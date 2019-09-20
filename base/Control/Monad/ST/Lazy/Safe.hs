@@ -32,5 +32,5 @@ module C.Control.Monad.ST.Lazy.Safe {-# DEPRECATED "Safe is now the default, ple
         stToIO,
     ) where
 
-import Control.Monad.ST.Lazy.Imp
+import C.Control.Monad.ST.Lazy.Imp
 
