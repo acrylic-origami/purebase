@@ -32,7 +32,7 @@ module C.GHC.MVar (
         , addMVarFinalizer
     ) where
 
-import GHC.Base
+import C.GHC.Base
 
 data MVar a = MVar (MVar# RealWorld a)
 {- ^
