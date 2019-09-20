@@ -18,6 +18,8 @@
 --
 -----------------------------------------------------------------------------
 
+-- TODO modify
+
 module C.GHC.IORef (
         IORef(..),
         newIORef, readIORef, writeIORef, atomicModifyIORef2Lazy,
