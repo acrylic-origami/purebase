@@ -76,12 +76,12 @@ module C.Control.Monad
     , (<$!>)
     ) where
 
-import Control.Monad.Fail ( MonadFail(fail) )
-import Data.Foldable ( Foldable, sequence_, sequenceA_, msum, mapM_, foldlM, forM_ )
-import Data.Functor ( void, (<$>) )
-import Data.Traversable ( forM, mapM, traverse, sequence, sequenceA )
+import C.Control.Monad.Fail ( MonadFail(fail) )
+import C.Data.Foldable ( Foldable, sequence_, sequenceA_, msum, mapM_, foldlM, forM_ )
+import C.Data.Functor ( void, (<$>) )
+import C.Data.Traversable ( forM, mapM, traverse, sequence, sequenceA )
 
-import GHC.Base hiding ( mapM, sequence )
+import C.GHC.Base hiding ( mapM, sequence )
 import GHC.List ( zipWith, unzip )
 import GHC.Num  ( (-) )
 
