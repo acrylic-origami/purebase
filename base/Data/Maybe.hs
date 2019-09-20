@@ -31,7 +31,7 @@ module C.Data.Maybe
    , mapMaybe
    ) where
 
-import GHC.Base
+import C.GHC.Base
 import GHC.Stack.Types ( HasCallStack )
 
 -- $setup
