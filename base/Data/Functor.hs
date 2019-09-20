@@ -46,7 +46,7 @@ module C.Data.Functor
       void,
     ) where
 
-import GHC.Base ( Functor(..), flip )
+import C.GHC.Base ( Functor(..), flip )
 
 -- $setup
 -- Allow the use of Prelude in doctests.

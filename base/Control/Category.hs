@@ -20,7 +20,7 @@
 
 module C.Control.Category where
 
-import qualified GHC.Base (id,(.))
+import qualified C.GHC.Base (id,(.))
 import Data.Type.Coercion
 import Data.Type.Equality
 import Data.Coerce (coerce)
