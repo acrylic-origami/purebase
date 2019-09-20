@@ -32,8 +32,8 @@ module C.GHC.List (
 
  ) where
 
-import Data.Maybe
-import GHC.Base
+import C.Data.Maybe
+import C.GHC.Base
 import GHC.Num (Num(..))
 import GHC.Integer (Integer)
 
