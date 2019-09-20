@@ -36,7 +36,7 @@ module C.Data.Complex
 
         )  where
 
-import GHC.Base (Applicative (..))
+import C.GHC.Base (Applicative (..))
 import GHC.Generics (Generic, Generic1)
 import GHC.Float (Floating(..))
 import Data.Data (Data)

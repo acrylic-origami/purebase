@@ -29,4 +29,4 @@ import GHC.Types (Coercible)
 
 -- The import of GHC.Base is for build ordering; see Notes in GHC.Base for
 -- more info.
-import GHC.Base ()
+import C.GHC.Base ()
