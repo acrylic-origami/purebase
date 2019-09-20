@@ -24,9 +24,9 @@ module C.GHC.ST (
         liftST, unsafeInterleaveST, unsafeDupableInterleaveST
     ) where
 
-import GHC.Base
+import C.GHC.Base
 import GHC.Show
-import qualified Control.Monad.Fail as Fail
+import qualified C.Control.Monad.Fail as Fail
 
 default ()
 

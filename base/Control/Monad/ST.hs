@@ -31,5 +31,5 @@ module C.Control.Monad.ST (
         stToIO,
     ) where
 
-import Control.Monad.ST.Imp
+import C.Control.Monad.ST.Imp
 

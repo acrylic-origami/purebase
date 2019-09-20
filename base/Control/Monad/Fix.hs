@@ -24,13 +24,13 @@ module C.Control.Monad.Fix (
         fix
   ) where
 
-import Data.Either
-import Data.Function ( fix )
-import Data.Maybe
-import Data.Monoid ( Dual(..), Sum(..), Product(..)
+import C.Data.Either
+import C.Data.Function ( fix )
+import C.Data.Maybe
+import C.Data.Monoid ( Dual(..), Sum(..), Product(..)
                    , First(..), Last(..), Alt(..), Ap(..) )
-import Data.Ord ( Down(..) )
-import GHC.Base ( Monad, NonEmpty(..), errorWithoutStackTrace, (.) )
+import C.Data.Ord ( Down(..) )
+import C.GHC.Base ( Monad, NonEmpty(..), errorWithoutStackTrace, (.) )
 import GHC.Generics
 import GHC.List ( head, tail )
 import Control.Monad.ST.Imp

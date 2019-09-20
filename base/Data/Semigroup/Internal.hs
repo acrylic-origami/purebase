@@ -20,7 +20,7 @@
 -- @since 4.11.0.0
 module C.Data.Semigroup.Internal where
 
-import GHC.Base hiding (Any)
+import C.GHC.Base hiding (Any)
 import GHC.Enum
 import GHC.Num
 import GHC.Read

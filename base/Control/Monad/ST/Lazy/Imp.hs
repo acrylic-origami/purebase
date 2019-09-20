@@ -37,14 +37,14 @@ module C.Control.Monad.ST.Lazy.Imp (
         unsafeIOToST
     ) where
 
-import Control.Monad.Fix
+import C.Control.Monad.Fix
 
-import qualified Control.Monad.ST as ST
-import qualified Control.Monad.ST.Unsafe as ST
+import qualified C.Control.Monad.ST as ST
+import qualified C.Control.Monad.ST.Unsafe as ST
 
-import qualified GHC.ST as GHC.ST
-import GHC.Base
-import qualified Control.Monad.Fail as Fail
+import qualified C.GHC.ST as GHC.ST
+import C.GHC.Base
+import qualified C.Control.Monad.Fail as Fail
 
 -- | The lazy @'ST' monad.
 -- The ST monad allows for destructive updates, but is escapable (unlike IO).

@@ -25,7 +25,7 @@ module C.Data.Function
   , on
   ) where
 
-import GHC.Base ( ($), (.), id, const, flip )
+import C.GHC.Base ( ($), (.), id, const, flip )
 
 infixl 0 `on`
 infixl 1 &
