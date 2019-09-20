@@ -24,7 +24,7 @@ module C.Data.STRef (
         modifySTRef'
  ) where
 
-import GHC.ST
+import C.GHC.ST
 import GHC.STRef
 
 -- | Mutate the contents of an 'STRef'.
