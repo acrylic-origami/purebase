@@ -18,10 +18,10 @@
 
 module C.Control.Monad.Zip where
 
-import Control.Monad (liftM, liftM2)
-import Data.Functor.Identity
-import Data.Monoid
-import Data.Ord ( Down(..) )
+import C.Control.Monad (liftM, liftM2)
+import C.Data.Functor.Identity
+import C.Data.Monoid
+import C.Data.Ord ( Down(..) )
 import Data.Proxy
 import qualified Data.List.NonEmpty as NE
 import GHC.Generics

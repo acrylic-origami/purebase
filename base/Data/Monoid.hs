@@ -79,7 +79,7 @@ module C.Data.Monoid (
   ) where
 
 -- Push down the module in the dependency hierarchy.
-import C/GHC.Base hiding (Any)
+import C.GHC.Base hiding (Any)
 import GHC.Enum
 import GHC.Generics
 import GHC.Num

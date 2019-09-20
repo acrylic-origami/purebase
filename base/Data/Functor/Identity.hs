@@ -35,14 +35,14 @@ module C.Data.Functor.Identity (
     Identity(..),
   ) where
 
-import Control.Monad.Fix
+import C.Control.Monad.Fix
 import Data.Bits (Bits, FiniteBits)
 import Data.Coerce
-import Data.Foldable
-import Data.Functor.Utils ((#.))
+import C.Data.Foldable
+import C.Data.Functor.Utils ((#.))
 import Foreign.Storable (Storable)
 import GHC.Arr (Ix)
-import GHC.Base ( Applicative(..), Eq(..), Functor(..), Monad(..)
+import C.GHC.Base ( Applicative(..), Eq(..), Functor(..), Monad(..)
                 , Semigroup, Monoid, Ord(..), ($), (.) )
 import GHC.Enum (Bounded, Enum)
 import GHC.Float (Floating, RealFloat)

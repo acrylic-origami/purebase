@@ -50,21 +50,21 @@ module C.Data.Foldable (
     find
     ) where
 
-import Data.Bool
-import Data.Either
-import Data.Eq
-import Data.Functor.Utils (Max(..), Min(..), (#.))
+import C.Data.Bool
+import C.Data.Either
+import C.Data.Eq
+import C.Data.Functor.Utils (Max(..), Min(..), (#.))
 import qualified GHC.List as List
-import Data.Maybe
-import Data.Monoid
-import Data.Ord
+import C.Data.Maybe
+import C.Data.Monoid
+import C.Data.Ord
 import Data.Proxy
 
 import GHC.Arr  ( Array(..), elems, numElements,
                   foldlElems, foldrElems,
                   foldlElems', foldrElems',
                   foldl1Elems, foldr1Elems)
-import GHC.Base hiding ( foldr )
+import C.GHC.Base hiding ( foldr )
 import GHC.Generics
 import GHC.Num  ( Num(..) )
 

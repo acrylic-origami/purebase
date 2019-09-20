@@ -26,7 +26,7 @@ module C.Data.Bool (
    bool,
   ) where
 
-import GHC.Base
+import C.GHC.Base
 
 -- | Case analysis for the 'Bool' type. @'bool' x y p@ evaluates to @x@
 -- when @p@ is 'False', and evaluates to @y@ when @p@ is 'True'.
