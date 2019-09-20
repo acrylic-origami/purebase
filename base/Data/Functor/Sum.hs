@@ -21,9 +21,9 @@ module C.Data.Functor.Sum (
     Sum(..),
   ) where
 
-import Control.Applicative ((<|>))
+import C.Control.Applicative ((<|>))
 import Data.Data (Data)
-import Data.Functor.Classes
+import C.Data.Functor.Classes
 import GHC.Generics (Generic, Generic1)
 import Text.Read (Read(..), readListDefault, readListPrecDefault)
 

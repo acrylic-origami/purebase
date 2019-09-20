@@ -93,27 +93,27 @@ module C.Data.List.NonEmpty (
    ) where
 
 
-import           Prelude             hiding (break, cycle, drop, dropWhile,
+import           C.Prelude             hiding (break, cycle, drop, dropWhile,
                                       filter, foldl, foldr, head, init, iterate,
                                       last, length, map, repeat, reverse,
                                       scanl, scanl1, scanr, scanr1, span,
                                       splitAt, tail, take, takeWhile,
                                       unzip, zip, zipWith, (!!))
-import qualified Prelude
+import qualified C.Prelude
 
-import           Control.Applicative (Applicative (..), Alternative (many))
-import           Data.Foldable       hiding (length, toList)
-import qualified Data.Foldable       as Foldable
-import           Data.Function       (on)
+import           C.Control.Applicative (Applicative (..), Alternative (many))
+import           C.Data.Foldable       hiding (length, toList)
+import qualified C.Data.Foldable       as Foldable
+import           C.Data.Function       (on)
 import qualified Data.List           as List
-import           Data.Ord            (comparing)
-import           GHC.Base            (NonEmpty(..))
+import           C.Data.Ord            (comparing)
+import           C.GHC.Base            (NonEmpty(..))
 
 infixr 5 <|
 
 -- | Number of elements in 'NonEmpty' list.
 length :: NonEmpty a -> Int
-length (_ :| xs) = 1 + Prelude.length xs
+length (_ :| xs) = 1 + C.Prelude.length xs
 
 -- | Compute n-ary logic exclusive OR operation on 'NonEmpty' list.
 xor :: NonEmpty Bool -> Bool

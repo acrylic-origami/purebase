@@ -45,15 +45,15 @@ module C.Data.Functor.Contravariant (
   , Op(..)
   ) where
 
-import Control.Applicative
-import Control.Category
-import Data.Function (on)
+import C.Control.Applicative
+import C.Control.Category
+import C.Data.Function (on)
 
-import Data.Functor.Product
-import Data.Functor.Sum
-import Data.Functor.Compose
+import C.Data.Functor.Product
+import C.Data.Functor.Sum
+import C.Data.Functor.Compose
 
-import Data.Monoid (Alt(..))
+import C.Data.Monoid (Alt(..))
 import Data.Proxy
 import GHC.Generics
 

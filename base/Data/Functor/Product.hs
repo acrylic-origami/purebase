@@ -21,12 +21,12 @@ module C.Data.Functor.Product (
     Product(..),
   ) where
 
-import Control.Applicative
-import Control.Monad (MonadPlus(..))
-import Control.Monad.Fix (MonadFix(..))
-import Control.Monad.Zip (MonadZip(mzipWith))
+import C.Control.Applicative
+import C.Control.Monad (MonadPlus(..))
+import C.Control.Monad.Fix (MonadFix(..))
+import C.Control.Monad.Zip (MonadZip(mzipWith))
 import Data.Data (Data)
-import Data.Functor.Classes
+import C.Data.Functor.Classes
 import GHC.Generics (Generic, Generic1)
 import Text.Read (Read(..), readListDefault, readListPrecDefault)
 
