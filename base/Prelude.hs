@@ -154,18 +154,18 @@ module Prelude (
 
   ) where
 
-import Control.Monad
+import C.Control.Monad
 import System.IO
 import System.IO.Error
-import Data.List
-import Data.Either
-import Data.Foldable    ( Foldable(..) )
-import Data.Functor     ( (<$>) )
-import Data.Maybe
-import Data.Traversable ( Traversable(..) )
-import Data.Tuple
+import C.Data.List
+import C.Data.Either
+import C.Data.Foldable    ( Foldable(..) )
+import C.Data.Functor     ( (<$>) )
+import C.Data.Maybe
+import C.Data.Traversable ( Traversable(..) )
+import C.Data.Tuple
 
-import GHC.Base hiding ( foldr, mapM, sequence )
+import C.GHC.Base hiding ( foldr, mapM, sequence )
 import Text.Read
 import GHC.Enum
 import GHC.Num
