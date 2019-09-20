@@ -103,18 +103,18 @@ module C.Data.Semigroup (
   , ArgMax
   ) where
 
-import           Prelude             hiding (foldr1)
+import           C.Prelude             hiding (foldr1)
 
-import GHC.Base (Semigroup(..))
+import C.GHC.Base (Semigroup(..))
 
-import           Data.Semigroup.Internal
+import           C.Data.Semigroup.Internal
 
-import           Control.Applicative
-import           Control.Monad
-import           Control.Monad.Fix
-import           Data.Bifoldable
-import           Data.Bifunctor
-import           Data.Bitraversable
+import           C.Control.Applicative
+import           C.Control.Monad
+import           C.Control.Monad.Fix
+import           C.Data.Bifoldable
+import           C.Data.Bifunctor
+import           C.Data.Bitraversable
 import           Data.Coerce
 import           Data.Data
 import           GHC.Generics
