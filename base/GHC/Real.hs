@@ -27,7 +27,7 @@ import GHC.Num
 import GHC.List
 import GHC.Enum
 import GHC.Show
-import {-# SOURCE #-} GHC.Exception( divZeroException, overflowException
+import  GHC.Exception( divZeroException, overflowException
                                    , underflowException
                                    , ratioZeroDenomException )
 

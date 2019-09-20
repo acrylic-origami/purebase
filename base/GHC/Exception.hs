@@ -40,7 +40,7 @@ import GHC.Stack.Types
 import GHC.OldList
 import GHC.Prim
 import GHC.IO.Unsafe
-import {-# SOURCE #-} GHC.Stack.CCS
+import  GHC.Stack.CCS
 import GHC.Exception.Type
 
 -- | Throw an exception.  Exceptions may be thrown from purely

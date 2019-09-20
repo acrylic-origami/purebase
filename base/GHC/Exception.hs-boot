@@ -30,7 +30,7 @@ module C.GHC.Exception
   , errorCallWithCallStackException
   ) where
 
-import {-# SOURCE #-} GHC.Exception.Type
+import  GHC.Exception.Type
 import GHC.Types ( Char )
 import GHC.Stack.Types ( CallStack )
 

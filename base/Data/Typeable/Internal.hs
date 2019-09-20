@@ -92,12 +92,12 @@ import GHC.TypeNats ( KnownNat, natVal' )
 import Unsafe.Coerce ( unsafeCoerce )
 
 import GHC.Fingerprint.Type
-import {-# SOURCE #-} GHC.Fingerprint
+import  GHC.Fingerprint
    -- loop: GHC.Fingerprint -> Foreign.Ptr -> Data.Typeable
    -- Better to break the loop here, because we want non-SOURCE imports
    -- of Data.Typeable as much as possible so we can optimise the derived
    -- instances.
--- import {-# SOURCE #-} Debug.Trace (trace)
+-- import  Debug.Trace (trace)
 
 #include "MachDeps.h"
 

@@ -44,7 +44,7 @@ import GHC.IO.IOMode
 import GHC.IO.Exception
 import GHC.IO.Device
 #if !defined(mingw32_HOST_OS)
-import {-# SOURCE #-} GHC.IO.Encoding (getFileSystemEncoding)
+import  GHC.IO.Encoding (getFileSystemEncoding)
 import qualified GHC.Foreign as GHC
 #endif
 

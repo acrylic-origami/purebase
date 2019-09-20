@@ -31,7 +31,7 @@ import GHC.Show
 import GHC.Ptr
 import GHC.Num
 import GHC.IO
-import {-# SOURCE #-} GHC.IO.Exception ( unsupportedOperation )
+import  GHC.IO.Exception ( unsupportedOperation )
 
 -- | A low-level I/O provider where the data is bytes in memory.
 class RawIO a where

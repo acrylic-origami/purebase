@@ -138,7 +138,7 @@ import GHC.Natural ()            -- Note [Depend on GHC.Natural]
 
 -- for 'class Semigroup'
 import GHC.Real (Integral)
-import {-# SOURCE #-} C.Data.Semigroup.Internal ( stimesDefault
+import  C.Data.Semigroup.Internal ( stimesDefault
                                               , stimesMaybe
                                               , stimesList
                                               , stimesIdempotentMonoid

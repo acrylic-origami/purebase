@@ -108,7 +108,7 @@ import GHC.Real
 import GHC.Num
 import GHC.Base
 
-import {-# SOURCE #-} GHC.IO.Encoding
+import  GHC.IO.Encoding
 import qualified GHC.Foreign as GHC
 
 -----------------------------------------------------------------------------
