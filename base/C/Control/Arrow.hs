@@ -160,7 +160,9 @@ deriving instance Generic (Kleisli m a b)
 deriving instance Generic1 (Kleisli m a)
 
 -- | @since 4.14.0.0
-deriving instance Functor m => Functor (Kleisli m a)
+-- deriving instance Functor m => Functor (Kleisli m a)
+instance Functor m => Functor (Kleisli m a) where
+    fmap f (Kleisli g) = Kleisli (fmap f . g)
 
 -- | @since 4.14.0.0
 instance Applicative m => Applicative (Kleisli m a) where

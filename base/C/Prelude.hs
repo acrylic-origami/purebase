@@ -157,7 +157,7 @@ module C.Prelude (
 import C.Control.Monad
 import System.IO
 import System.IO.Error
-import C.Data.List
+import Data.List hiding ( map, (++), null, length )
 import C.Data.Either
 import C.Data.Foldable    ( Foldable(..) )
 import C.Data.Functor     ( (<$>) )

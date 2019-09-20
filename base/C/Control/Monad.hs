@@ -65,9 +65,6 @@ module C.Control.Monad
 
     , liftM
     , liftM2
-    , liftM3
-    , liftM4
-    , liftM5
 
     , ap
 
@@ -338,10 +335,8 @@ infixl 4 <$!>
 -- @since 4.8.0.0
 (<$!>) :: Monad m => (a -> b) -> m a -> m b
 {-# INLINE (<$!>) #-}
-f <$!> m = do
-  x <- m
-  let z = f x
-  z `seq` return z
+f <$!> m = (f <$> m) >>= \z -> z `seq` return z
+  
 
 
 -- -----------------------------------------------------------------------------
@@ -369,8 +364,7 @@ f <$!> m = do
 mfilter :: (MonadPlus m) => (a -> Bool) -> m a -> m a
 {-# INLINABLE mfilter #-}
 mfilter p ma = do
-  a <- ma
-  if p a then return a else mzero
+  ma >>= (\a -> if p a then return a else mzero)
 
 {- $naming
 

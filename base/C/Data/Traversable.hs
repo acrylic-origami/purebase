@@ -59,7 +59,7 @@ import C.Data.Either ( Either(..) )
 import C.Data.Foldable ( Foldable )
 import C.Data.Functor
 import C.Data.Functor.Identity ( Identity(..) )
-import C.Data.Functor.Utißls ( StateL(..), StateR(..) )
+import C.Data.Functor.Utils ( StateL(..), StateR(..) )
 import C.Data.Monoid ( Dual(..), Sum(..), Product(..),
                      First(..), Last(..), Alt(..), Ap(..) )
 import C.Data.Ord ( Down(..) )
@@ -246,19 +246,19 @@ instance Traversable ((,) a) where
     traverse f (x, y) = (,) x <$> f y
 
 -- | @since 2.01
-instance Ix i => Traversable (Array i) where
-    traverse f arr = listArray (bounds arr) `fmap` traverse f (elems arr)
+-- instance Ix i => Traversable (Array i) where
+--     traverse f arr = listArray (bounds arr) `fmap` traverse f (elems arr)
 
 -- | @since 4.7.0.0
-instance Traversable Proxy where
-    traverse _ _ = pure Proxy
-    {-# INLINE traverse #-}
-    sequenceA _ = pure Proxy
-    {-# INLINE sequenceA #-}
-    mapM _ _ = pure Proxy
-    {-# INLINE mapM #-}
-    sequence _ = pure Proxy
-    {-# INLINE sequence #-}
+-- instance Traversable Proxy where
+--     traverse _ _ = pure Proxy
+--     {-# INLINE traverse #-}
+--     sequenceA _ = pure Proxy
+--     {-# INLINE sequenceA #-}
+--     mapM _ _ = pure Proxy
+--     {-# INLINE mapM #-}
+--     sequence _ = pure Proxy
+--     {-# INLINE sequence #-}
 
 -- | @since 4.7.0.0
 instance Traversable (Const m) where
@@ -297,66 +297,66 @@ instance Traversable ZipList where
     traverse f (ZipList x) = ZipList <$> traverse f x
 
 -- | @since 4.9.0.0
-deriving instance Traversable Identity
+-- deriving instance Traversable Identity
 
 
 -- Instances for GHC.Generics
 -- | @since 4.9.0.0
-instance Traversable U1 where
-    traverse _ _ = pure U1
-    {-# INLINE traverse #-}
-    sequenceA _ = pure U1
-    {-# INLINE sequenceA #-}
-    mapM _ _ = pure U1
-    {-# INLINE mapM #-}
-    sequence _ = pure U1
-    {-# INLINE sequence #-}
+-- instance Traversable U1 where
+--     traverse _ _ = pure U1
+--     {-# INLINE traverse #-}
+--     sequenceA _ = pure U1
+--     {-# INLINE sequenceA #-}
+--     mapM _ _ = pure U1
+--     {-# INLINE mapM #-}
+--     sequence _ = pure U1
+--     {-# INLINE sequence #-}
 
--- | @since 4.9.0.0
-deriving instance Traversable V1
+-- -- | @since 4.9.0.0
+-- deriving instance Traversable V1
 
--- | @since 4.9.0.0
-deriving instance Traversable Par1
+-- -- | @since 4.9.0.0
+-- deriving instance Traversable Par1
 
--- | @since 4.9.0.0
-deriving instance Traversable f => Traversable (Rec1 f)
+-- -- | @since 4.9.0.0
+-- deriving instance Traversable f => Traversable (Rec1 f)
 
--- | @since 4.9.0.0
-deriving instance Traversable (K1 i c)
+-- -- | @since 4.9.0.0
+-- deriving instance Traversable (K1 i c)
 
--- | @since 4.9.0.0
-deriving instance Traversable f => Traversable (M1 i c f)
+-- -- | @since 4.9.0.0
+-- deriving instance Traversable f => Traversable (M1 i c f)
 
--- | @since 4.9.0.0
-deriving instance (Traversable f, Traversable g) => Traversable (f :+: g)
+-- -- | @since 4.9.0.0
+-- deriving instance (Traversable f, Traversable g) => Traversable (f :+: g)
 
--- | @since 4.9.0.0
-deriving instance (Traversable f, Traversable g) => Traversable (f :*: g)
+-- -- | @since 4.9.0.0
+-- deriving instance (Traversable f, Traversable g) => Traversable (f :*: g)
 
--- | @since 4.9.0.0
-deriving instance (Traversable f, Traversable g) => Traversable (f :.: g)
+-- -- | @since 4.9.0.0
+-- deriving instance (Traversable f, Traversable g) => Traversable (f :.: g)
 
--- | @since 4.9.0.0
-deriving instance Traversable UAddr
+-- -- | @since 4.9.0.0
+-- deriving instance Traversable UAddr
 
--- | @since 4.9.0.0
-deriving instance Traversable UChar
+-- -- | @since 4.9.0.0
+-- deriving instance Traversable UChar
 
--- | @since 4.9.0.0
-deriving instance Traversable UDouble
+-- -- | @since 4.9.0.0
+-- deriving instance Traversable UDouble
 
--- | @since 4.9.0.0
-deriving instance Traversable UFloat
+-- -- | @since 4.9.0.0
+-- deriving instance Traversable UFloat
 
--- | @since 4.9.0.0
-deriving instance Traversable UInt
+-- -- | @since 4.9.0.0
+-- deriving instance Traversable UInt
 
--- | @since 4.9.0.0
-deriving instance Traversable UWord
+-- -- | @since 4.9.0.0
+-- deriving instance Traversable UWord
 
--- Instance for Data.Ord
--- | @since 4.12.0.0
-deriving instance Traversable Down
+-- -- Instance for Data.Ord
+-- -- | @since 4.12.0.0
+-- deriving instance Traversable Down
 
 -- general functions
 
