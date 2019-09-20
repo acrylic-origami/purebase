@@ -153,9 +153,9 @@ import C.GHC.MVar ( MVar(..), newEmptyMVar, newMVar, takeMVar, putMVar,
                   tryTakeMVar, tryPutMVar, isEmptyMVar, readMVar,
                   tryReadMVar
                 )
-import qualified GHC.MVar
+import qualified C.GHC.MVar
 import GHC.Weak
-import GHC.Base
+import C.GHC.Base
 
 import Control.Exception.Base
 
