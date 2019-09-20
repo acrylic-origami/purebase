@@ -29,7 +29,7 @@ import Control.Exception
 import Data.Data
 import Data.Ix
 import GHC.Generics
-import Data.Semigroup (Semigroup(..), stimesIdempotent)
+import C.Data.Semigroup (Semigroup(..), stimesIdempotent)
 
 -- | Uninhabited data type
 --
