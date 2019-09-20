@@ -30,5 +30,5 @@ module C.Control.Monad.ST.Lazy (
         stToIO,
     ) where
 
-import Control.Monad.ST.Lazy.Imp
+import C.Control.Monad.ST.Lazy.Imp
 

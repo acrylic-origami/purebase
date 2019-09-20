@@ -18,5 +18,5 @@ module C.Control.Monad.ST.Strict (
         module Control.Monad.ST
   ) where
 
-import Control.Monad.ST
+import C.Control.Monad.ST
 
