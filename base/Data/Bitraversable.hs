@@ -26,12 +26,12 @@ module C.Data.Bitraversable
   , bifoldMapDefault
   ) where
 
-import Control.Applicative
-import Data.Bifunctor
-import Data.Bifoldable
+import C.Control.Applicative
+import C.Data.Bifunctor
+import C.Data.Bifoldable
 import Data.Coerce
-import Data.Functor.Identity (Identity(..))
-import Data.Functor.Utils (StateL(..), StateR(..))
+import C.Data.Functor.Identity (Identity(..))
+import C.Data.Functor.Utils (StateL(..), StateR(..))
 import GHC.Generics (K1(..))
 
 -- | 'Bitraversable' identifies bifunctorial data structures whose elements can

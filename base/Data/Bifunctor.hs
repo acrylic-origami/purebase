@@ -17,7 +17,7 @@ module C.Data.Bifunctor
   ( Bifunctor(..)
   ) where
 
-import Control.Applicative  ( Const(..) )
+import C.Control.Applicative  ( Const(..) )
 import GHC.Generics ( K1(..) )
 
 -- | A bifunctor is a type constructor that takes

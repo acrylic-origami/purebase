@@ -49,10 +49,10 @@ module C.Data.Bifoldable
   , bifind
   ) where
 
-import Control.Applicative
-import Data.Functor.Utils (Max(..), Min(..), (#.))
-import Data.Maybe (fromMaybe)
-import Data.Monoid
+import C.Control.Applicative
+import C.Data.Functor.Utils (Max(..), Min(..), (#.))
+import C.Data.Maybe (fromMaybe)
+import C.Data.Monoid
 import GHC.Generics (K1(..))
 
 -- | 'Bifoldable' identifies foldable structures with two different varieties
