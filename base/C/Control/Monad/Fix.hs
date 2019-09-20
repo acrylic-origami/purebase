@@ -98,8 +98,8 @@ instance MonadFix (Either e) where
                    unRight (Left  _) = errorWithoutStackTrace "mfix Either: Left"
 
 -- | @since 2.01
-instance MonadFix (ST s) where
-        mfix = fixST
+-- instance MonadFix (ST s) where
+--         mfix = fixST
 
 -- Instances of Data.Monoid wrappers
 
@@ -133,23 +133,23 @@ instance MonadFix f => MonadFix (Ap f) where
 
 -- Instances for GHC.Generics
 -- | @since 4.9.0.0
-instance MonadFix Par1 where
-    mfix f = Par1 (fix (unPar1 . f))
+-- instance MonadFix Par1 where
+--     mfix f = Par1 (fix (unPar1 . f))
 
 -- | @since 4.9.0.0
-instance MonadFix f => MonadFix (Rec1 f) where
-    mfix f = Rec1 (mfix (unRec1 . f))
+-- instance MonadFix f => MonadFix (Rec1 f) where
+--     mfix f = Rec1 (mfix (unRec1 . f))
 
 -- | @since 4.9.0.0
-instance MonadFix f => MonadFix (M1 i c f) where
-    mfix f = M1 (mfix (unM1. f))
+-- instance MonadFix f => MonadFix (M1 i c f) where
+--     mfix f = M1 (mfix (unM1. f))
 
 -- | @since 4.9.0.0
-instance (MonadFix f, MonadFix g) => MonadFix (f :*: g) where
-    mfix f = (mfix (fstP . f)) :*: (mfix (sndP . f))
-      where
-        fstP (a :*: _) = a
-        sndP (_ :*: b) = b
+-- instance (MonadFix f, MonadFix g) => MonadFix (f :*: g) where
+--     mfix f = (mfix (fstP . f)) :*: (mfix (sndP . f))
+--       where
+--         fstP (a :*: _) = a
+--         sndP (_ :*: b) = b
 
 -- Instances for Data.Ord
 
