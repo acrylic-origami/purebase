@@ -35,7 +35,7 @@ module C.Control.Monad.ST.Imp (
         unsafeSTToIO
     ) where
 
-import C.GHC.ST           ( ST, runST, unsafeInterleaveST
+import GHC.ST           ( ST, runST, unsafeInterleaveST
                         , unsafeDupableInterleaveST )
 import C.GHC.Base         ( RealWorld, ($), return )
 import GHC.IO           ( stToIO, unsafeIOToST, unsafeSTToIO

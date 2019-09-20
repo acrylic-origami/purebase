@@ -52,8 +52,8 @@ class Category cat where
 
 -- | @since 3.0
 instance Category (->) where
-    id = GHC.Base.id
-    (.) = (GHC.Base..)
+    id = C.GHC.Base.id
+    (.) = (C.GHC.Base..)
 
 -- | @since 4.7.0.0
 instance Category (:~:) where

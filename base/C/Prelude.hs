@@ -17,7 +17,7 @@
 --
 -----------------------------------------------------------------------------
 
-module Prelude (
+module C.Prelude (
 
     -- * Standard types, classes and related functions
 

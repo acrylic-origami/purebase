@@ -33,7 +33,7 @@ import C.Data.Ord ( Down(..) )
 import C.GHC.Base ( Monad, NonEmpty(..), errorWithoutStackTrace, (.) )
 import GHC.Generics
 import GHC.List ( head, tail )
-import Control.Monad.ST.Imp
+import C.Control.Monad.ST.Imp
 import System.IO
 
 -- | Monads having fixed points with a \'knot-tying\' semantics.

@@ -110,15 +110,15 @@ Other Prelude modules are much easier with fewer complex dependencies.
 
 module C.GHC.Base
         (
-        module GHC.Base,
+        module C.GHC.Base,
         module GHC.Classes,
         module GHC.CString,
         module GHC.Magic,
         module GHC.Types,
         module GHC.Prim,        -- Re-export GHC.Prim and [boot] GHC.Err,
-        module GHC.Prim.Ext,    -- to avoid lots of people having to
+        -- module GHC.Prim.Ext,    -- to avoid lots of people having to
         module GHC.Err,         -- import it explicitly
-        module GHC.Maybe
+        module C.GHC.Maybe
   )
         where
 
@@ -127,18 +127,18 @@ import GHC.Classes
 import GHC.CString
 import GHC.Magic
 import GHC.Prim
-import GHC.Prim.Ext
+-- import GHC.Prim.Ext
 import GHC.Err
 import C.GHC.Maybe
 import GHC.IO (failIO,mplusIO)
 
-import C.GHC.Tuple ()              -- Note [Depend on GHC.Tuple]
+import GHC.Tuple ()              -- Note [Depend on GHC.Tuple]
 import GHC.Integer ()            -- Note [Depend on GHC.Integer]
 import GHC.Natural ()            -- Note [Depend on GHC.Natural]
 
 -- for 'class Semigroup'
 import GHC.Real (Integral)
-import  C.Data.Semigroup.Internal ( stimesDefault
+import {-# SOURCE #-} C.Data.Semigroup.Internal ( stimesDefault
                                               , stimesMaybe
                                               , stimesList
                                               , stimesIdempotentMonoid
@@ -838,7 +838,7 @@ mapM :: Monad m => (a -> m b) -> [a] -> m [b]
 {-# INLINE mapM #-}
 mapM f as = foldr k (return []) as
             where
-              k a r = do { x <- f a; xs <- r; return (x:xs) }
+              k a r = liftA2 (:) (f a) r
 
 {-
 Note: [sequence and mapM]
@@ -859,7 +859,7 @@ similar problems in nofib.
 
 -- | Promote a function to a monad.
 liftM   :: (Monad m) => (a1 -> r) -> m a1 -> m r
-liftM f m1              = do { x1 <- m1; return (f x1) }
+liftM f m1              = m1 >>= return . f
 
 -- | Promote a function to a monad, scanning the monadic arguments from
 -- left to right.  For example,
@@ -868,24 +868,9 @@ liftM f m1              = do { x1 <- m1; return (f x1) }
 -- > liftM2 (+) (Just 1) Nothing = Nothing
 --
 liftM2  :: (Monad m) => (a1 -> a2 -> r) -> m a1 -> m a2 -> m r
-liftM2 f m1 m2          = do { x1 <- m1; x2 <- m2; return (f x1 x2) }
+liftM2 f m1 m2          = m1 >>= (\x1 -> m2 >>= return . f x1)
 -- Caution: since this may be used for `liftA2`, we can't use the obvious
 -- definition of liftM2 = liftA2.
-
--- | Promote a function to a monad, scanning the monadic arguments from
--- left to right (cf. 'liftM2').
-liftM3  :: (Monad m) => (a1 -> a2 -> a3 -> r) -> m a1 -> m a2 -> m a3 -> m r
-liftM3 f m1 m2 m3       = do { x1 <- m1; x2 <- m2; x3 <- m3; return (f x1 x2 x3) }
-
--- | Promote a function to a monad, scanning the monadic arguments from
--- left to right (cf. 'liftM2').
-liftM4  :: (Monad m) => (a1 -> a2 -> a3 -> a4 -> r) -> m a1 -> m a2 -> m a3 -> m a4 -> m r
-liftM4 f m1 m2 m3 m4    = do { x1 <- m1; x2 <- m2; x3 <- m3; x4 <- m4; return (f x1 x2 x3 x4) }
-
--- | Promote a function to a monad, scanning the monadic arguments from
--- left to right (cf. 'liftM2').
-liftM5  :: (Monad m) => (a1 -> a2 -> a3 -> a4 -> a5 -> r) -> m a1 -> m a2 -> m a3 -> m a4 -> m a5 -> m r
-liftM5 f m1 m2 m3 m4 m5 = do { x1 <- m1; x2 <- m2; x3 <- m3; x4 <- m4; x5 <- m5; return (f x1 x2 x3 x4 x5) }
 
 {-# INLINABLE liftM #-}
 {-# SPECIALISE liftM :: (a1->r) -> IO a1 -> IO r #-}
@@ -893,15 +878,6 @@ liftM5 f m1 m2 m3 m4 m5 = do { x1 <- m1; x2 <- m2; x3 <- m3; x4 <- m4; x5 <- m5;
 {-# INLINABLE liftM2 #-}
 {-# SPECIALISE liftM2 :: (a1->a2->r) -> IO a1 -> IO a2 -> IO r #-}
 {-# SPECIALISE liftM2 :: (a1->a2->r) -> Maybe a1 -> Maybe a2 -> Maybe r #-}
-{-# INLINABLE liftM3 #-}
-{-# SPECIALISE liftM3 :: (a1->a2->a3->r) -> IO a1 -> IO a2 -> IO a3 -> IO r #-}
-{-# SPECIALISE liftM3 :: (a1->a2->a3->r) -> Maybe a1 -> Maybe a2 -> Maybe a3 -> Maybe r #-}
-{-# INLINABLE liftM4 #-}
-{-# SPECIALISE liftM4 :: (a1->a2->a3->a4->r) -> IO a1 -> IO a2 -> IO a3 -> IO a4 -> IO r #-}
-{-# SPECIALISE liftM4 :: (a1->a2->a3->a4->r) -> Maybe a1 -> Maybe a2 -> Maybe a3 -> Maybe a4 -> Maybe r #-}
-{-# INLINABLE liftM5 #-}
-{-# SPECIALISE liftM5 :: (a1->a2->a3->a4->a5->r) -> IO a1 -> IO a2 -> IO a3 -> IO a4 -> IO a5 -> IO r #-}
-{-# SPECIALISE liftM5 :: (a1->a2->a3->a4->a5->r) -> Maybe a1 -> Maybe a2 -> Maybe a3 -> Maybe a4 -> Maybe a5 -> Maybe r #-}
 
 {- | In many situations, the 'liftM' operations can be replaced by uses of
 'ap', which promotes function application.
@@ -915,7 +891,7 @@ is equivalent to
 -}
 
 ap                :: (Monad m) => m (a -> b) -> m a -> m b
-ap m1 m2          = do { x1 <- m1; x2 <- m2; return (x1 x2) }
+ap m1 m2          = liftA2 ($) m1 m2
 -- Since many Applicative instances define (<*>) = ap, we
 -- cannot define ap = (<*>)
 {-# INLINABLE ap #-}
@@ -1425,14 +1401,14 @@ flip f x y              =  f y x
 -- Note that @('$')@ is levity-polymorphic in its result type, so that
 -- @foo '$' True@ where @foo :: Bool -> Int#@ is well-typed.
 {-# INLINE ($) #-}
-($) :: forall r a (b :: TYPE r). (a -> b) -> a -> b
+($) :: (a -> b) -> a -> b -- forall r a (b :: TYPE r). 
 f $ x =  f x
 
 -- | Strict (call-by-value) application operator. It takes a function and an
 -- argument, evaluates the argument to weak head normal form (WHNF), then calls
 -- the function with that value.
 
-($!) :: forall r a (b :: TYPE r). (a -> b) -> a -> b
+($!) :: (a -> b) -> a -> b -- forall r a (b :: TYPE r). 
 f $! x = let !vx = x in f vx  -- see #2273
 
 -- | @'until' p f@ yields the result of applying @f@ until @p@ holds.

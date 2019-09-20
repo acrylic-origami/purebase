@@ -142,8 +142,6 @@ import C.Data.Semigroup.Internal
 newtype First a = First { getFirst :: Maybe a }
         deriving ( Eq          -- ^ @since 2.01
                  , Ord         -- ^ @since 2.01
-                 , Read        -- ^ @since 2.01
-                 , Show        -- ^ @since 2.01
                  , Generic     -- ^ @since 4.7.0.0
                  , Generic1    -- ^ @since 4.7.0.0
                  , Functor     -- ^ @since 4.8.0.0
@@ -181,8 +179,6 @@ instance Monoid (First a) where
 newtype Last a = Last { getLast :: Maybe a }
         deriving ( Eq          -- ^ @since 2.01
                  , Ord         -- ^ @since 2.01
-                 , Read        -- ^ @since 2.01
-                 , Show        -- ^ @since 2.01
                  , Generic     -- ^ @since 4.7.0.0
                  , Generic1    -- ^ @since 4.7.0.0
                  , Functor     -- ^ @since 4.8.0.0

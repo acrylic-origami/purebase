@@ -105,7 +105,7 @@ module C.Data.Semigroup (
 
 import           C.Prelude             hiding (foldr1)
 
-import C.GHC.Base (Semigroup(..))
+import {-# SOURCE #-} C.GHC.Base (Semigroup(..))
 
 import           C.Data.Semigroup.Internal
 
