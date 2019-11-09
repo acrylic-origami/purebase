@@ -18,8 +18,8 @@
 module C.GHC.IO.Device (
         RawIO(..),
         IODevice(..),
-        IODeviceType(..),
-        SeekMode(..)
+        -- IODeviceType(..),
+        -- SeekMode(..)
     ) where
 
 import GHC.Base

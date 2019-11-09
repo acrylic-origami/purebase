@@ -45,7 +45,7 @@ import Foreign (Storable, castPtr, peek, poke, pokeElemOff, peekElemOff, sizeOf,
 
 import Data.Complex ( Complex(..) )
 
-infix  6  :+
+-- infix  6  :+
 
 -- -----------------------------------------------------------------------------
 -- The Complex type

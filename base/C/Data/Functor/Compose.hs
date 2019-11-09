@@ -35,7 +35,7 @@ import Text.Read (Read(..), readListDefault, readListPrecDefault)
 
 import Data.Functor.Compose ( Compose(..) )
 
-infixr 9 `Compose`
+-- infixr 9 `Compose`
 
 -- | Right-to-left composition of functors.
 -- The composition of applicative functors is always applicative,

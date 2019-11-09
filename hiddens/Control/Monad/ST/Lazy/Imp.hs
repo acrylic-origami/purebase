@@ -19,7 +19,7 @@
 --
 -----------------------------------------------------------------------------
 
-module C.Control.Monad.ST.Lazy.Imp (
+module Control.Monad.ST.Lazy.Imp (
         -- * The 'ST' monad
         ST,
         runST,
@@ -61,7 +61,12 @@ import qualified Control.Monad.Fail as Fail
 -- The '>>=' and '>>' operations are not strict in the state.  For example,
 --
 -- @'runST' (writeSTRef _|_ v >>= readSTRef _|_ >> return 2) = 2@
-import Control.Monad.ST.Lazy.Imp ( ST(..), State(..) )
+newtype ST s a = ST { unST :: State s -> (a, State s) }
+
+-- A lifted state token. This can be imagined as a moment in the timeline
+-- of a lazy state thread. Forcing the token forces all delayed actions in
+-- the thread up until that moment to be performed.
+data State s = S# (State# s)
 
 {- Note [Lazy ST and multithreading]
 
@@ -101,6 +106,98 @@ noDup a = runRW# (\s ->
     _ -> a)
 
 -- | @since 2.01
+instance Functor (ST s) where
+    fmap f m = ST $ \ s ->
+      let
+        -- See Note [Lazy ST and multithreading]
+        {-# NOINLINE res #-}
+        res = noDup (unST m s)
+        (r,new_s) = res
+      in
+        (f r,new_s)
+
+    x <$ m = ST $ \ s ->
+      let
+        {-# NOINLINE s' #-}
+        -- See Note [Lazy ST and multithreading]
+        s' = noDup (snd (unST m s))
+      in (x, s')
+
+-- | @since 2.01
+instance Applicative (ST s) where
+    pure a = ST $ \ s -> (a,s)
+
+    fm <*> xm = ST $ \ s ->
+       let
+         {-# NOINLINE res1 #-}
+         !res1 = unST fm s
+         !(f, s') = res1
+
+         {-# NOINLINE res2 #-}
+         -- See Note [Lazy ST and multithreading]
+         res2 = noDup (unST xm s')
+         (x, s'') = res2
+       in (f x, s'')
+    -- Why can we use a strict binding for res1? If someone
+    -- forces the (f x, s'') pair, then they must need
+    -- f or s''. To get s'', they need s'.
+
+    liftA2 f m n = ST $ \ s ->
+      let
+        {-# NOINLINE res1 #-}
+        -- See Note [Lazy ST and multithreading]
+        res1 = noDup (unST m s)
+        (x, s') = res1
+
+        {-# NOINLINE res2 #-}
+        res2 = noDup (unST n s')
+        (y, s'') = res2
+      in (f x y, s'')
+    -- We don't get to be strict in liftA2, but we clear out a
+    -- NOINLINE in comparison to the default definition, which may
+    -- help the simplifier.
+
+    m *> n = ST $ \s ->
+       let
+         {-# NOINLINE s' #-}
+         -- See Note [Lazy ST and multithreading]
+         s' = noDup (snd (unST m s))
+       in unST n s'
+
+    m <* n = ST $ \s ->
+       let
+         {-# NOINLINE res1 #-}
+         !res1 = unST m s
+         !(mr, s') = res1
+
+         {-# NOINLINE s'' #-}
+         -- See Note [Lazy ST and multithreading]
+         s'' = noDup (snd (unST n s'))
+       in (mr, s'')
+    -- Why can we use a strict binding for res1? The same reason as
+    -- in <*>. If someone demands the (mr, s'') pair, then they will
+    -- force mr or s''. To get s'', they need s'.
+
+-- | @since 2.01
+instance Monad (ST s) where
+    (>>) = (*>)
+
+    m >>= k = ST $ \ s ->
+       let
+         -- See Note [Lazy ST and multithreading]
+         {-# NOINLINE res #-}
+         res = noDup (unST m s)
+         (r,new_s) = res
+       in
+         unST (k r) new_s
+
+-- | @since 4.10
+instance Fail.MonadFail (ST s) where
+    fail s = errorWithoutStackTrace s
+
+-- | Return the value computed by an 'ST' computation.
+-- The @forall@ ensures that the internal state used by the 'ST'
+-- computation is inaccessible to the rest of the program.
 runST :: (forall s. ST s a) -> a
 runST (ST st) = runRW# (\s -> case st (S# s) of (r, _) -> r)
 
@@ -119,6 +216,12 @@ fixST m = ST (\ s ->
 -- Note [Lazy ST: not producing lazy pairs].
 
 -- | @since 2.01
+instance MonadFix (ST s) where
+        mfix = fixST
+
+-- ---------------------------------------------------------------------------
+-- Strict <--> Lazy
+
 {-|
 Convert a strict 'ST' computation into a lazy one.  The strict state
 thread passed to 'strictToLazyST' is not performed until the result of

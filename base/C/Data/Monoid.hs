@@ -139,7 +139,7 @@ import Data.Semigroup.Internal
 -- be marked deprecated in GHC 8.8, and removed in GHC 8.10.
 -- Users are advised to use the variant from "Data.Semigroup" and wrap
 -- it in 'Maybe'.
-import Data.Monoid ( First(..), Ap(..), Last(..), Maybe(..) )
+import Data.Monoid ( First(..), Ap(..), Last(..) )
 
 {-
 {--------------------------------------------------------------------

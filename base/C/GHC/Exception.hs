@@ -25,7 +25,7 @@
 module C.GHC.Exception
        ( module GHC.Exception.Type
        , throw
-       , ErrorCall(..,ErrorCall)
+       -- , ErrorCall(..,ErrorCall)
        , errorCallException
        , errorCallWithCallStackException
          -- re-export CallStack and SrcLoc from GHC.Types
@@ -53,11 +53,11 @@ throw e = raise# (toException e)
 
 -- | This is thrown when the user calls 'error'. The first @String@ is the
 -- argument given to 'error', second @String@ is the location.
-pattern ErrorCall :: String -> ErrorCall
-pattern ErrorCall err <- ErrorCallWithLocation err _ where
-  ErrorCall err = ErrorCallWithLocation err ""
+-- pattern ErrorCall :: String -> ErrorCall
+-- pattern ErrorCall err <- ErrorCallWithLocation err _ where
+--  ErrorCall err = ErrorCallWithLocation err ""
 
-{-# COMPLETE ErrorCall #-}
+-- {-# COMPLETE ErrorCall #-}
 
 -- | @since 4.0.0.0
 -- | @since 4.0.0.0

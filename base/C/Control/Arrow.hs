@@ -111,10 +111,10 @@ infixr 1 ^<<, <<^
 -- Ordinary functions are arrows.
 
 -- | @since 2.01
-deriving instance Generic (Kleisli m a b)
+
 
 -- | @since 4.14.0.0
-deriving instance Generic1 (Kleisli m a)
+
 
 -- | @since 4.14.0.0
 -- deriving instance Functor m => Functor (Kleisli m a)

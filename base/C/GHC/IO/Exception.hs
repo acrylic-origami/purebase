@@ -32,7 +32,7 @@ module C.GHC.IO.Exception (
   AsyncException(..), stackOverflow, heapOverflow,
 
   ArrayException(..),
-  ExitCode(..),
+  -- ExitCode(..),
   FixIOException (..),
 
   ioException,
@@ -152,28 +152,6 @@ type IOError = IOException
 -- string and maybe the handle that was used when the error was
 -- flagged.
 -- | @since 4.1.0.0
-data IOErrorType
-  -- Haskell 2010:
-  = AlreadyExists
-  | NoSuchThing
-  | ResourceBusy
-  | ResourceExhausted
-  | EOF
-  | IllegalOperation
-  | PermissionDenied
-  | UserError
-  -- GHC only:
-  | UnsatisfiedConstraints
-  | SystemError
-  | ProtocolError
-  | OtherError
-  | InvalidArgument
-  | InappropriateType
-  | HardwareFault
-  | UnsupportedOperation
-  | TimeExpired
-  | ResourceVanished
-  | Interrupted
 
 -- | @since 4.1.0.0
 userError       :: String  -> IOError

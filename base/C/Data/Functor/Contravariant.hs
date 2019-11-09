@@ -98,7 +98,7 @@ import Data.Functor.Contravariant ( Contravariant(..), Predicate(..), Comparison
 phantom :: (Functor f, Contravariant f) => f a -> f b
 phantom x = () <$ x $< ()
 
-infixl 4 >$, $<, >$<, >$$<
+infixl 4 $<, >$<, >$$<
 
 -- | This is '>$' with its arguments flipped.
 ($<) :: Contravariant f => f b -> b -> f a
@@ -112,12 +112,12 @@ infixl 4 >$, $<, >$<, >$$<
 (>$$<) :: Contravariant f => f b -> (a -> b) -> f a
 (>$$<) = flip contramap
 
-deriving instance Contravariant f => Contravariant (Alt f)
-deriving instance Contravariant f => Contravariant (Rec1 f)
-deriving instance Contravariant f => Contravariant (M1 i c f)
 
-deriving instance Semigroup (Comparison a)
-deriving instance Monoid (Comparison a)
+
+
+
+
+
 
 -- | A 'Comparison' is a 'Contravariant' 'Functor', because 'contramap' can
 -- apply its function argument to each input of the comparison function.
@@ -143,6 +143,6 @@ comparisonEquivalence :: Comparison a -> Equivalence a
 comparisonEquivalence (Comparison p) = Equivalence $ \a b -> p a b == EQ
 
 -- | Dual function arrows.
-deriving instance Semigroup a => Semigroup (Op a b)
-deriving instance Monoid a => Monoid (Op a b)
+
+
 

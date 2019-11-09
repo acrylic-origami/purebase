@@ -123,7 +123,7 @@ bisequence = bitraverse id id
 -- | @since 4.10.0.0  bitraverse f g ~(x, y, z, w, a, b) = liftA2 ((,,,,,) x y z w) (f a) (g b)
 
 -- | @since 4.10.0.0  bitraverse f g ~(x, y, z, w, v, a, b) =
-    liftA2 ((,,,,,,) x y z w v) (f a) (g b)
+    -- liftA2 ((,,,,,,) x y z w v) (f a) (g b)
 
 -- | @since 4.10.0.0
 bifor :: (Bitraversable t, Applicative f)

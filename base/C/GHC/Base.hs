@@ -110,7 +110,7 @@ Other Prelude modules are much easier with fewer complex dependencies.
 
 module C.GHC.Base
         (
-        module C.GHC.Base,
+        module GHC.Base,
         module GHC.Classes,
         module GHC.CString,
         module GHC.Magic,
@@ -118,7 +118,7 @@ module C.GHC.Base
         module GHC.Prim,        -- Re-export GHC.Prim and [boot] GHC.Err,
         -- module GHC.Prim.Ext,    -- to avoid lots of people having to
         module GHC.Err,         -- import it explicitly
-        module C.GHC.Maybe
+        module GHC.Maybe
   )
         where
 
@@ -149,12 +149,13 @@ import GHC.Base ( Int(..), Functor(..), Char(..), MonadPlus(..), NonEmpty(..), M
 
 infixr 9  .
 infixr 5  ++
-infixl 4  <$
-infixl 1  >>, >>=
+-- infixl 4  <$
+-- infixl 1  >>, >>=
 infixr 1  =<<
 infixr 0  $, $!
 
-infixl 4 <*>, <*, *>, <**>
+-- <*, *>
+-- infixl 4 <*>, <**>
 
 default ()              -- Double isn't available yet
 
@@ -518,15 +519,15 @@ ap m1 m2          = liftA2 ($) m1 m2
 -- | @since 2.01    fmap = (.)
 
 -- | @since 2.01    pure = const
-    (<*>) f g x = f x (g x)
-    liftA2 q f g x = q (f x) (g x)
+    -- (<*>) f g x = f x (g x)
+    -- liftA2 q f g x = q (f x) (g x)
 
 -- | @since 2.01    f >>= k = \ r -> k (f r) r
 
 -- | @since 2.01    fmap f (x,y) = (x, f y)
 
 -- | @since 2.01
-infixl 3 <|>
+-- infixl 3 <|>
 
 -- | A monoid on applicative functors.
 --
@@ -539,7 +540,7 @@ infixl 3 <|>
 ---------------------------------------------
 -- The non-empty list type
 
-infixr 5 :|
+-- infixr 5 :|
 
 -- | Non-empty (and non-strict) list type.
 --

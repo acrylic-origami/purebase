@@ -113,7 +113,7 @@ infixr 5 <|
 
 -- | Number of elements in 'NonEmpty' list.
 length :: NonEmpty a -> Int
-length (_ :| xs) = 1 + C.Prelude.length xs
+length (_ :| xs) = 1 + Prelude.length xs
 
 -- | Compute n-ary logic exclusive OR operation on 'NonEmpty' list.
 xor :: NonEmpty Bool -> Bool

@@ -26,7 +26,6 @@ import C.Data.Function
 import C.Data.Monoid
 import C.Data.Complex
 import C.Data.Bifunctor
-import C.Data.Typeable.Internal
 import C.Data.Bifoldable
 import C.Data.List
 import C.Data.Either
@@ -56,7 +55,6 @@ import C.Control.Monad.ST.Imp
 import C.Control.Monad.ST.Lazy
 import C.Control.Monad.ST.Safe
 import C.Control.Monad.ST.Lazy.Unsafe
-import C.Control.Monad.ST.Lazy.Imp
 import C.Control.Monad.ST.Lazy.Safe
 import C.Control.Monad.ST.Strict
 import C.Control.Monad.ST

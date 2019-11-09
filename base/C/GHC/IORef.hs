@@ -22,9 +22,9 @@
 
 module C.GHC.IORef (
         IORef(..),
-        newIORef, readIORef, writeIORef, atomicModifyIORef2Lazy,
-        atomicModifyIORef2, atomicModifyIORefLazy_, atomicModifyIORef'_,
-        atomicModifyIORefP, atomicSwapIORef, atomicModifyIORef'
+        newIORef, readIORef, writeIORef -- , atomicModifyIORef2Lazy,
+        -- atomicModifyIORef2, atomicModifyIORefLazy_, atomicModifyIORef'_,
+        -- atomicModifyIORefP -- , atomicSwapIORef -- , atomicModifyIORef'
     ) where
 
 import GHC.Base
@@ -35,7 +35,7 @@ import GHC.IO
 -- IORefs
 
 -- |A mutable variable in the 'IO' monad
-import GHC.IORef ( IORef(..), Box(..) )
+import GHC.IORef ( IORef(..) ) -- , Box(..) -- what's in the
 
 newIORef    :: a -> IO (IORef a)
 newIORef v = stToIO (newSTRef v) >>= \ var -> return (IORef var)
@@ -54,60 +54,60 @@ writeIORef (IORef var) v = stToIO (writeSTRef var v)
 -- The result of the function application (the pair) is not forced.
 -- As a result, this can lead to memory leaks. It is generally better
 -- to use 'atomicModifyIORef2'.
-atomicModifyIORef2Lazy :: IORef a -> (a -> (a,b)) -> IO (a, (a, b))
-atomicModifyIORef2Lazy (IORef (STRef r#)) f =
-  IO (\s -> case atomicModifyMutVar2# r# f s of
-              (# s', old, res #) -> (# s', (old, res) #))
+-- atomicModifyIORef2Lazy :: IORef a -> (a -> (a,b)) -> IO (a, (a, b))
+-- atomicModifyIORef2Lazy (IORef (STRef r#)) f =
+--   IO (\s -> case atomicModifyMutVar2# r# f s of
+--               (# s', old, res #) -> (# s', (old, res) #))
 
 -- Atomically apply a function to the contents of an 'IORef',
 -- installing its first component in the 'IORef' and returning
 -- the old contents and the result of applying the function.
 -- The result of the function application (the pair) is forced,
 -- but neither of its components is.
-atomicModifyIORef2 :: IORef a -> (a -> (a,b)) -> IO (a, (a, b))
-atomicModifyIORef2 ref f = do
-  r@(_old, (_new, _res)) <- atomicModifyIORef2Lazy ref f
-  return r
+-- atomicModifyIORef2 :: IORef a -> (a -> (a,b)) -> IO (a, (a, b))
+-- atomicModifyIORef2 ref f = do
+--   r@(_old, (_new, _res)) <- atomicModifyIORef2Lazy ref f
+--   return r
 
 -- | A version of 'Data.IORef.atomicModifyIORef' that forces
 -- the (pair) result of the function.
-atomicModifyIORefP :: IORef a -> (a -> (a,b)) -> IO b
-atomicModifyIORefP ref f = do
-  (_old, (_,r)) <- atomicModifyIORef2 ref f
-  pure r
+-- atomicModifyIORefP :: IORef a -> (a -> (a,b)) -> IO b
+-- atomicModifyIORefP ref f = do
+--   (_old, (_,r)) <- atomicModifyIORef2 ref f
+--   pure r
 
 -- | Atomically apply a function to the contents of an
 -- 'IORef' and return the old and new values. The result
 -- of the function is not forced. As this can lead to a
 -- memory leak, it is usually better to use `atomicModifyIORef'_`.
-atomicModifyIORefLazy_ :: IORef a -> (a -> a) -> IO (a, a)
-atomicModifyIORefLazy_ (IORef (STRef ref)) f = IO $ \s ->
-  case atomicModifyMutVar_# ref f s of
-    (# s', old, new #) -> (# s', (old, new) #)
+-- atomicModifyIORefLazy_ :: IORef a -> (a -> a) -> IO (a, a)
+-- atomicModifyIORefLazy_ (IORef (STRef ref)) f = IO $ \s ->
+  -- case atomicModifyMutVar_# ref f s of
+    -- (# s', old, new #) -> (# s', (old, new) #)
 
 -- | Atomically apply a function to the contents of an
 -- 'IORef' and return the old and new values. The result
 -- of the function is forced.
-atomicModifyIORef'_ :: IORef a -> (a -> a) -> IO (a, a)
-atomicModifyIORef'_ ref f = do
-  (old, !new) <- atomicModifyIORefLazy_ ref f
-  return (old, new)
+-- atomicModifyIORef'_ :: IORef a -> (a -> a) -> IO (a, a)
+-- atomicModifyIORef'_ ref f = do
+--   (old, !new) <- atomicModifyIORefLazy_ ref f
+  -- return (old, new)
 
 -- | Atomically replace the contents of an 'IORef', returning
 -- the old contents.
-atomicSwapIORef :: IORef a -> a -> IO a
--- Bad implementation! This will be a primop shortly.
-atomicSwapIORef (IORef (STRef ref)) new = IO $ \s ->
-  case atomicModifyMutVar2# ref (\_old -> Box new) s of
-    (# s', old, Box _new #) -> (# s', old #)
+-- atomicSwapIORef :: IORef a -> a -> IO a
+-- -- Bad implementation! This will be a primop shortly.
+-- atomicSwapIORef (IORef (STRef ref)) new = IO $ \s ->
+--   case atomicModifyMutVar2# ref (\_old -> Box new) s of
+--     (# s', old, Box _new #) -> (# s', old #)
 
-atomicModifyIORef' :: IORef a -> (a -> (a,b)) -> IO b
--- See Note [atomicModifyIORef' definition]
-atomicModifyIORef' ref f = do
-  (_old, (_new, !res)) <- atomicModifyIORef2 ref $
-    \old -> case f old of
-       r@(!_new, _res) -> r
-  pure res
+-- atomicModifyIORef' :: IORef a -> (a -> (a,b)) -> IO b
+-- -- See Note [atomicModifyIORef' definition]
+-- atomicModifyIORef' ref f = do
+--   (_old, (_new, !res)) <- atomicModifyIORef2 ref $
+--     \old -> case f old of
+--        r@(!_new, _res) -> r
+--   pure res
 
 -- Note [atomicModifyIORef' definition]
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

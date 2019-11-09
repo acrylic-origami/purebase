@@ -38,7 +38,7 @@ import GHC.Integer.GMP.Internals
 import GHC.Real ( Integral(..), RealFrac(..), Real(..), Fractional(..), Ratio(..) )
 
 infixr 8  ^, ^^
-infixl 7  /, `quot`, `rem`, `div`, `mod`
+-- infixl 7  /, `quot`, `rem`, `div`, `mod`
 infixl 7  %
 
 default ()              -- Double isn't available yet,

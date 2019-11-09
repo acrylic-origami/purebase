@@ -70,7 +70,7 @@ import GHC.Num  ( Num(..) )
 
 import Data.Foldable ( Foldable(..) )
 
-infix  4 `elem`, `notElem`
+infix  4 `notElem`
 
 -- | Data structures that can be folded.
 --
@@ -117,9 +117,6 @@ infix  4 `elem`, `notElem`
 -- which implies that
 --
 -- > foldMap f . fmap g = foldMap (f . g)
-    foldMap f (_, y) = f y
-
-    foldr f z (_, y) = f y z
 
 -- | @since 4.8.0.0
 foldrM :: (Foldable t, Monad m) => (a -> b -> m b) -> b -> t a -> m b
