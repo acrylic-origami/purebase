@@ -1,5 +1,5 @@
 -- Instance of class Eq for Compose (f g a)
-module InstEqComposefga.hs where
+module InstEqComposefga where
 import Data.Functor.Classes
 
 import Control.Applicative
@@ -12,6 +12,7 @@ import Text.Read (Read(..), readListDefault, readListPrecDefault)
 
 import Data.Functor.Compose ( Compose(..) )
 
-    (==) = eq1
+(==) :: (Eq1 f, Eq1 g, Eq a) => Compose f g a -> Compose f g a -> Bool
+(==) = eq1
 
 -- | @since 4.9.0.0

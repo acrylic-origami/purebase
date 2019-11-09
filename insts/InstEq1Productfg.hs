@@ -1,5 +1,5 @@
 -- Instance of class Eq1 for Product (f g)
-module InstEq1Productfg.hs where
+module InstEq1Productfg where
 import Control.Applicative
 import Control.Monad (MonadPlus(..))
 import Control.Monad.Fix (MonadFix(..))
@@ -13,6 +13,6 @@ import Text.Read (Read(..), readListDefault, readListPrecDefault)
 
 import Data.Functor.Product ( Product(..) )
 
-    liftEq eq (Pair x1 y1) (Pair x2 y2) = liftEq eq x1 x2 && liftEq eq y1 y2
+liftEq eq (Pair x1 y1) (Pair x2 y2) = Data.Functor.Classes.liftEq eq x1 x2 && Data.Functor.Classes.liftEq eq y1 y2
 
 -- | @since 4.9.0.0

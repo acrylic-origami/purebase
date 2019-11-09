@@ -1,5 +1,5 @@
 -- Instance of class Applicative for WrappedMonad (m)
-module InstApplicativeWrappedMonadm.hs where
+module InstApplicativeWrappedMonadm where
 import Control.Category hiding ((.), id)
 import Control.Arrow
 import Data.Maybe
@@ -19,8 +19,9 @@ import GHC.Show (Show)
 
 import Control.Applicative ( WrappedMonad(..) )
 
-    pure = WrapMonad . pure
-    WrapMonad f <*> WrapMonad v = WrapMonad (f `ap` v)
-    liftA2 f (WrapMonad x) (WrapMonad y) = WrapMonad (liftM2 f x y)
+pure :: Applicative m => a -> WrappedMonad m a
+pure = WrapMonad . GHC.Base.pure
+WrapMonad f <*> WrapMonad v = WrapMonad (f `ap` v)
+liftA2 f (WrapMonad x) (WrapMonad y) = WrapMonad (liftM2 f x y)
 
 -- | @since 2.01

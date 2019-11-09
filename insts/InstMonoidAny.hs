@@ -1,5 +1,5 @@
 -- Instance of class Monoid for Any ()
-module InstMonoidAny.hs where
+module InstMonoidAny where
 import GHC.Base hiding (Any)
 import GHC.Enum
 import GHC.Num
@@ -15,7 +15,7 @@ import GHC.Real
 
 import Data.Semigroup.Internal ( Any(..) )
 
-        mempty = Any False
+mempty = Any False
 
 -- | Monoid under addition.
 --

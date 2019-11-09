@@ -1,5 +1,5 @@
 -- Instance of class Applicative for Product ()
-module InstApplicativeProduct.hs where
+module InstApplicativeProduct where
 import GHC.Base hiding (Any)
 import GHC.Enum
 import GHC.Num
@@ -15,7 +15,8 @@ import GHC.Real
 
 import Data.Semigroup.Internal ( Product(..) )
 
-    pure     = Product
-    (<*>)    = coerce
+pure     = Product
+(<*>) :: Product (a -> b) -> Product a -> Product b
+(<*>)    = coerce
 
 -- | @since 4.8.0.0

@@ -1,5 +1,5 @@
 -- Instance of class Contravariant for Op ( a)
-module InstContravariantOpa.hs where
+module InstContravariantOpa where
 import Control.Applicative
 import Control.Category
 import Data.Function (on)
@@ -49,7 +49,7 @@ import Prelude hiding ((.),id)
 -- condition holds.
 
 
-import Data.Functor.Contravariant ( Contravariant(..) )
+import Data.Functor.Contravariant ( Contravariant(..), Op(..) )
 
-  contramap f g = Op (getOp g . f)
+contramap f g = Op (getOp g . f)
 

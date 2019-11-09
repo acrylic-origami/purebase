@@ -1,5 +1,5 @@
 -- Instance of class Applicative for Compose (f g)
-module InstApplicativeComposefg.hs where
+module InstApplicativeComposefg where
 import Data.Functor.Classes
 
 import Control.Applicative
@@ -12,9 +12,8 @@ import Text.Read (Read(..), readListDefault, readListPrecDefault)
 
 import Data.Functor.Compose ( Compose(..) )
 
-    pure x = Compose (pure (pure x))
-    Compose f <*> Compose x = Compose (liftA2 (<*>) f x)
-    liftA2 f (Compose x) (Compose y) =
-      Compose (liftA2 (liftA2 f) x y)
+pure x = Compose (Control.Applicative.pure (Control.Applicative.pure x))
+Compose f <*> Compose x = Compose (Control.Applicative.liftA2 (Control.Applicative.<*>) f x)
+liftA2 f (Compose x) (Compose y) = Compose (Control.Applicative.liftA2 (Control.Applicative.liftA2 f) x y)
 
 -- | @since 4.9.0.0

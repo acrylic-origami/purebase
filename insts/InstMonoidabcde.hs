@@ -1,5 +1,5 @@
 -- Instance of class Monoid for a (,b,c,d,e)
-module InstMonoidabcde.hs where
+module InstMonoidabcde where
 import GHC.Types
 import GHC.Classes
 import GHC.CString
@@ -24,9 +24,10 @@ import {-# SOURCE #-} Data.Semigroup.Internal ( stimesDefault
                                               )
 
 
-import because it has different types in different scenarios. ( Monoid(..) )
+import GHC.Base ( Monoid(..) )
 
-        mempty = (mempty, mempty, mempty, mempty, mempty)
+mempty :: (Monoid a, Monoid b, Monoid c, Monoid d, Monoid e) => (a, b, c, d, e)
+mempty = (GHC.Base.mempty, GHC.Base.mempty, GHC.Base.mempty, GHC.Base.mempty, GHC.Base.mempty)
 
 
 -- | @since 4.9.0.0

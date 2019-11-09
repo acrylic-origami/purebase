@@ -1,5 +1,5 @@
 -- Instance of class Applicative for Maybe ()
-module InstApplicativeMaybe.hs where
+module InstApplicativeMaybe where
 import GHC.Types
 import GHC.Classes
 import GHC.CString
@@ -24,17 +24,17 @@ import {-# SOURCE #-} Data.Semigroup.Internal ( stimesDefault
                                               )
 
 
-import because it has different types in different scenarios. ( Applicative(..) )
+import GHC.Base ( Applicative(..), Functor(..) )
 
-    pure = Just
+pure = Just
 
-    Just f  <*> m       = fmap f m
-    Nothing <*> _m      = Nothing
+Just f  <*> m       = fmap f m
+Nothing <*> _m      = Nothing
 
-    liftA2 f (Just x) (Just y) = Just (f x y)
-    liftA2 _ _ _ = Nothing
+liftA2 f (Just x) (Just y) = Just (f x y)
+liftA2 _ _ _ = Nothing
 
-    Just _m1 *> m2      = m2
-    Nothing  *> _m2     = Nothing
+Just _m1 *> m2      = m2
+Nothing  *> _m2     = Nothing
 
 -- | @since 2.01

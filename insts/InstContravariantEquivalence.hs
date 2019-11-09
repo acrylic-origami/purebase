@@ -1,5 +1,5 @@
 -- Instance of class Contravariant for Equivalence ()
-module InstContravariantEquivalence.hs where
+module InstContravariantEquivalence where
 import Control.Applicative
 import Control.Category
 import Data.Function (on)
@@ -49,7 +49,7 @@ import Prelude hiding ((.),id)
 -- condition holds.
 
 
-import Data.Functor.Contravariant ( Contravariant(..) )
+import Data.Functor.Contravariant ( Contravariant(..), Equivalence(..) )
 
-  contramap f g = Equivalence $ on (getEquivalence g) f
+contramap f g = Equivalence $ on (getEquivalence g) f
 

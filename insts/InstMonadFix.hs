@@ -1,5 +1,5 @@
 -- Instance of class MonadFix for  ([])
-module InstMonadFix.hs where
+module InstMonadFix where
 import Data.Either
 import Data.Function ( fix )
 import Data.Maybe
@@ -33,8 +33,8 @@ import System.IO
 
 import Control.Monad.Fix ( MonadFix(..) )
 
-    mfix f = case fix (f . head) of
+mfix f = case fix (f . head) of
                []    -> []
-               (x:_) -> x : mfix (tail . f)
+               (x:_) -> x : Control.Monad.Fix.mfix (tail . f)
 
 -- | @since 4.9.0.0

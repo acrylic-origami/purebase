@@ -1,5 +1,5 @@
 -- Instance of class MonadFail for  ([])
-module InstMonadFail.hs where
+module InstMonadFail where
 import GHC.Base (String, Monad(), Maybe(Nothing), IO())
 import  GHC.IO (failIO)
 
@@ -28,7 +28,7 @@ import  GHC.IO (failIO)
 
 import Control.Monad.Fail ( MonadFail(..) )
 
-    {-# INLINE fail #-}
-    fail _ = []
+{-# INLINE fail #-}
+fail _ = []
 
 -- | @since 4.9.0.0

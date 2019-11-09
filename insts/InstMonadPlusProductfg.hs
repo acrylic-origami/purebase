@@ -1,5 +1,5 @@
 -- Instance of class MonadPlus for Product (f g)
-module InstMonadPlusProductfg.hs where
+module InstMonadPlusProductfg where
 import Control.Applicative
 import Control.Monad (MonadPlus(..))
 import Control.Monad.Fix (MonadFix(..))
@@ -13,7 +13,8 @@ import Text.Read (Read(..), readListDefault, readListPrecDefault)
 
 import Data.Functor.Product ( Product(..) )
 
-    mzero = Pair mzero mzero
-    Pair x1 y1 `mplus` Pair x2 y2 = Pair (x1 `mplus` x2) (y1 `mplus` y2)
+mzero :: (MonadPlus a, MonadPlus b) => Product a b c
+mzero = Pair Control.Monad.mzero Control.Monad.mzero
+Pair x1 y1 `mplus` Pair x2 y2 = Pair (x1 `Control.Monad.mplus` x2) (y1 `Control.Monad.mplus` y2)
 
 -- | @since 4.9.0.0

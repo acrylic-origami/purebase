@@ -1,5 +1,5 @@
 -- Instance of class Foldable for Identity ()
-module InstFoldableIdentity.hs where
+module InstFoldableIdentity where
 import Control.Monad.Fix
 import Data.Bits (Bits, FiniteBits)
 import Data.Coerce
@@ -24,21 +24,26 @@ import GHC.Types (Bool(..))
 
 import Data.Functor.Identity ( Identity(..) )
 
-    foldMap                = coerce
+foldMap :: Monoid m => (a -> m) -> Identity a -> m
+foldMap            = coerce
 
-    elem                   = (. runIdentity) #. (==)
-    foldl                  = coerce
-    foldl'                 = coerce
-    foldl1 _               = runIdentity
-    foldr f z (Identity x) = f x z
-    foldr'                 = foldr
-    foldr1 _               = runIdentity
-    length _               = 1
-    maximum                = runIdentity
-    minimum                = runIdentity
-    null _                 = False
-    product                = runIdentity
-    sum                    = runIdentity
-    toList (Identity x)    = [x]
+elem :: Eq a => a -> Identity a -> Bool
+elem               = (. runIdentity) #. (==)
+foldl :: (b -> a -> b) -> b -> Identity a -> b
+foldl              = coerce
+foldl' :: (b -> a -> b) -> b -> Identity a -> b
+foldl'             = coerce
+foldl1 _           = runIdentity
+foldr f z (Identity x) = f x z
+foldr' :: (a -> b -> b) -> b -> Identity a -> b
+foldr'             = InstFoldableIdentity.foldr
+foldr1 _           = runIdentity
+length _           = 1
+maximum            = runIdentity
+minimum            = runIdentity
+null _             = False
+product            = runIdentity
+sum                = runIdentity
+toList (Identity x)    = [x]
 
 -- | @since 4.8.0.0

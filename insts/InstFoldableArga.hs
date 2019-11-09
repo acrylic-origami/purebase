@@ -1,5 +1,5 @@
 -- Instance of class Foldable for Arg ( a)
-module InstFoldableArga.hs where
+module InstFoldableArga where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,6 +21,6 @@ import           GHC.Generics
 
 import Data.Semigroup ( Arg(..) )
 
-  foldMap f (Arg _ a) = f a
+foldMap f (Arg _ a) = f a
 
 -- | @since 4.9.0.0

@@ -1,5 +1,5 @@
 -- Instance of class Applicative for IO ()
-module InstApplicativeIO.hs where
+module InstApplicativeIO where
 import GHC.Types
 import GHC.Classes
 import GHC.CString
@@ -24,14 +24,16 @@ import {-# SOURCE #-} Data.Semigroup.Internal ( stimesDefault
                                               )
 
 
-import because it has different types in different scenarios. ( Applicative(..) )
+import GHC.Base ( Applicative(..), returnIO, thenIO, ap, liftM2 )
 
-    {-# INLINE pure #-}
-    {-# INLINE (*>) #-}
-    {-# INLINE liftA2 #-}
-    pure  = returnIO
-    (*>)  = thenIO
-    (<*>) = ap
-    liftA2 = liftM2
+{-# INLINE pure #-}
+{-# INLINE (*>) #-}
+{-# INLINE liftA2 #-}
+pure  = returnIO
+(*>)  = thenIO
+(<*>) :: IO (a -> b) -> IO a -> IO b
+(<*>) = ap
+liftA2 :: (a -> b -> c) -> IO a -> IO b -> IO c
+liftA2 = liftM2
 
 -- | @since 2.01

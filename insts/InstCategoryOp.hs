@@ -1,5 +1,5 @@
 -- Instance of class Category for Op ()
-module InstCategoryOp.hs where
+module InstCategoryOp where
 import Control.Applicative
 import Control.Category
 import Data.Function (on)
@@ -51,6 +51,6 @@ import Prelude hiding ((.),id)
 
 import Data.Functor.Contravariant ( Op(..) )
 
-  id = Op id
-  Op f . Op g = Op (g . f)
+id = Op Control.Category.id
+Op f . Op g = Op (g Control.Category.. f)
 

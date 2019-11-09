@@ -1,5 +1,5 @@
 -- Instance of class Functor for Identity ()
-module InstFunctorIdentity.hs where
+module InstFunctorIdentity where
 import Control.Monad.Fix
 import Data.Bits (Bits, FiniteBits)
 import Data.Coerce
@@ -24,6 +24,7 @@ import GHC.Types (Bool(..))
 
 import Data.Functor.Identity ( Identity(..) )
 
-    fmap     = coerce
+fmap :: (a -> b) -> Identity a -> Identity b
+fmap     = coerce
 
 -- | @since 4.8.0.0

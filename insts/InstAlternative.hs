@@ -1,5 +1,5 @@
 -- Instance of class Alternative for  ([])
-module InstAlternative.hs where
+module InstAlternative where
 import GHC.Types
 import GHC.Classes
 import GHC.CString
@@ -24,9 +24,9 @@ import {-# SOURCE #-} Data.Semigroup.Internal ( stimesDefault
                                               )
 
 
-import because it has different types in different scenarios. ( Alternative(..) )
+import GHC.Base ( Alternative(..), (++) )
 
-    empty = []
-    (<|>) = (++)
+empty = []
+(<|>) = (++)
 
 -- | @since 2.01

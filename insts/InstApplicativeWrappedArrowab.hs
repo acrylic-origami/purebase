@@ -1,5 +1,5 @@
 -- Instance of class Applicative for WrappedArrow (a b)
-module InstApplicativeWrappedArrowab.hs where
+module InstApplicativeWrappedArrowab where
 import Control.Category hiding ((.), id)
 import Control.Arrow
 import Data.Maybe
@@ -19,8 +19,8 @@ import GHC.Show (Show)
 
 import Control.Applicative ( WrappedArrow(..) )
 
-    pure x = WrapArrow (arr (const x))
-    liftA2 f (WrapArrow u) (WrapArrow v) =
-      WrapArrow (u &&& v >>> arr (uncurry f))
+pure x = WrapArrow (arr (const x))
+liftA2 f (WrapArrow u) (WrapArrow v) =
+  WrapArrow (u &&& v >>> arr (uncurry f))
 
 -- | @since 2.01

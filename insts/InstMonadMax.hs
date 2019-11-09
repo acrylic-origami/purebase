@@ -1,5 +1,5 @@
 -- Instance of class Monad for Max ()
-module InstMonadMax.hs where
+module InstMonadMax where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,7 +21,8 @@ import           GHC.Generics
 
 import Data.Semigroup ( Max(..) )
 
-  (>>) = (*>)
-  Max a >>= f = f a
+(>>) :: Max a -> Max b -> Max b
+(>>) = (*>)
+Max a >>= f = f a
 
 -- | @since 4.9.0.0

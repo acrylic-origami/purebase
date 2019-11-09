@@ -1,5 +1,5 @@
 -- Instance of class Arrow for Kleisli (m)
-module InstArrowKleislim.hs where
+module InstArrowKleislim where
 import Data.Tuple ( fst, snd, uncurry )
 import Data.Either
 import Control.Monad.Fix
@@ -8,10 +8,10 @@ import GHC.Base hiding ( (.), id )
 import GHC.Generics (Generic, Generic1)
 
 
-import Control.Arrow ( Arrow(..) )
+import Control.Arrow ( Arrow(..), Kleisli(..) )
 
-    arr f = Kleisli (return . f)
-    first (Kleisli f) = Kleisli (\ ~(b,d) -> f b >>= \c -> return (c,d))
-    second (Kleisli f) = Kleisli (\ ~(d,b) -> f b >>= \c -> return (d,c))
+arr f = Kleisli (return Control.Category.. f)
+first (Kleisli f) = Kleisli (\ ~(b,d) -> f b >>= \c -> return (c,d))
+second (Kleisli f) = Kleisli (\ ~(d,b) -> f b >>= \c -> return (d,c))
 
 -- | The identity arrow, which plays the role of 'return' in arrow notation.

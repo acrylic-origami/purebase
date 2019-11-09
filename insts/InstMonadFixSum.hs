@@ -1,5 +1,5 @@
 -- Instance of class MonadFix for Sum ()
-module InstMonadFixSum.hs where
+module InstMonadFixSum where
 import Data.Either
 import Data.Function ( fix )
 import Data.Maybe
@@ -33,6 +33,6 @@ import System.IO
 
 import Control.Monad.Fix ( MonadFix(..) )
 
-    mfix f   = Sum (fix (getSum . f))
+mfix f   = Sum (fix (getSum . f))
 
 -- | @since 4.8.0.0

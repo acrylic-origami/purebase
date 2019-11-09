@@ -1,5 +1,5 @@
 -- Instance of class Eq1 for Compose (f g)
-module InstEq1Composefg.hs where
+module InstEq1Composefg where
 import Data.Functor.Classes
 
 import Control.Applicative
@@ -12,6 +12,6 @@ import Text.Read (Read(..), readListDefault, readListPrecDefault)
 
 import Data.Functor.Compose ( Compose(..) )
 
-    liftEq eq (Compose x) (Compose y) = liftEq (liftEq eq) x y
+liftEq eq (Compose x) (Compose y) = Data.Functor.Classes.liftEq (Data.Functor.Classes.liftEq eq) x y
 
 -- | @since 4.9.0.0

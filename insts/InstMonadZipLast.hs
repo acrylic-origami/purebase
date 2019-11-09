@@ -1,5 +1,5 @@
 -- Instance of class MonadZip for Last ()
-module InstMonadZipLast.hs where
+module InstMonadZipLast where
 import Control.Monad (liftM, liftM2)
 import Data.Functor.Identity
 import Data.Monoid
@@ -23,7 +23,9 @@ import GHC.Generics
 --
 
 import Control.Monad.Zip ( MonadZip(..) )
+import Control.Monad ( Monad(..) )
 
-    mzipWith = liftM2
+mzipWith :: (a -> b -> c) -> Last a -> Last b -> Last c
+mzipWith = liftM2
 
 -- | @since 4.8.0.0

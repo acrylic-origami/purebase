@@ -1,5 +1,5 @@
 -- Instance of class Monoid for Sum (a)
-module InstMonoidSuma.hs where
+module InstMonoidSuma where
 import GHC.Base hiding (Any)
 import GHC.Enum
 import GHC.Num
@@ -15,6 +15,6 @@ import GHC.Real
 
 import Data.Semigroup.Internal ( Sum(..) )
 
-        mempty = Sum 0
+mempty = Sum 0
 
 -- | @since 4.8.0.0

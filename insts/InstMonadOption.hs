@@ -1,5 +1,5 @@
 -- Instance of class Monad for Option ()
-module InstMonadOption.hs where
+module InstMonadOption where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,8 +21,10 @@ import           GHC.Generics
 
 import Data.Semigroup ( Option(..) )
 
-  Option (Just a) >>= k = k a
-  _               >>= _ = Option Nothing
-  (>>) = (*>)
+Option (Just a) >>= k = k a
+_               >>= _ = Option Nothing
+
+(>>) :: Option a -> Option b -> Option b
+(>>) = (*>)
 
 -- | @since 4.9.0.0

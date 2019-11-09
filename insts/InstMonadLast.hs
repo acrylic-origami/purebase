@@ -1,5 +1,5 @@
 -- Instance of class Monad for Last ()
-module InstMonadLast.hs where
+module InstMonadLast where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,7 +21,8 @@ import           GHC.Generics
 
 import Data.Semigroup ( Last(..) )
 
-  (>>) = (*>)
-  Last a >>= f = f a
+(>>) :: Last a -> Last b -> Last b
+(>>) = (*>)
+Last a >>= f = f a
 
 -- | @since 4.9.0.0

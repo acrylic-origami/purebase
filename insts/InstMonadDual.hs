@@ -1,5 +1,5 @@
 -- Instance of class Monad for Dual ()
-module InstMonadDual.hs where
+module InstMonadDual where
 import GHC.Base hiding (Any)
 import GHC.Enum
 import GHC.Num
@@ -15,7 +15,7 @@ import GHC.Real
 
 import Data.Semigroup.Internal ( Dual(..) )
 
-    m >>= k  = k (getDual m)
+m >>= k  = k (getDual m)
 
 -- | The monoid of endomorphisms under composition.
 --

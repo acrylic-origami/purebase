@@ -1,5 +1,5 @@
 -- Instance of class MonadZip for Alt (f)
-module InstMonadZipAltf.hs where
+module InstMonadZipAltf where
 import Control.Monad (liftM, liftM2)
 import Data.Functor.Identity
 import Data.Monoid
@@ -24,6 +24,7 @@ import GHC.Generics
 
 import Control.Monad.Zip ( MonadZip(..) )
 
-    mzipWith f (Alt ma) (Alt mb) = Alt (mzipWith f ma mb)
+mzipWith :: MonadZip m => (a -> b -> c) -> Alt m a -> Alt m b -> Alt m c
+mzipWith f (Alt ma) (Alt mb) = Alt (Control.Monad.Zip.mzipWith f ma mb)
 
 -- | @since 4.9.0.0

@@ -1,5 +1,5 @@
 -- Instance of class MonadZip for U1 ()
-module InstMonadZipU1.hs where
+module InstMonadZipU1 where
 import Control.Monad (liftM, liftM2)
 import Data.Functor.Identity
 import Data.Monoid
@@ -24,6 +24,6 @@ import GHC.Generics
 
 import Control.Monad.Zip ( MonadZip(..) )
 
-    mzipWith _ _ _ = U1
+mzipWith _ _ _ = U1
 
 -- | @since 4.9.0.0

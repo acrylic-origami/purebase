@@ -1,5 +1,5 @@
 -- Instance of class Alternative for WrappedMonad (m)
-module InstAlternativeWrappedMonadm.hs where
+module InstAlternativeWrappedMonadm where
 import Control.Category hiding ((.), id)
 import Control.Arrow
 import Data.Maybe
@@ -19,6 +19,7 @@ import GHC.Show (Show)
 
 import Control.Applicative ( WrappedMonad(..) )
 
-    empty = WrapMonad mzero
-    WrapMonad u <|> WrapMonad v = WrapMonad (u `mplus` v)
+empty :: MonadPlus m => WrappedMonad m a
+empty = WrapMonad mzero
+WrapMonad u <|> WrapMonad v = WrapMonad (u `mplus` v)
 

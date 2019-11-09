@@ -1,5 +1,5 @@
 -- Instance of class MonadFix for Alt (f)
-module InstMonadFixAltf.hs where
+module InstMonadFixAltf where
 import Data.Either
 import Data.Function ( fix )
 import Data.Maybe
@@ -33,6 +33,6 @@ import System.IO
 
 import Control.Monad.Fix ( MonadFix(..) )
 
-    mfix f   = Alt (mfix (getAlt . f))
+mfix f   = Alt (Control.Monad.Fix.mfix (getAlt . f))
 
 -- | @since 4.12.0.0

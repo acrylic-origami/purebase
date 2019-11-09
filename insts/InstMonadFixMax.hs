@@ -1,5 +1,5 @@
 -- Instance of class MonadFix for Max ()
-module InstMonadFixMax.hs where
+module InstMonadFixMax where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,6 +21,6 @@ import           GHC.Generics
 
 import Data.Semigroup ( Max(..) )
 
-  mfix f = fix (f . getMax)
+mfix f = fix (f . getMax)
 
 -- | @since 4.9.0.0

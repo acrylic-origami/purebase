@@ -1,5 +1,5 @@
 -- Instance of class Functor for Option ()
-module InstFunctorOption.hs where
+module InstFunctorOption where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,6 +21,6 @@ import           GHC.Generics
 
 import Data.Semigroup ( Option(..) )
 
-  fmap f (Option a) = Option (fmap f a)
+fmap f (Option a) = Option (Control.Monad.fmap f a)
 
 -- | @since 4.9.0.0

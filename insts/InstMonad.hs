@@ -1,5 +1,5 @@
 -- Instance of class Monad for  ([])
-module InstMonad.hs where
+module InstMonad where
 import GHC.Types
 import GHC.Classes
 import GHC.CString
@@ -24,11 +24,12 @@ import {-# SOURCE #-} Data.Semigroup.Internal ( stimesDefault
                                               )
 
 
-import because it has different types in different scenarios. ( Monad(..) )
+import GHC.Base ( Monad(..), Applicative(..) )
 
-    {-# INLINE (>>=) #-}
-    xs >>= f             = [y | x <- xs, y <- f x]
-    {-# INLINE (>>) #-}
-    (>>) = (*>)
+{-# INLINE (>>=) #-}
+xs >>= f             = [y | x <- xs, y <- f x]
+{-# INLINE (>>) #-}
+(>>) :: [a] -> [b] -> [b]
+(>>) = (*>)
 
 -- | @since 2.01

@@ -1,5 +1,5 @@
 -- Instance of class Fractional for Op (a b)
-module InstFractionalOpab.hs where
+module InstFractionalOpab where
 import Control.Applicative
 import Control.Category
 import Data.Function (on)
@@ -51,7 +51,7 @@ import Prelude hiding ((.),id)
 
 import Data.Functor.Contravariant ( Op(..) )
 
-  Op f / Op g = Op $ \a -> f a / g a
-  recip (Op f) = Op $ recip . f
-  fromRational = Op . const . fromRational
+Op f / Op g = Op $ \a -> f a Prelude./ g a
+recip (Op f) = Op $ Prelude.recip . f
+fromRational = Op . const . Prelude.fromRational
 

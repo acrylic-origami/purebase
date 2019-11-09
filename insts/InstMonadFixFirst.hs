@@ -1,5 +1,5 @@
 -- Instance of class MonadFix for First ()
-module InstMonadFixFirst.hs where
+module InstMonadFixFirst where
 import Data.Either
 import Data.Function ( fix )
 import Data.Maybe
@@ -33,6 +33,6 @@ import System.IO
 
 import Control.Monad.Fix ( MonadFix(..) )
 
-    mfix f   = First (mfix (getFirst . f))
+mfix f   = First (Control.Monad.Fix.mfix (getFirst . f))
 
 -- | @since 4.8.0.0

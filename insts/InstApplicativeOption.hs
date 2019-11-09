@@ -1,5 +1,5 @@
 -- Instance of class Applicative for Option ()
-module InstApplicativeOption.hs where
+module InstApplicativeOption where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,11 +21,11 @@ import           GHC.Generics
 
 import Data.Semigroup ( Option(..) )
 
-  pure a = Option (Just a)
-  Option a <*> Option b = Option (a <*> b)
-  liftA2 f (Option x) (Option y) = Option (liftA2 f x y)
+pure a = Option (Just a)
+Option a <*> Option b = Option (a Control.Applicative.<*> b)
+liftA2 f (Option x) (Option y) = Option (Control.Applicative.liftA2 f x y)
 
-  Option Nothing  *>  _ = Option Nothing
-  _               *>  b = b
+Option Nothing  *>  _ = Option Nothing
+_               *>  b = b
 
 -- | @since 4.9.0.0

@@ -1,5 +1,5 @@
 -- Instance of class Bifoldable for Const ()
-module InstBifoldableConst.hs where
+module InstBifoldableConst where
 import Control.Applicative
 import Data.Functor.Utils (Max(..), Min(..), (#.))
 import Data.Maybe (fromMaybe)
@@ -43,6 +43,6 @@ import GHC.Generics (K1(..))
 
 import Data.Bifoldable ( Bifoldable(..) )
 
-  bifoldMap f _ (Const a) = f a
+bifoldMap f _ (Const a) = f a
 
 -- | @since 4.10.0.0

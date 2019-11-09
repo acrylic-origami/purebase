@@ -1,5 +1,5 @@
 -- Instance of class Foldable for Max ()
-module InstFoldableMax.hs where
+module InstFoldableMax where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,6 +21,6 @@ import           GHC.Generics
 
 import Data.Semigroup ( Max(..) )
 
-  foldMap f (Max a) = f a
+foldMap f (Max a) = f a
 
 -- | @since 4.9.0.0

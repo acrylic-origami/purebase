@@ -1,5 +1,5 @@
 -- Instance of class Functor for Product (f g)
-module InstFunctorProductfg.hs where
+module InstFunctorProductfg where
 import Control.Applicative
 import Control.Monad (MonadPlus(..))
 import Control.Monad.Fix (MonadFix(..))
@@ -13,7 +13,7 @@ import Text.Read (Read(..), readListDefault, readListPrecDefault)
 
 import Data.Functor.Product ( Product(..) )
 
-    fmap f (Pair x y) = Pair (fmap f x) (fmap f y)
-    a <$ (Pair x y) = Pair (a <$ x) (a <$ y)
+fmap f (Pair x y) = Pair (Prelude.fmap f x) (Prelude.fmap f y)
+a <$ (Pair x y) = Pair (a Control.Applicative.<$ x) (a Control.Applicative.<$ y)
 
 -- | @since 4.9.0.0

@@ -1,5 +1,5 @@
 -- Instance of class Foldable for Const ( m)
-module InstFoldableConstm.hs where
+module InstFoldableConstm where
 import Data.Bits (Bits, FiniteBits)
 import Data.Foldable (Foldable(foldMap))
 import Foreign.Storable (Storable)
@@ -18,6 +18,6 @@ import GHC.Show (Show(showsPrec), showParen, showString)
 
 import Data.Functor.Const ( Const(..) )
 
-    foldMap _ _ = mempty
+foldMap _ _ = mempty
 
 -- | @since 2.01

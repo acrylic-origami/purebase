@@ -1,5 +1,5 @@
 -- Instance of class Monoid for Ap (f a)
-module InstMonoidApfa.hs where
+module InstMonoidApfa where
 import GHC.Base hiding (Any)
 import GHC.Enum
 import GHC.Generics
@@ -63,6 +63,7 @@ import Data.Semigroup.Internal
 
 import Data.Monoid ( Ap(..) )
 
-        mempty = Ap $ pure mempty
+mempty :: (Applicative m, Monoid a) => Ap m a
+mempty = Ap $ pure GHC.Base.mempty
 
 -- | @since 4.12.0.0

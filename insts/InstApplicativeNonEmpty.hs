@@ -1,5 +1,5 @@
 -- Instance of class Applicative for NonEmpty ()
-module InstApplicativeNonEmpty.hs where
+module InstApplicativeNonEmpty where
 import GHC.Types
 import GHC.Classes
 import GHC.CString
@@ -24,10 +24,12 @@ import {-# SOURCE #-} Data.Semigroup.Internal ( stimesDefault
                                               )
 
 
-import because it has different types in different scenarios. ( Applicative(..) )
+import GHC.Base ( Applicative(..), NonEmpty(..), ap, liftM2 )
 
-  pure a = a :| []
-  (<*>) = ap
-  liftA2 = liftM2
+pure a = a :| []
+(<*>) :: NonEmpty (a -> b) -> NonEmpty a -> NonEmpty b
+(<*>) = ap
+liftA2 :: (a -> b -> c) -> NonEmpty a -> NonEmpty b -> NonEmpty c
+liftA2 = liftM2
 
 -- | @since 4.9.0.0

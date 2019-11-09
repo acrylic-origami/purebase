@@ -1,5 +1,5 @@
 -- Instance of class Bitraversable for K1 ( i)
-module InstBitraversableK1i.hs where
+module InstBitraversableK1i where
 import Control.Applicative
 import Data.Bifunctor
 import Data.Bifoldable
@@ -69,7 +69,7 @@ import GHC.Generics (K1(..))
 
 import Data.Bitraversable ( Bitraversable(..) )
 
-  bitraverse f _ (K1 c) = K1 <$> f c
+bitraverse f _ (K1 c) = K1 <$> f c
 
 -- | 'bifor' is 'bitraverse' with the structure as the first argument. For a
 -- version that ignores the results, see 'bifor_'.

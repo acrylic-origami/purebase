@@ -1,5 +1,5 @@
 -- Instance of class MonadFix for Min ()
-module InstMonadFixMin.hs where
+module InstMonadFixMin where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,6 +21,6 @@ import           GHC.Generics
 
 import Data.Semigroup ( Min(..) )
 
-  mfix f = fix (f . getMin)
+mfix f = fix (f . getMin)
 
 -- | @since 4.9.0.0

@@ -1,5 +1,5 @@
 -- Instance of class Functor for Either ( a)
-module InstFunctorEithera.hs where
+module InstFunctorEithera where
 import GHC.Base
 import GHC.Show
 import GHC.Read
@@ -11,7 +11,7 @@ import GHC.Read
 
 import Data.Either ( Either(..) )
 
-    fmap _ (Left x) = Left x
-    fmap f (Right y) = Right (f y)
+fmap _ (Left x) = Left x
+fmap f (Right y) = Right (f y)
 
 -- | @since 4.9.0.0

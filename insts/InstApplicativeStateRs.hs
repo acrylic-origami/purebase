@@ -1,5 +1,5 @@
 -- Instance of class Applicative for StateR ( s)
-module InstApplicativeStateRs.hs where
+module InstApplicativeStateRs where
 import Data.Coerce (Coercible, coerce)
 import GHC.Base ( Applicative(..), Functor(..), Maybe(..), Monoid(..), Ord(..)
                 , Semigroup(..), ($), otherwise )
@@ -13,14 +13,14 @@ import GHC.Base ( Applicative(..), Functor(..), Maybe(..), Monoid(..), Ord(..)
 
 import Data.Functor.Utils ( StateR(..) )
 
-    pure x = StateR (\ s -> (s, x))
-    StateR kf <*> StateR kv = StateR $ \ s ->
-        let (s', v) = kv s
-            (s'', f) = kf s'
-        in (s'', f v)
-    liftA2 f (StateR kx) (StateR ky) = StateR $ \ s ->
-        let (s', y) = ky s
-            (s'', x) = kx s'
-        in (s'', f x y)
+pure x = StateR (\ s -> (s, x))
+StateR kf <*> StateR kv = StateR $ \ s ->
+  let (s', v) = kv s
+      (s'', f) = kf s'
+  in (s'', f v)
+liftA2 f (StateR kx) (StateR ky) = StateR $ \ s ->
+  let (s', y) = ky s
+      (s'', x) = kx s'
+  in (s'', f x y)
 
 -- See Note [Function coercion]

@@ -1,5 +1,5 @@
 -- Instance of class Functor for StateL ( s)
-module InstFunctorStateLs.hs where
+module InstFunctorStateLs where
 import Data.Coerce (Coercible, coerce)
 import GHC.Base ( Applicative(..), Functor(..), Maybe(..), Monoid(..), Ord(..)
                 , Semigroup(..), ($), otherwise )
@@ -13,6 +13,6 @@ import GHC.Base ( Applicative(..), Functor(..), Maybe(..), Monoid(..), Ord(..)
 
 import Data.Functor.Utils ( StateL(..) )
 
-    fmap f (StateL k) = StateL $ \ s -> let (s', v) = k s in (s', f v)
+fmap f (StateL k) = StateL $ \ s -> let (s', v) = k s in (s', f v)
 
 -- | @since 4.0

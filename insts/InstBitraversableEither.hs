@@ -1,5 +1,5 @@
 -- Instance of class Bitraversable for Either ()
-module InstBitraversableEither.hs where
+module InstBitraversableEither where
 import Control.Applicative
 import Data.Bifunctor
 import Data.Bifoldable
@@ -69,7 +69,7 @@ import GHC.Generics (K1(..))
 
 import Data.Bitraversable ( Bitraversable(..) )
 
-  bitraverse f _ (Left a) = Left <$> f a
-  bitraverse _ g (Right b) = Right <$> g b
+bitraverse f _ (Left a) = Left <$> f a
+bitraverse _ g (Right b) = Right <$> g b
 
 -- | @since 4.10.0.0

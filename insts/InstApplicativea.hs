@@ -1,5 +1,5 @@
 -- Instance of class Applicative for  ((,) a)
-module InstApplicativea.hs where
+module InstApplicativea where
 import GHC.Types
 import GHC.Classes
 import GHC.CString
@@ -24,10 +24,10 @@ import {-# SOURCE #-} Data.Semigroup.Internal ( stimesDefault
                                               )
 
 
-import because it has different types in different scenarios. ( Applicative(..) )
+import GHC.Base ( Applicative(..), Monoid(..) )
 
-    pure x = (mempty, x)
-    (u, f) <*> (v, x) = (u <> v, f x)
-    liftA2 f (u, x) (v, y) = (u <> v, f x y)
+pure x = (mempty, x)
+(u, f) <*> (v, x) = (u <> v, f x)
+liftA2 f (u, x) (v, y) = (u <> v, f x y)
 
 -- | @since 4.9.0.0

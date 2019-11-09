@@ -1,5 +1,5 @@
 -- Instance of class Foldable for Option ()
-module InstFoldableOption.hs where
+module InstFoldableOption where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,7 +21,7 @@ import           GHC.Generics
 
 import Data.Semigroup ( Option(..) )
 
-  foldMap f (Option (Just m)) = f m
-  foldMap _ (Option Nothing)  = mempty
+foldMap f (Option (Just m)) = f m
+foldMap _ (Option Nothing)  = mempty
 
 -- | @since 4.9.0.0

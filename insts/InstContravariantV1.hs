@@ -1,5 +1,6 @@
+{-# LANGUAGE EmptyCase #-}
 -- Instance of class Contravariant for V1 ()
-module InstContravariantV1.hs where
+module InstContravariantV1 where
 import Control.Applicative
 import Control.Category
 import Data.Function (on)
@@ -51,5 +52,5 @@ import Prelude hiding ((.),id)
 
 import Data.Functor.Contravariant ( Contravariant(..) )
 
-  contramap _ x = case x of
+contramap _ x = case x of
 

@@ -1,5 +1,5 @@
 -- Instance of class Applicative for ZipList ()
-module InstApplicativeZipList.hs where
+module InstApplicativeZipList where
 import Control.Category hiding ((.), id)
 import Control.Arrow
 import Data.Maybe
@@ -19,7 +19,7 @@ import GHC.Show (Show)
 
 import Control.Applicative ( ZipList(..) )
 
-    pure x = ZipList (repeat x)
-    liftA2 f (ZipList xs) (ZipList ys) = ZipList (zipWith f xs ys)
+pure x = ZipList (repeat x)
+liftA2 f (ZipList xs) (ZipList ys) = ZipList (zipWith f xs ys)
 
 -- | @since 4.11.0.0

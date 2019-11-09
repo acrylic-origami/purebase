@@ -1,5 +1,5 @@
 -- Instance of class Monoid for Alt (f a)
-module InstMonoidAltfa.hs where
+module InstMonoidAltfa where
 import GHC.Base hiding (Any)
 import GHC.Enum
 import GHC.Num
@@ -15,4 +15,5 @@ import GHC.Real
 
 import Data.Semigroup.Internal ( Alt(..) )
 
-    mempty = Alt empty
+mempty :: Alternative t => Alt t a
+mempty = Alt empty

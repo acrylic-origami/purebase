@@ -1,5 +1,5 @@
 -- Instance of class MonadZip for Product (f g)
-module InstMonadZipProductfg.hs where
+module InstMonadZipProductfg where
 import Control.Applicative
 import Control.Monad (MonadPlus(..))
 import Control.Monad.Fix (MonadFix(..))
@@ -13,4 +13,5 @@ import Text.Read (Read(..), readListDefault, readListPrecDefault)
 
 import Data.Functor.Product ( Product(..) )
 
-    mzipWith f (Pair x1 y1) (Pair x2 y2) = Pair (mzipWith f x1 x2) (mzipWith f y1 y2)
+mzipWith :: (MonadZip f, MonadZip g) => (a -> b -> c) -> Product f g a -> Product f g b -> Product f g c
+mzipWith f (Pair x1 y1) (Pair x2 y2) = Pair (Control.Monad.Zip.mzipWith f x1 x2) (Control.Monad.Zip.mzipWith f y1 y2)

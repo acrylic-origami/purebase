@@ -1,5 +1,5 @@
 -- Instance of class Functor for Last ()
-module InstFunctorLast.hs where
+module InstFunctorLast where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,7 +21,7 @@ import           GHC.Generics
 
 import Data.Semigroup ( Last(..) )
 
-  fmap f (Last x) = Last (f x)
-  a <$ _ = Last a
+fmap f (Last x) = Last (f x)
+a <$ _ = Last a
 
 -- | @since 4.9.0.0

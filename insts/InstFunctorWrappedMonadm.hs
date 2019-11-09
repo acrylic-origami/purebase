@@ -1,5 +1,5 @@
 -- Instance of class Functor for WrappedMonad (m)
-module InstFunctorWrappedMonadm.hs where
+module InstFunctorWrappedMonadm where
 import Control.Category hiding ((.), id)
 import Control.Arrow
 import Data.Maybe
@@ -19,6 +19,6 @@ import GHC.Show (Show)
 
 import Control.Applicative ( WrappedMonad(..) )
 
-    fmap f (WrapMonad v) = WrapMonad (liftM f v)
+fmap f (WrapMonad v) = WrapMonad (liftM f v)
 
 -- | @since 2.01

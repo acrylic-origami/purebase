@@ -1,5 +1,5 @@
 -- Instance of class Monad for Sum ()
-module InstMonadSum.hs where
+module InstMonadSum where
 import GHC.Base hiding (Any)
 import GHC.Enum
 import GHC.Num
@@ -15,7 +15,7 @@ import GHC.Real
 
 import Data.Semigroup.Internal ( Sum(..) )
 
-    m >>= k  = k (getSum m)
+m >>= k  = k (getSum m)
 
 -- | Monoid under multiplication.
 --

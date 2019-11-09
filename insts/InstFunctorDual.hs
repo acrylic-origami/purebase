@@ -1,5 +1,5 @@
 -- Instance of class Functor for Dual ()
-module InstFunctorDual.hs where
+module InstFunctorDual where
 import GHC.Base hiding (Any)
 import GHC.Enum
 import GHC.Num
@@ -15,6 +15,7 @@ import GHC.Real
 
 import Data.Semigroup.Internal ( Dual(..) )
 
-    fmap     = coerce
+fmap :: (a -> b) -> Dual a -> Dual b
+fmap     = coerce
 
 -- | @since 4.8.0.0

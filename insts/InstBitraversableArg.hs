@@ -1,5 +1,5 @@
 -- Instance of class Bitraversable for Arg ()
-module InstBitraversableArg.hs where
+module InstBitraversableArg where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,7 +21,7 @@ import           GHC.Generics
 
 import Data.Semigroup ( Arg(..) )
 
-  bitraverse f g (Arg a b) = Arg <$> f a <*> g b
+bitraverse f g (Arg a b) = Arg <$> f a <*> g b
 
 -- | Use @'Option' ('First' a)@ to get the behavior of
 -- 'Data.Monoid.First' from "Data.Monoid".

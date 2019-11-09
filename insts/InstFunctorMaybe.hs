@@ -1,5 +1,5 @@
 -- Instance of class Functor for Maybe ()
-module InstFunctorMaybe.hs where
+module InstFunctorMaybe where
 import GHC.Types
 import GHC.Classes
 import GHC.CString
@@ -24,9 +24,9 @@ import {-# SOURCE #-} Data.Semigroup.Internal ( stimesDefault
                                               )
 
 
-import because it has different types in different scenarios. ( Functor(..) )
+import GHC.Base ( Functor(..) )
 
-    fmap _ Nothing       = Nothing
-    fmap f (Just a)      = Just (f a)
+fmap _ Nothing       = Nothing
+fmap f (Just a)      = Just (f a)
 
 -- | @since 2.01

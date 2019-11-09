@@ -1,5 +1,7 @@
+{-# LANGUAGE CPP #-}
+
 -- Instance of class Integral for Natural ()
-module InstIntegralNatural.hs where
+module InstIntegralNatural where
 import GHC.Base
 import GHC.Num
 import GHC.List
@@ -16,15 +18,15 @@ import GHC.Integer.GMP.Internals
 
 import GHC.Real ( Integral(..) )
 
-    toInteger = naturalToInteger
+toInteger = naturalToInteger
 
-    divMod = quotRemNatural
-    div    = quotNatural
-    mod    = remNatural
+divMod = quotRemNatural
+div    = quotNatural
+mod    = remNatural
 
-    quotRem = quotRemNatural
-    quot    = quotNatural
-    rem     = remNatural
+quotRem = quotRemNatural
+quot    = quotNatural
+rem     = remNatural
 
 --------------------------------------------------------------
 -- Instances for @Ratio@

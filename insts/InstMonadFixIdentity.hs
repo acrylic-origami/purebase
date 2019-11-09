@@ -1,5 +1,5 @@
 -- Instance of class MonadFix for Identity ()
-module InstMonadFixIdentity.hs where
+module InstMonadFixIdentity where
 import Control.Monad.Fix
 import Data.Bits (Bits, FiniteBits)
 import Data.Coerce
@@ -24,4 +24,4 @@ import GHC.Types (Bool(..))
 
 import Data.Functor.Identity ( Identity(..) )
 
-    mfix f   = Identity (fix (runIdentity . f))
+mfix f   = Identity (fix (runIdentity . f))

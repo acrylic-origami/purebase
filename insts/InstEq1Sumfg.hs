@@ -1,5 +1,5 @@
 -- Instance of class Eq1 for Sum (f g)
-module InstEq1Sumfg.hs where
+module InstEq1Sumfg where
 import Control.Applicative ((<|>))
 import Data.Data (Data)
 import Data.Functor.Classes
@@ -10,9 +10,9 @@ import Text.Read (Read(..), readListDefault, readListPrecDefault)
 
 import Data.Functor.Sum ( Sum(..) )
 
-    liftEq eq (InL x1) (InL x2) = liftEq eq x1 x2
-    liftEq _ (InL _) (InR _) = False
-    liftEq _ (InR _) (InL _) = False
-    liftEq eq (InR y1) (InR y2) = liftEq eq y1 y2
+liftEq eq (InL x1) (InL x2) = Data.Functor.Classes.liftEq eq x1 x2
+liftEq _ (InL _) (InR _) = False
+liftEq _ (InR _) (InL _) = False
+liftEq eq (InR y1) (InR y2) = Data.Functor.Classes.liftEq eq y1 y2
 
 -- | @since 4.9.0.0

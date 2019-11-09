@@ -1,5 +1,5 @@
 -- Instance of class Monad for Product (f g)
-module InstMonadProductfg.hs where
+module InstMonadProductfg where
 import Control.Applicative
 import Control.Monad (MonadPlus(..))
 import Control.Monad.Fix (MonadFix(..))
@@ -13,9 +13,9 @@ import Text.Read (Read(..), readListDefault, readListPrecDefault)
 
 import Data.Functor.Product ( Product(..) )
 
-    Pair m n >>= f = Pair (m >>= fstP . f) (n >>= sndP . f)
-      where
-        fstP (Pair a _) = a
-        sndP (Pair _ b) = b
+Pair m n >>= f = Pair (m Prelude.>>= fstP . f) (n Prelude.>>= sndP . f)
+  where
+    fstP (Pair a _) = a
+    sndP (Pair _ b) = b
 
 -- | @since 4.9.0.0

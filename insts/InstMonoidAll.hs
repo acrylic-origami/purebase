@@ -1,5 +1,5 @@
 -- Instance of class Monoid for All ()
-module InstMonoidAll.hs where
+module InstMonoidAll where
 import GHC.Base hiding (Any)
 import GHC.Enum
 import GHC.Num
@@ -15,7 +15,7 @@ import GHC.Real
 
 import Data.Semigroup.Internal ( All(..) )
 
-        mempty = All True
+mempty = All True
 
 -- | Boolean monoid under disjunction ('||').
 --

@@ -1,5 +1,5 @@
 -- Instance of class Floating for Op (a b)
-module InstFloatingOpab.hs where
+module InstFloatingOpab where
 import Control.Applicative
 import Control.Category
 import Data.Function (on)
@@ -51,21 +51,21 @@ import Prelude hiding ((.),id)
 
 import Data.Functor.Contravariant ( Op(..) )
 
-  pi = Op $ const pi
-  exp (Op f) = Op $ exp . f
-  sqrt (Op f) = Op $ sqrt . f
-  log (Op f) = Op $ log . f
-  sin (Op f) = Op $ sin . f
-  tan (Op f) = Op $ tan . f
-  cos (Op f) = Op $ cos . f
-  asin (Op f) = Op $ asin . f
-  atan (Op f) = Op $ atan . f
-  acos (Op f) = Op $ acos . f
-  sinh (Op f) = Op $ sinh . f
-  tanh (Op f) = Op $ tanh . f
-  cosh (Op f) = Op $ cosh . f
-  asinh (Op f) = Op $ asinh . f
-  atanh (Op f) = Op $ atanh . f
-  acosh (Op f) = Op $ acosh . f
-  Op f ** Op g = Op $ \a -> f a ** g a
-  logBase (Op f) (Op g) = Op $ \a -> logBase (f a) (g a)
+pi = Op $ Prelude.const Prelude.pi
+exp (Op f) = Op $ Prelude.exp . f
+sqrt (Op f) = Op $ Prelude.sqrt . f
+log (Op f) = Op $ Prelude.log . f
+sin (Op f) = Op $ Prelude.sin . f
+tan (Op f) = Op $ Prelude.tan . f
+cos (Op f) = Op $ Prelude.cos . f
+asin (Op f) = Op $ Prelude.asin . f
+atan (Op f) = Op $ Prelude.atan . f
+acos (Op f) = Op $ Prelude.acos . f
+sinh (Op f) = Op $ Prelude.sinh . f
+tanh (Op f) = Op $ Prelude.tanh . f
+cosh (Op f) = Op $ Prelude.cosh . f
+asinh (Op f) = Op $ Prelude.asinh . f
+atanh (Op f) = Op $ Prelude.atanh . f
+acosh (Op f) = Op $ Prelude.acosh . f
+Op f ** Op g = Op $ \a -> f a Prelude.** g a
+logBase (Op f) (Op g) = Op $ \a -> Prelude.logBase (f a) (g a)

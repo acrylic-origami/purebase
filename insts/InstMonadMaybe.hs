@@ -1,5 +1,5 @@
 -- Instance of class Monad for Maybe ()
-module InstMonadMaybe.hs where
+module InstMonadMaybe where
 import GHC.Types
 import GHC.Classes
 import GHC.CString
@@ -24,12 +24,13 @@ import {-# SOURCE #-} Data.Semigroup.Internal ( stimesDefault
                                               )
 
 
-import because it has different types in different scenarios. ( Monad(..) )
+import GHC.Base ( Monad(..), Applicative(..) )
 
-    (Just x) >>= k      = k x
-    Nothing  >>= _      = Nothing
+(Just x) >>= k      = k x
+Nothing  >>= _      = Nothing
 
-    (>>) = (*>)
+(>>) :: Maybe a -> Maybe b -> Maybe b
+(>>) = (*>)
 
 -- -----------------------------------------------------------------------------
 -- The Alternative class definition

@@ -1,5 +1,5 @@
 -- Instance of class Functor for Compose (f g)
-module InstFunctorComposefg.hs where
+module InstFunctorComposefg where
 import Data.Functor.Classes
 
 import Control.Applicative
@@ -12,7 +12,7 @@ import Text.Read (Read(..), readListDefault, readListPrecDefault)
 
 import Data.Functor.Compose ( Compose(..) )
 
-    fmap f (Compose x) = Compose (fmap (fmap f) x)
-    a <$ (Compose x) = Compose (fmap (a <$) x)
+fmap f (Compose x) = Compose (Prelude.fmap (Prelude.fmap f) x)
+a <$ (Compose x) = Compose (Prelude.fmap (a Prelude.<$) x)
 
 -- | @since 4.9.0.0

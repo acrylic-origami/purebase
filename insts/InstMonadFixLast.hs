@@ -1,5 +1,5 @@
 -- Instance of class MonadFix for Last ()
-module InstMonadFixLast.hs where
+module InstMonadFixLast where
 import Data.Either
 import Data.Function ( fix )
 import Data.Maybe
@@ -33,6 +33,6 @@ import System.IO
 
 import Control.Monad.Fix ( MonadFix(..) )
 
-    mfix f   = Last (mfix (getLast . f))
+mfix f   = Last (Control.Monad.Fix.mfix (getLast . f))
 
 -- | @since 4.8.0.0

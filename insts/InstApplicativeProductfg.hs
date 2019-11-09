@@ -1,5 +1,5 @@
 -- Instance of class Applicative for Product (f g)
-module InstApplicativeProductfg.hs where
+module InstApplicativeProductfg where
 import Control.Applicative
 import Control.Monad (MonadPlus(..))
 import Control.Monad.Fix (MonadFix(..))
@@ -13,8 +13,8 @@ import Text.Read (Read(..), readListDefault, readListPrecDefault)
 
 import Data.Functor.Product ( Product(..) )
 
-    pure x = Pair (pure x) (pure x)
-    Pair f g <*> Pair x y = Pair (f <*> x) (g <*> y)
-    liftA2 f (Pair a b) (Pair x y) = Pair (liftA2 f a x) (liftA2 f b y)
+pure x = Pair (Control.Applicative.pure x) (Control.Applicative.pure x)
+Pair f g <*> Pair x y = Pair (f Control.Applicative.<*> x) (g Control.Applicative.<*> y)
+liftA2 f (Pair a b) (Pair x y) = Pair (Control.Applicative.liftA2 f a x) (Control.Applicative.liftA2 f b y)
 
 -- | @since 4.9.0.0

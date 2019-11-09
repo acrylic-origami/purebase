@@ -1,5 +1,5 @@
 -- Instance of class Functor for Arg ( a)
-module InstFunctorArga.hs where
+module InstFunctorArga where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,6 +21,6 @@ import           GHC.Generics
 
 import Data.Semigroup ( Arg(..) )
 
-  fmap f (Arg x a) = Arg x (f a)
+fmap f (Arg x a) = Arg x (f a)
 
 -- | @since 4.9.0.0

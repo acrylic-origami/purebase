@@ -1,5 +1,5 @@
 -- Instance of class Monoid for Option (a)
-module InstMonoidOptiona.hs where
+module InstMonoidOptiona where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,4 +21,4 @@ import           GHC.Generics
 
 import Data.Semigroup ( Option(..) )
 
-  mempty = Option Nothing
+mempty = Option Nothing

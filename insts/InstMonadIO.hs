@@ -1,5 +1,5 @@
 -- Instance of class Monad for IO ()
-module InstMonadIO.hs where
+module InstMonadIO where
 import GHC.Types
 import GHC.Classes
 import GHC.CString
@@ -24,11 +24,12 @@ import {-# SOURCE #-} Data.Semigroup.Internal ( stimesDefault
                                               )
 
 
-import because it has different types in different scenarios. ( Monad(..) )
+import GHC.Base ( Monad(..), Applicative(..), bindIO )
 
-    {-# INLINE (>>)   #-}
-    {-# INLINE (>>=)  #-}
-    (>>)      = (*>)
-    (>>=)     = bindIO
+{-# INLINE (>>)   #-}
+{-# INLINE (>>=)  #-}
+(>>) :: IO a -> IO b -> IO b
+(>>)      = (*>)
+(>>=)     = bindIO
 
 -- | @since 4.9.0.0

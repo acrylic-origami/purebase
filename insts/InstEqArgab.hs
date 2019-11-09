@@ -1,5 +1,5 @@
 -- Instance of class Eq for Arg (a b)
-module InstEqArgab.hs where
+module InstEqArgab where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,6 +21,6 @@ import           GHC.Generics
 
 import Data.Semigroup ( Arg(..) )
 
-  Arg a _ == Arg b _ = a == b
+Arg a _ == Arg b _ = a Prelude.== b
 
 -- | @since 4.9.0.0

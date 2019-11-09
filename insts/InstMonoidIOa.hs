@@ -1,5 +1,5 @@
 -- Instance of class Monoid for IO (a)
-module InstMonoidIOa.hs where
+module InstMonoidIOa where
 import GHC.Types
 import GHC.Classes
 import GHC.CString
@@ -24,7 +24,9 @@ import {-# SOURCE #-} Data.Semigroup.Internal ( stimesDefault
                                               )
 
 
-import because it has different types in different scenarios. ( Monoid(..) )
+import GHC.Base ( Monoid(..) )
+import Control.Applicative ( Applicative(..) )
 
-    mempty = pure mempty
+mempty :: Monoid a => IO a
+mempty = pure GHC.Base.mempty
 

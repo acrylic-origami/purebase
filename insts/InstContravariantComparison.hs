@@ -1,5 +1,5 @@
 -- Instance of class Contravariant for Comparison ()
-module InstContravariantComparison.hs where
+module InstContravariantComparison where
 import Control.Applicative
 import Control.Category
 import Data.Function (on)
@@ -49,8 +49,8 @@ import Prelude hiding ((.),id)
 -- condition holds.
 
 
-import Data.Functor.Contravariant ( Contravariant(..) )
+import Data.Functor.Contravariant ( Contravariant(..), Comparison(..) )
 
-  contramap f g = Comparison $ on (getComparison g) f
+contramap f g = Comparison $ on (getComparison g) f
 
 -- | Compare using 'compare'.

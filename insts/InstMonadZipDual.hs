@@ -1,5 +1,5 @@
 -- Instance of class MonadZip for Dual ()
-module InstMonadZipDual.hs where
+module InstMonadZipDual where
 import Control.Monad (liftM, liftM2)
 import Data.Functor.Identity
 import Data.Monoid
@@ -23,8 +23,11 @@ import GHC.Generics
 --
 
 import Control.Monad.Zip ( MonadZip(..) )
+import Control.Monad ( Monad(..) )
 
-    -- Cannot use coerce, it's unsafe
-    mzipWith = liftM2
+-- Cannot use coerce, it's unsafe
+
+mzipWith :: (a -> b -> c) -> Dual a -> Dual b -> Dual c
+mzipWith = liftM2
 
 -- | @since 4.8.0.0

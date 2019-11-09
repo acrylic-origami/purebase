@@ -1,5 +1,5 @@
 -- Instance of class Monoid for WrappedMonoid (m)
-module InstMonoidWrappedMonoidm.hs where
+module InstMonoidWrappedMonoidm where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,6 +21,7 @@ import           GHC.Generics
 
 import Data.Semigroup ( WrappedMonoid(..) )
 
-  mempty = WrapMonoid mempty
+mempty :: Monoid a => WrappedMonoid a
+mempty = WrapMonoid Prelude.mempty
 
 -- | @since 4.9.0.0

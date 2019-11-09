@@ -1,5 +1,5 @@
 -- Instance of class Alternative for Maybe ()
-module InstAlternativeMaybe.hs where
+module InstAlternativeMaybe where
 import GHC.Types
 import GHC.Classes
 import GHC.CString
@@ -24,11 +24,11 @@ import {-# SOURCE #-} Data.Semigroup.Internal ( stimesDefault
                                               )
 
 
-import because it has different types in different scenarios. ( Alternative(..) )
+import GHC.Base ( Alternative(..) )
 
-    empty = Nothing
-    Nothing <|> r = r
-    l       <|> _ = l
+empty = Nothing
+Nothing <|> r = r
+l       <|> _ = l
 
 -- -----------------------------------------------------------------------------
 -- The MonadPlus class definition

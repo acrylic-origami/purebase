@@ -1,5 +1,5 @@
 -- Instance of class Monoid for Dual (a)
-module InstMonoidDuala.hs where
+module InstMonoidDuala where
 import GHC.Base hiding (Any)
 import GHC.Enum
 import GHC.Num
@@ -15,6 +15,7 @@ import GHC.Real
 
 import Data.Semigroup.Internal ( Dual(..) )
 
-        mempty = Dual mempty
+mempty :: Monoid a => Dual a
+mempty = Dual GHC.Base.mempty
 
 -- | @since 4.8.0.0

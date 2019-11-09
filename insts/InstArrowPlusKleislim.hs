@@ -1,5 +1,5 @@
 -- Instance of class ArrowPlus for Kleisli (m)
-module InstArrowPlusKleislim.hs where
+module InstArrowPlusKleislim where
 import Data.Tuple ( fst, snd, uncurry )
 import Data.Either
 import Control.Monad.Fix
@@ -8,9 +8,9 @@ import GHC.Base hiding ( (.), id )
 import GHC.Generics (Generic, Generic1)
 
 
-import Control.Arrow ( ArrowPlus(..) )
+import Control.Arrow ( ArrowPlus(..), Kleisli(..) )
 
-    Kleisli f <+> Kleisli g = Kleisli (\x -> f x `mplus` g x)
+Kleisli f <+> Kleisli g = Kleisli (\x -> f x `mplus` g x)
 
 -- | Choice, for arrows that support it.  This class underlies the
 -- @if@ and @case@ constructs in arrow notation.

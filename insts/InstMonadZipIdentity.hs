@@ -1,5 +1,5 @@
 -- Instance of class MonadZip for Identity ()
-module InstMonadZipIdentity.hs where
+module InstMonadZipIdentity where
 import Control.Monad (liftM, liftM2)
 import Data.Functor.Identity
 import Data.Monoid
@@ -23,8 +23,10 @@ import GHC.Generics
 --
 
 import Control.Monad.Zip ( MonadZip(..) )
+import Control.Monad ( Monad(..) )
 
-    mzipWith                 = liftM2
-    munzip (Identity (a, b)) = (Identity a, Identity b)
+mzipWith :: (a -> b -> c) -> Identity a -> Identity b -> Identity c
+mzipWith                 = liftM2
+munzip (Identity (a, b)) = (Identity a, Identity b)
 
 -- | @since 4.8.0.0

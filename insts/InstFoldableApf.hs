@@ -1,5 +1,5 @@
 -- Instance of class Foldable for Ap (f)
-module InstFoldableApf.hs where
+module InstFoldableApf where
 import Data.Bool
 import Data.Either
 import Data.Eq
@@ -11,9 +11,9 @@ import Data.Ord
 import Data.Proxy
 
 import GHC.Arr  ( Array(..), elems, numElements,
-                  foldlElems, foldrElems,
-                  foldlElems', foldrElems',
-                  foldl1Elems, foldr1Elems)
+  foldlElems, foldrElems,
+  foldlElems', foldrElems',
+  foldl1Elems, foldr1Elems)
 import GHC.Base hiding ( foldr )
 import GHC.Generics
 import GHC.Num  ( Num(..) )
@@ -21,7 +21,7 @@ import GHC.Num  ( Num(..) )
 
 import Data.Foldable ( Foldable(..) )
 
-    foldMap f = foldMap f . getAp
+foldMap f = Data.Foldable.foldMap f . getAp
 
 -- Instances for GHC.Generics
 -- | @since 4.9.0.0

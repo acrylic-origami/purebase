@@ -1,5 +1,5 @@
 -- Instance of class Bitraversable for  (,)
-module InstBitraversable.hs where
+module InstBitraversable where
 import Control.Applicative
 import Data.Bifunctor
 import Data.Bifoldable
@@ -69,6 +69,6 @@ import GHC.Generics (K1(..))
 
 import Data.Bitraversable ( Bitraversable(..) )
 
-  bitraverse f g ~(a, b) = liftA2 (,) (f a) (g b)
+bitraverse f g ~(a, b) = liftA2 (,) (f a) (g b)
 
 -- | @since 4.10.0.0

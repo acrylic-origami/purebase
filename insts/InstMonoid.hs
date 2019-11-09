@@ -1,5 +1,5 @@
 -- Instance of class Monoid for  ()
-module InstMonoid.hs where
+module InstMonoid where
 import GHC.Types
 import GHC.Classes
 import GHC.CString
@@ -24,10 +24,10 @@ import {-# SOURCE #-} Data.Semigroup.Internal ( stimesDefault
                                               )
 
 
-import because it has different types in different scenarios. ( Monoid(..) )
+import GHC.Base ( Monoid(..) )
 
         -- Should it be strict?
-        mempty        = ()
-        mconcat _     = ()
+mempty        = ()
+mconcat _     = ()
 
 -- | @since 4.9.0.0

@@ -1,5 +1,5 @@
 -- Instance of class Bounded for Ap (f a)
-module InstBoundedApfa.hs where
+module InstBoundedApfa where
 import GHC.Base hiding (Any)
 import GHC.Enum
 import GHC.Generics
@@ -63,7 +63,9 @@ import Data.Semigroup.Internal
 
 import Data.Monoid ( Ap(..) )
 
-  minBound = pure minBound
-  maxBound = pure maxBound
+minBound :: (Applicative f, Bounded a) => Ap f a
+minBound = pure GHC.Enum.minBound
+maxBound :: (Applicative f, Bounded a) => Ap f a
+maxBound = pure GHC.Enum.maxBound
 
 -- | @since 4.12.0.0

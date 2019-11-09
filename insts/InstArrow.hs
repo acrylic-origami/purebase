@@ -1,5 +1,5 @@
 -- Instance of class Arrow for  (->)
-module InstArrow.hs where
+module InstArrow where
 import Data.Tuple ( fst, snd, uncurry )
 import Data.Either
 import Control.Monad.Fix
@@ -10,9 +10,9 @@ import GHC.Generics (Generic, Generic1)
 
 import Control.Arrow ( Arrow(..) )
 
-    arr f = f
+arr f = f
 --  (f *** g) ~(x,y) = (f x, g y)
 --  sorry, although the above defn is fully H'98, nhc98 can't parse it.
-    (***) f g ~(x,y) = (f x, g y)
+(***) f g ~(x,y) = (f x, g y)
 
 -- | Kleisli arrows of a monad.

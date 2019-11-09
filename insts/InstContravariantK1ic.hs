@@ -1,5 +1,5 @@
 -- Instance of class Contravariant for K1 ( i c)
-module InstContravariantK1ic.hs where
+module InstContravariantK1ic where
 import Control.Applicative
 import Control.Category
 import Data.Function (on)
@@ -51,5 +51,5 @@ import Prelude hiding ((.),id)
 
 import Data.Functor.Contravariant ( Contravariant(..) )
 
-  contramap _ (K1 c) = K1 c
+contramap _ (K1 c) = K1 c
 

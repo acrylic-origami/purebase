@@ -1,5 +1,5 @@
 -- Instance of class Monad for Identity ()
-module InstMonadIdentity.hs where
+module InstMonadIdentity where
 import Control.Monad.Fix
 import Data.Bits (Bits, FiniteBits)
 import Data.Coerce
@@ -24,6 +24,6 @@ import GHC.Types (Bool(..))
 
 import Data.Functor.Identity ( Identity(..) )
 
-    m >>= k  = k (runIdentity m)
+m >>= k  = k (runIdentity m)
 
 -- | @since 4.8.0.0

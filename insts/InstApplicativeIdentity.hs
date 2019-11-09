@@ -1,5 +1,5 @@
 -- Instance of class Applicative for Identity ()
-module InstApplicativeIdentity.hs where
+module InstApplicativeIdentity where
 import Control.Monad.Fix
 import Data.Bits (Bits, FiniteBits)
 import Data.Coerce
@@ -24,8 +24,10 @@ import GHC.Types (Bool(..))
 
 import Data.Functor.Identity ( Identity(..) )
 
-    pure     = Identity
-    (<*>)    = coerce
-    liftA2   = coerce
+pure     = Identity
+(<*>) :: Identity (a -> b) -> Identity a -> Identity b
+(<*>)    = coerce
+liftA2 :: (a -> b -> c) -> Identity a -> Identity b -> Identity c
+liftA2   = coerce
 
 -- | @since 4.8.0.0

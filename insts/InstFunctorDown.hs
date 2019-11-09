@@ -1,5 +1,5 @@
 -- Instance of class Functor for Down ()
-module InstFunctorDown.hs where
+module InstFunctorDown where
 import Data.Bits (Bits, FiniteBits)
 import Foreign.Storable (Storable)
 import GHC.Arr (Ix)
@@ -21,6 +21,7 @@ import GHC.Show
 
 import Data.Ord ( Down(..) )
 
-    fmap = coerce
+fmap :: (a -> b) -> Down a -> Down b
+fmap = coerce
 
 -- | @since 4.11.0.0

@@ -1,5 +1,5 @@
 -- Instance of class Applicative for Last ()
-module InstApplicativeLast.hs where
+module InstApplicativeLast where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,10 +21,12 @@ import           GHC.Generics
 
 import Data.Semigroup ( Last(..) )
 
-  pure = Last
-  a <* _ = a
-  _ *> a = a
-  (<*>) = coerce
-  liftA2 = coerce
+pure = Last
+a <* _ = a
+_ *> a = a
+(<*>) :: Last (a -> b) -> Last a -> Last b
+(<*>) = coerce
+liftA2 :: (a -> b -> c) -> Last a -> Last b -> Last c
+liftA2 = coerce
 
 -- | @since 4.9.0.0

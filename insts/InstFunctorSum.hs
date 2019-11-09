@@ -1,5 +1,5 @@
 -- Instance of class Functor for Sum ()
-module InstFunctorSum.hs where
+module InstFunctorSum where
 import GHC.Base hiding (Any)
 import GHC.Enum
 import GHC.Num
@@ -15,6 +15,7 @@ import GHC.Real
 
 import Data.Semigroup.Internal ( Sum(..) )
 
-    fmap     = coerce
+fmap :: (a -> b) -> Sum a -> Sum b
+fmap     = coerce
 
 -- | @since 4.8.0.0

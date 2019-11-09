@@ -1,5 +1,5 @@
 -- Instance of class MonadFix for Product (f g)
-module InstMonadFixProductfg.hs where
+module InstMonadFixProductfg where
 import Control.Applicative
 import Control.Monad (MonadPlus(..))
 import Control.Monad.Fix (MonadFix(..))
@@ -13,9 +13,9 @@ import Text.Read (Read(..), readListDefault, readListPrecDefault)
 
 import Data.Functor.Product ( Product(..) )
 
-    mfix f = Pair (mfix (fstP . f)) (mfix (sndP . f))
-      where
-        fstP (Pair a _) = a
-        sndP (Pair _ b) = b
+mfix f = Pair (Control.Monad.Fix.mfix (fstP . f)) (Control.Monad.Fix.mfix (sndP . f))
+  where
+    fstP (Pair a _) = a
+    sndP (Pair _ b) = b
 
 -- | @since 4.9.0.0

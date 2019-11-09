@@ -1,5 +1,5 @@
 -- Instance of class Bifunctor for Arg ()
-module InstBifunctorArg.hs where
+module InstBifunctorArg where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,6 +21,6 @@ import           GHC.Generics
 
 import Data.Semigroup ( Arg(..) )
 
-  bimap f g (Arg a b) = Arg (f a) (g b)
+bimap f g (Arg a b) = Arg (f a) (g b)
 
 -- | @since 4.10.0.0

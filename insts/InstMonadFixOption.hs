@@ -1,5 +1,5 @@
 -- Instance of class MonadFix for Option ()
-module InstMonadFixOption.hs where
+module InstMonadFixOption where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,6 +21,6 @@ import           GHC.Generics
 
 import Data.Semigroup ( Option(..) )
 
-  mfix f = Option (mfix (getOption . f))
+mfix f = Option (Control.Monad.Fix.mfix (getOption . f))
 
 -- | @since 4.9.0.0

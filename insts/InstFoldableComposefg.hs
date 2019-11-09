@@ -1,5 +1,5 @@
 -- Instance of class Foldable for Compose (f g)
-module InstFoldableComposefg.hs where
+module InstFoldableComposefg where
 import Data.Functor.Classes
 
 import Control.Applicative
@@ -12,6 +12,6 @@ import Text.Read (Read(..), readListDefault, readListPrecDefault)
 
 import Data.Functor.Compose ( Compose(..) )
 
-    foldMap f (Compose t) = foldMap (foldMap f) t
+foldMap f (Compose t) = Prelude.foldMap (Prelude.foldMap f) t
 
 -- | @since 4.9.0.0

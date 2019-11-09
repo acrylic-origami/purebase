@@ -1,5 +1,5 @@
 -- Instance of class Applicative for  ([])
-module InstApplicative.hs where
+module InstApplicative where
 import GHC.Types
 import GHC.Classes
 import GHC.CString
@@ -24,16 +24,16 @@ import {-# SOURCE #-} Data.Semigroup.Internal ( stimesDefault
                                               )
 
 
-import because it has different types in different scenarios. ( Applicative(..) )
+import GHC.Base ( Applicative(..) )
 
-    {-# INLINE pure #-}
-    pure x    = [x]
-    {-# INLINE (<*>) #-}
-    fs <*> xs = [f x | f <- fs, x <- xs]
-    {-# INLINE liftA2 #-}
-    liftA2 f xs ys = [f x y | x <- xs, y <- ys]
-    {-# INLINE (*>) #-}
-    xs *> ys  = [y | _ <- xs, y <- ys]
+{-# INLINE pure #-}
+pure x    = [x]
+{-# INLINE (<*>) #-}
+fs <*> xs = [f x | f <- fs, x <- xs]
+{-# INLINE liftA2 #-}
+liftA2 f xs ys = [f x y | x <- xs, y <- ys]
+{-# INLINE (*>) #-}
+xs *> ys  = [y | _ <- xs, y <- ys]
 
 -- See Note: [List comprehensions and inlining]
 -- | @since 2.01

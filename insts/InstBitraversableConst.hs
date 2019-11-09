@@ -1,5 +1,5 @@
 -- Instance of class Bitraversable for Const ()
-module InstBitraversableConst.hs where
+module InstBitraversableConst where
 import Control.Applicative
 import Data.Bifunctor
 import Data.Bifoldable
@@ -69,6 +69,6 @@ import GHC.Generics (K1(..))
 
 import Data.Bitraversable ( Bitraversable(..) )
 
-  bitraverse f _ (Const a) = Const <$> f a
+bitraverse f _ (Const a) = Const <$> f a
 
 -- | @since 4.10.0.0

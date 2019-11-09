@@ -1,5 +1,5 @@
 -- Instance of class Functor for WrappedArrow (a b)
-module InstFunctorWrappedArrowab.hs where
+module InstFunctorWrappedArrowab where
 import Control.Category hiding ((.), id)
 import Control.Arrow
 import Data.Maybe
@@ -19,6 +19,6 @@ import GHC.Show (Show)
 
 import Control.Applicative ( WrappedArrow(..) )
 
-    fmap f (WrapArrow a) = WrapArrow (a >>> arr f)
+fmap f (WrapArrow a) = WrapArrow (a >>> arr f)
 
 -- | @since 2.01

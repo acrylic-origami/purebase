@@ -1,5 +1,5 @@
 -- Instance of class Monoid for Last ( a)
-module InstMonoidLasta.hs where
+module InstMonoidLasta where
 import GHC.Base hiding (Any)
 import GHC.Enum
 import GHC.Generics
@@ -63,7 +63,7 @@ import Data.Semigroup.Internal
 
 import Data.Monoid ( Last(..) )
 
-        mempty = Last Nothing
+mempty = Last Nothing
 
 -- | This data type witnesses the lifting of a 'Monoid' into an
 -- 'Applicative' pointwise.

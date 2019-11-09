@@ -1,5 +1,5 @@
 -- Instance of class Monad for NonEmpty ()
-module InstMonadNonEmpty.hs where
+module InstMonadNonEmpty where
 import GHC.Types
 import GHC.Classes
 import GHC.CString
@@ -24,12 +24,12 @@ import {-# SOURCE #-} Data.Semigroup.Internal ( stimesDefault
                                               )
 
 
-import because it has different types in different scenarios. ( Monad(..) )
+import GHC.Base ( Monad(..), NonEmpty(..), (++), (.) )
 
-  ~(a :| as) >>= f = b :| (bs ++ bs')
-    where b :| bs = f a
-          bs' = as >>= toList . f
-          toList ~(c :| cs) = c : cs
+~(a :| as) >>= f = b :| (bs ++ bs')
+  where b :| bs = f a
+        bs' = as GHC.Base.>>= toList . f
+        toList ~(c :| cs) = c : cs
 
 ----------------------------------------------
 -- The list type

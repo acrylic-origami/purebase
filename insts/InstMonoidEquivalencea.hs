@@ -1,5 +1,5 @@
 -- Instance of class Monoid for Equivalence ( a)
-module InstMonoidEquivalencea.hs where
+module InstMonoidEquivalencea where
 import Control.Applicative
 import Control.Category
 import Data.Function (on)
@@ -51,7 +51,7 @@ import Prelude hiding ((.),id)
 
 import Data.Functor.Contravariant ( Equivalence(..) )
 
-  mempty = Equivalence (\_ _ -> True)
+mempty = Equivalence (\_ _ -> True)
 
 -- | Check for equivalence with '=='.
 --

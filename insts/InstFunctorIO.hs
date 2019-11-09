@@ -1,5 +1,5 @@
 -- Instance of class Functor for IO ()
-module InstFunctorIO.hs where
+module InstFunctorIO where
 import GHC.Types
 import GHC.Classes
 import GHC.CString
@@ -24,8 +24,8 @@ import {-# SOURCE #-} Data.Semigroup.Internal ( stimesDefault
                                               )
 
 
-import because it has different types in different scenarios. ( Functor(..) )
+import GHC.Base ( Functor(..), (.), (>>=), pure )
 
-   fmap f x = x >>= (pure . f)
+fmap f x = x >>= (pure . f)
 
 -- | @since 2.01

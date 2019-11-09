@@ -1,5 +1,5 @@
 -- Instance of class Applicative for Min ()
-module InstApplicativeMin.hs where
+module InstApplicativeMin where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,10 +21,12 @@ import           GHC.Generics
 
 import Data.Semigroup ( Min(..) )
 
-  pure = Min
-  a <* _ = a
-  _ *> a = a
-  (<*>) = coerce
-  liftA2 = coerce
+pure = Min
+a <* _ = a
+_ *> a = a
+(<*>) :: Min (a -> b) -> Min a -> Min b
+(<*>) = coerce
+liftA2 :: (a -> b -> c) -> Min a -> Min b -> Min c
+liftA2 = coerce
 
 -- | @since 4.9.0.0

@@ -1,5 +1,5 @@
 -- Instance of class Contravariant for Compose (f g)
-module InstContravariantComposefg.hs where
+module InstContravariantComposefg where
 import Control.Applicative
 import Control.Category
 import Data.Function (on)
@@ -51,5 +51,5 @@ import Prelude hiding ((.),id)
 
 import Data.Functor.Contravariant ( Contravariant(..) )
 
-  contramap f (Compose fga) = Compose (fmap (contramap f) fga)
+contramap f (Compose fga) = Compose (fmap (Data.Functor.Contravariant.contramap f) fga)
 

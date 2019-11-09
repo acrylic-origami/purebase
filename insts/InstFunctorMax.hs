@@ -1,5 +1,5 @@
 -- Instance of class Functor for Max ()
-module InstFunctorMax.hs where
+module InstFunctorMax where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,6 +21,6 @@ import           GHC.Generics
 
 import Data.Semigroup ( Max(..) )
 
-  fmap f (Max x) = Max (f x)
+fmap f (Max x) = Max (f x)
 
 -- | @since 4.9.0.0

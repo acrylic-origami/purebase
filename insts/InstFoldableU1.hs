@@ -1,5 +1,5 @@
 -- Instance of class Foldable for U1 ()
-module InstFoldableU1.hs where
+module InstFoldableU1 where
 import Data.Bool
 import Data.Either
 import Data.Eq
@@ -11,9 +11,9 @@ import Data.Ord
 import Data.Proxy
 
 import GHC.Arr  ( Array(..), elems, numElements,
-                  foldlElems, foldrElems,
-                  foldlElems', foldrElems',
-                  foldl1Elems, foldr1Elems)
+  foldlElems, foldrElems,
+  foldlElems', foldrElems',
+  foldl1Elems, foldr1Elems)
 import GHC.Base hiding ( foldr )
 import GHC.Generics
 import GHC.Num  ( Num(..) )
@@ -21,21 +21,21 @@ import GHC.Num  ( Num(..) )
 
 import Data.Foldable ( Foldable(..) )
 
-    foldMap _ _ = mempty
-    {-# INLINE foldMap #-}
-    fold _ = mempty
-    {-# INLINE fold #-}
-    foldr _ z _ = z
-    {-# INLINE foldr #-}
-    foldl _ z _ = z
-    {-# INLINE foldl #-}
-    foldl1 _ _ = errorWithoutStackTrace "foldl1: U1"
-    foldr1 _ _ = errorWithoutStackTrace "foldr1: U1"
-    length _   = 0
-    null _     = True
-    elem _ _   = False
-    sum _      = 0
-    product _  = 1
+foldMap _ _ = mempty
+{-# INLINE foldMap #-}
+fold _ = mempty
+{-# INLINE fold #-}
+foldr _ z _ = z
+{-# INLINE foldr #-}
+foldl _ z _ = z
+{-# INLINE foldl #-}
+foldl1 _ _ = errorWithoutStackTrace "foldl1: U1"
+foldr1 _ _ = errorWithoutStackTrace "foldr1: U1"
+length _   = 0
+null _     = True
+elem _ _   = False
+sum _      = 0
+product _  = 1
 
 -- | @since 4.9.0.0
 -- deriving instance Foldable V1

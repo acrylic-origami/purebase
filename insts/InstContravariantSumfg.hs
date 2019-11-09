@@ -1,5 +1,5 @@
 -- Instance of class Contravariant for Sum (f g)
-module InstContravariantSumfg.hs where
+module InstContravariantSumfg where
 import Control.Applicative
 import Control.Category
 import Data.Function (on)
@@ -51,6 +51,6 @@ import Prelude hiding ((.),id)
 
 import Data.Functor.Contravariant ( Contravariant(..) )
 
-  contramap f (InL xs) = InL (contramap f xs)
-  contramap f (InR ys) = InR (contramap f ys)
+contramap f (InL xs) = InL (Data.Functor.Contravariant.contramap f xs)
+contramap f (InR ys) = InR (Data.Functor.Contravariant.contramap f ys)
 

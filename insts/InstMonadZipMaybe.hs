@@ -1,5 +1,5 @@
 -- Instance of class MonadZip for Maybe ()
-module InstMonadZipMaybe.hs where
+module InstMonadZipMaybe where
 import Control.Monad (liftM, liftM2)
 import Data.Functor.Identity
 import Data.Monoid
@@ -23,7 +23,9 @@ import GHC.Generics
 --
 
 import Control.Monad.Zip ( MonadZip(..) )
+import Control.Monad ( Monad(..) )
 
-    mzipWith = liftM2
+mzipWith :: (a -> b -> c) -> Maybe a -> Maybe b -> Maybe c
+mzipWith = liftM2
 
 -- | @since 4.8.0.0

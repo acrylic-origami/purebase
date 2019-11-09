@@ -1,5 +1,5 @@
 -- Instance of class Applicative for Either ( e)
-module InstApplicativeEithere.hs where
+module InstApplicativeEithere where
 import GHC.Base
 import GHC.Show
 import GHC.Read
@@ -11,8 +11,8 @@ import GHC.Read
 
 import Data.Either ( Either(..) )
 
-    pure          = Right
-    Left  e <*> _ = Left e
-    Right f <*> r = fmap f r
+pure          = Right
+Left  e <*> _ = Left e
+Right f <*> r = fmap f r
 
 -- | @since 4.4.0.0

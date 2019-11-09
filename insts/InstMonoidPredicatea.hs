@@ -1,5 +1,5 @@
 -- Instance of class Monoid for Predicate ( a)
-module InstMonoidPredicatea.hs where
+module InstMonoidPredicatea where
 import Control.Applicative
 import Control.Category
 import Data.Function (on)
@@ -51,7 +51,7 @@ import Prelude hiding ((.),id)
 
 import Data.Functor.Contravariant ( Predicate(..) )
 
-  mempty = Predicate $ const True
+mempty = Predicate $ const True
 
 -- | Defines a total ordering on a type as per 'compare'.
 --

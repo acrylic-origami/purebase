@@ -1,5 +1,5 @@
 -- Instance of class Monoid for Maybe (a)
-module InstMonoidMaybea.hs where
+module InstMonoidMaybea where
 import GHC.Types
 import GHC.Classes
 import GHC.CString
@@ -24,9 +24,9 @@ import {-# SOURCE #-} Data.Semigroup.Internal ( stimesDefault
                                               )
 
 
-import because it has different types in different scenarios. ( Monoid(..) )
+import GHC.Base ( Monoid(..) )
 
-    mempty = Nothing
+mempty = Nothing
 
 -- | For tuples, the 'Monoid' constraint on @a@ determines
 -- how the first values merge.

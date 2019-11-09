@@ -1,5 +1,5 @@
 -- Instance of class Monad for First ()
-module InstMonadFirst.hs where
+module InstMonadFirst where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,7 +21,8 @@ import           GHC.Generics
 
 import Data.Semigroup ( First(..) )
 
-  (>>) = (*>)
-  First a >>= f = f a
+(>>) :: First a -> First b -> First b
+(>>) = (*>)
+First a >>= f = f a
 
 -- | @since 4.9.0.0

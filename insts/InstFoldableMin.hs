@@ -1,5 +1,5 @@
 -- Instance of class Foldable for Min ()
-module InstFoldableMin.hs where
+module InstFoldableMin where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,6 +21,6 @@ import           GHC.Generics
 
 import Data.Semigroup ( Min(..) )
 
-  foldMap f (Min a) = f a
+foldMap f (Min a) = f a
 
 -- | @since 4.9.0.0

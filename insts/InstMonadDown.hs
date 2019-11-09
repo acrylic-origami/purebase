@@ -1,5 +1,5 @@
 -- Instance of class Monad for Down ()
-module InstMonadDown.hs where
+module InstMonadDown where
 import Data.Bits (Bits, FiniteBits)
 import Foreign.Storable (Storable)
 import GHC.Arr (Ix)
@@ -21,4 +21,4 @@ import GHC.Show
 
 import Data.Ord ( Down(..) )
 
-    Down a >>= k = k a
+Down a >>= k = k a

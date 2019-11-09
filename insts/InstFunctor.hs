@@ -1,5 +1,5 @@
 -- Instance of class Functor for  ([])
-module InstFunctor.hs where
+module InstFunctor where
 import GHC.Types
 import GHC.Classes
 import GHC.CString
@@ -24,10 +24,11 @@ import {-# SOURCE #-} Data.Semigroup.Internal ( stimesDefault
                                               )
 
 
-import because it has different types in different scenarios. ( Functor(..) )
+import GHC.Base ( Functor(..), map )
 
-    {-# INLINE fmap #-}
-    fmap = map
+{-# INLINE fmap #-}
+fmap :: (a -> b) -> [a] -> [b]
+fmap = map
 
 -- See Note: [List comprehensions and inlining]
 -- | @since 2.01

@@ -1,5 +1,5 @@
 -- Instance of class Monoid for Ordering ()
-module InstMonoidOrdering.hs where
+module InstMonoidOrdering where
 import GHC.Types
 import GHC.Classes
 import GHC.CString
@@ -24,8 +24,8 @@ import {-# SOURCE #-} Data.Semigroup.Internal ( stimesDefault
                                               )
 
 
-import because it has different types in different scenarios. ( Monoid(..) )
+import GHC.Base ( Monoid(..) )
 
-    mempty             = EQ
+mempty             = EQ
 
 -- | @since 4.9.0.0

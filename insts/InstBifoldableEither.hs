@@ -1,5 +1,5 @@
 -- Instance of class Bifoldable for Either ()
-module InstBifoldableEither.hs where
+module InstBifoldableEither where
 import Control.Applicative
 import Data.Functor.Utils (Max(..), Min(..), (#.))
 import Data.Maybe (fromMaybe)
@@ -43,8 +43,8 @@ import GHC.Generics (K1(..))
 
 import Data.Bifoldable ( Bifoldable(..) )
 
-  bifoldMap f _ (Left a) = f a
-  bifoldMap _ g (Right b) = g b
+bifoldMap f _ (Left a) = f a
+bifoldMap _ g (Right b) = g b
 
 -- | As 'bifoldr', but strict in the result of the reduction functions at each
 -- step.

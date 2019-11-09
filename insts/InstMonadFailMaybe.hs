@@ -1,5 +1,5 @@
 -- Instance of class MonadFail for Maybe ()
-module InstMonadFailMaybe.hs where
+module InstMonadFailMaybe where
 import GHC.Base (String, Monad(), Maybe(Nothing), IO())
 import  GHC.IO (failIO)
 
@@ -28,6 +28,6 @@ import  GHC.IO (failIO)
 
 import Control.Monad.Fail ( MonadFail(..) )
 
-    fail _ = Nothing
+fail _ = Nothing
 
 -- | @since 4.9.0.0

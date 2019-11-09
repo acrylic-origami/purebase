@@ -1,5 +1,5 @@
 -- Instance of class Foldable for Product (f g)
-module InstFoldableProductfg.hs where
+module InstFoldableProductfg where
 import Control.Applicative
 import Control.Monad (MonadPlus(..))
 import Control.Monad.Fix (MonadFix(..))
@@ -13,6 +13,6 @@ import Text.Read (Read(..), readListDefault, readListPrecDefault)
 
 import Data.Functor.Product ( Product(..) )
 
-    foldMap f (Pair x y) = foldMap f x `mappend` foldMap f y
+foldMap f (Pair x y) = Prelude.foldMap f x `mappend` Prelude.foldMap f y
 
 -- | @since 4.9.0.0

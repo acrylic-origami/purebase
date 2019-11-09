@@ -1,5 +1,5 @@
 -- Instance of class Applicative for Sum ()
-module InstApplicativeSum.hs where
+module InstApplicativeSum where
 import GHC.Base hiding (Any)
 import GHC.Enum
 import GHC.Num
@@ -15,7 +15,8 @@ import GHC.Real
 
 import Data.Semigroup.Internal ( Sum(..) )
 
-    pure     = Sum
-    (<*>)    = coerce
+pure     = Sum
+(<*>) :: Sum (a -> b) -> Sum a -> Sum b
+(<*>)    = coerce
 
 -- | @since 4.8.0.0

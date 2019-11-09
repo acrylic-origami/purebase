@@ -1,5 +1,5 @@
 -- Instance of class Bifunctor for  (,)
-module InstBifunctor.hs where
+module InstBifunctor where
 import Control.Applicative  ( Const(..) )
 import GHC.Generics ( K1(..) )
 
@@ -47,6 +47,6 @@ import GHC.Generics ( K1(..) )
 
 import Data.Bifunctor ( Bifunctor(..) )
 
-    bimap f g ~(a, b) = (f a, g b)
+bimap f g ~(a, b) = (f a, g b)
 
 -- | @since 4.8.0.0

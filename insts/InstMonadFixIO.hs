@@ -1,5 +1,5 @@
 -- Instance of class MonadFix for IO ()
-module InstMonadFixIO.hs where
+module InstMonadFixIO where
 import Data.Either
 import Data.Function ( fix )
 import Data.Maybe
@@ -33,6 +33,6 @@ import System.IO
 
 import Control.Monad.Fix ( MonadFix(..) )
 
-    mfix = fixIO
+mfix = fixIO
 
 -- | @since 2.01

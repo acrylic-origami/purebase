@@ -1,5 +1,5 @@
 -- Instance of class Functor for Const ( m)
-module InstFunctorConstm.hs where
+module InstFunctorConstm where
 import Data.Bits (Bits, FiniteBits)
 import Data.Foldable (Foldable(foldMap))
 import Foreign.Storable (Storable)
@@ -18,6 +18,6 @@ import GHC.Show (Show(showsPrec), showParen, showString)
 
 import Data.Functor.Const ( Const(..) )
 
-    fmap _ (Const v) = Const v
+fmap _ (Const v) = Const v
 
 -- | @since 2.0.1

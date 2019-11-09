@@ -1,5 +1,5 @@
 -- Instance of class Functor for NonEmpty ()
-module InstFunctorNonEmpty.hs where
+module InstFunctorNonEmpty where
 import GHC.Types
 import GHC.Classes
 import GHC.CString
@@ -24,9 +24,9 @@ import {-# SOURCE #-} Data.Semigroup.Internal ( stimesDefault
                                               )
 
 
-import because it has different types in different scenarios. ( Functor(..) )
+import GHC.Base ( Functor(..), NonEmpty(..) )
 
-  fmap f ~(a :| as) = f a :| fmap f as
-  b <$ ~(_ :| as)   = b   :| (b <$ as)
+fmap f ~(a :| as) = f a :| GHC.Base.fmap f as
+b <$ ~(_ :| as)   = b   :| (b GHC.Base.<$ as)
 
 -- | @since 4.9.0.0

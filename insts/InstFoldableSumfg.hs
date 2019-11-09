@@ -1,5 +1,5 @@
 -- Instance of class Foldable for Sum (f g)
-module InstFoldableSumfg.hs where
+module InstFoldableSumfg where
 import Control.Applicative ((<|>))
 import Data.Data (Data)
 import Data.Functor.Classes
@@ -10,7 +10,7 @@ import Text.Read (Read(..), readListDefault, readListPrecDefault)
 
 import Data.Functor.Sum ( Sum(..) )
 
-    foldMap f (InL x) = foldMap f x
-    foldMap f (InR y) = foldMap f y
+foldMap f (InL x) = Prelude.foldMap f x
+foldMap f (InR y) = Prelude.foldMap f y
 
 -- | @since 4.9.0.0

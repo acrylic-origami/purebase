@@ -1,5 +1,5 @@
 -- Instance of class Foldable for Product ()
-module InstFoldableProduct.hs where
+module InstFoldableProduct where
 import Data.Bool
 import Data.Either
 import Data.Eq
@@ -11,9 +11,9 @@ import Data.Ord
 import Data.Proxy
 
 import GHC.Arr  ( Array(..), elems, numElements,
-                  foldlElems, foldrElems,
-                  foldlElems', foldrElems',
-                  foldl1Elems, foldr1Elems)
+  foldlElems, foldrElems,
+  foldlElems', foldrElems',
+  foldl1Elems, foldr1Elems)
 import GHC.Base hiding ( foldr )
 import GHC.Generics
 import GHC.Num  ( Num(..) )
@@ -21,21 +21,26 @@ import GHC.Num  ( Num(..) )
 
 import Data.Foldable ( Foldable(..) )
 
-    foldMap               = coerce
+foldMap :: Monoid m => (a -> m) -> Product a -> m
+foldMap            = coerce
 
-    elem                  = (. getProduct) #. (==)
-    foldl                 = coerce
-    foldl'                = coerce
-    foldl1 _              = getProduct
-    foldr f z (Product x) = f x z
-    foldr'                = foldr
-    foldr1 _              = getProduct
-    length _              = 1
-    maximum               = getProduct
-    minimum               = getProduct
-    null _                = False
-    product               = getProduct
-    sum                   = getProduct
-    toList (Product x)    = [x]
+elem :: Eq a => a -> Product a -> Bool
+elem               = (. getProduct) #. (==)
+foldl :: (b -> a -> b) -> b -> Product a -> b
+foldl              = coerce
+foldl' :: (b -> a -> b) -> b -> Product a -> b
+foldl'             = coerce
+foldl1 _           = getProduct
+foldr f z (Product x) = f x z
+foldr' :: (a -> b -> b) -> b -> Product a -> b
+foldr'             = InstFoldableProduct.foldr
+foldr1 _           = getProduct
+length _           = 1
+maximum            = getProduct
+minimum            = getProduct
+null _             = False
+product            = getProduct
+sum                = getProduct
+toList (Product x)    = [x]
 
 -- | @since 4.8.0.0

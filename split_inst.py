@@ -4,8 +4,8 @@ import re
 
 q = sys.argv[1]
 
-context_rg = lambda pre, bra: re.compile("^" + pre + r"[^=]*=>\s*([^\n]*?) \(?([A-Za-z0-9]*)\s*([^=\n]*?)\)?\s*" + bra + r"(.*?)(?=^[^\s#-]|\Z)", re.MULTILINE | re.DOTALL)
-uncontext_rg = lambda pre, bra: re.compile("^" + pre + r"\s*([^=\n \(]*?) \(?([A-Za-z0-9]*)([^=\n\)]*?)\)?\s*" + bra + r"(.*?)(?=^[^\s#-]|\Z)", re.MULTILINE | re.DOTALL) # assume there's a space between the thing we're making and the type variables # fun fact: the outer instance name can only have a single bracket to the left because of the lack of support for partial type applications (e.g. `Maybe Int`)
+context_rg = lambda pre, bra: re.compile("^" + pre + r"[^=]*=>\s*([^=\n \(]*?) \(?([A-Za-z0-9]*)\s*([^=\n]*?)\)?\s*" + bra + r"(.*?)(?=^[^\s#-]|\Z)", re.MULTILINE | re.DOTALL)
+uncontext_rg = lambda pre, bra: re.compile("^" + pre + r"\s*([^=\n \(]*?) \(?([A-Za-z0-9]*)([^=\n\)]*?)\)?\s*" + bra + r"(.*?)(?=^[^\s#-]|\Z)", re.MULTILINE | re.DOTALL) # assume there's a space between the thing we're making and the type variables # fun fact: the outer instance name can only have a single bracket to the left because of the lack of support for partial type applications (e.g. `Either Int`)
 
 inst_grep = lambda pre, bra, s: re.findall(uncontext_rg(pre, bra), s) + re.findall(context_rg(pre, bra), s)
 

@@ -1,5 +1,5 @@
 -- Instance of class Monad for Min ()
-module InstMonadMin.hs where
+module InstMonadMin where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,7 +21,8 @@ import           GHC.Generics
 
 import Data.Semigroup ( Min(..) )
 
-  (>>) = (*>)
-  Min a >>= f = f a
+(>>) :: Min a -> Min b -> Min b
+(>>) = (*>)
+Min a >>= f = f a
 
 -- | @since 4.9.0.0

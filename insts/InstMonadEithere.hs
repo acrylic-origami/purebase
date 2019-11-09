@@ -1,5 +1,5 @@
 -- Instance of class Monad for Either ( e)
-module InstMonadEithere.hs where
+module InstMonadEithere where
 import GHC.Base
 import GHC.Show
 import GHC.Read
@@ -11,8 +11,8 @@ import GHC.Read
 
 import Data.Either ( Either(..) )
 
-    Left  l >>= _ = Left l
-    Right r >>= k = k r
+Left  l >>= _ = Left l
+Right r >>= k = k r
 
 -- | Case analysis for the 'Either' type.
 -- If the value is @'Left' a@, apply the first function to @a@;

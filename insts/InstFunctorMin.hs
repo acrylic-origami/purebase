@@ -1,5 +1,5 @@
 -- Instance of class Functor for Min ()
-module InstFunctorMin.hs where
+module InstFunctorMin where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,6 +21,6 @@ import           GHC.Generics
 
 import Data.Semigroup ( Min(..) )
 
-  fmap f (Min x) = Min (f x)
+fmap f (Min x) = Min (f x)
 
 -- | @since 4.9.0.0

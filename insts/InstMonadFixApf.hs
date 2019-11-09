@@ -1,5 +1,5 @@
 -- Instance of class MonadFix for Ap (f)
-module InstMonadFixApf.hs where
+module InstMonadFixApf where
 import Data.Either
 import Data.Function ( fix )
 import Data.Maybe
@@ -33,7 +33,7 @@ import System.IO
 
 import Control.Monad.Fix ( MonadFix(..) )
 
-    mfix f   = Ap (mfix (getAp . f))
+mfix f   = Ap (Control.Monad.Fix.mfix (getAp . f))
 
 -- Instances for GHC.Generics
 -- | @since 4.9.0.0

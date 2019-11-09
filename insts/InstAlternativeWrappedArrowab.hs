@@ -1,5 +1,5 @@
 -- Instance of class Alternative for WrappedArrow (a b)
-module InstAlternativeWrappedArrowab.hs where
+module InstAlternativeWrappedArrowab where
 import Control.Category hiding ((.), id)
 import Control.Arrow
 import Data.Maybe
@@ -19,7 +19,8 @@ import GHC.Show (Show)
 
 import Control.Applicative ( WrappedArrow(..) )
 
-    empty = WrapArrow zeroArrow
-    WrapArrow u <|> WrapArrow v = WrapArrow (u <+> v)
+empty :: (ArrowZero a, ArrowPlus a) => WrappedArrow a b z
+empty = WrapArrow zeroArrow
+WrapArrow u <|> WrapArrow v = WrapArrow (u <+> v)
 
 -- | Lists, but with an 'Applicative' functor based on zipping.

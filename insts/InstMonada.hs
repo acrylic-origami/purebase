@@ -1,5 +1,5 @@
 -- Instance of class Monad for  ((,) a)
-module InstMonada.hs where
+module InstMonada where
 import GHC.Types
 import GHC.Classes
 import GHC.CString
@@ -24,8 +24,8 @@ import {-# SOURCE #-} Data.Semigroup.Internal ( stimesDefault
                                               )
 
 
-import because it has different types in different scenarios. ( Monad(..) )
+import GHC.Base ( Monad(..) )
 
-    (u, a) >>= k = case k a of (v, b) -> (u <> v, b)
+(u, a) >>= k = case k a of (v, b) -> (u <> v, b)
 
 -- | @since 4.10.0.0

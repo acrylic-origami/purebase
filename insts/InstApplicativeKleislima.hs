@@ -1,5 +1,5 @@
 -- Instance of class Applicative for Kleisli (m a)
-module InstApplicativeKleislima.hs where
+module InstApplicativeKleislima where
 import Data.Tuple ( fst, snd, uncurry )
 import Data.Either
 import Control.Monad.Fix
@@ -10,13 +10,14 @@ import GHC.Generics (Generic, Generic1)
 
 import Control.Arrow ( Kleisli(..) )
 
-  pure = Kleisli . const . pure
-  {-# INLINE pure #-}
-  Kleisli f <*> Kleisli g = Kleisli $ \x -> f x <*> g x
-  {-# INLINE (<*>) #-}
-  Kleisli f *> Kleisli g = Kleisli $ \x -> f x *> g x
-  {-# INLINE (*>) #-}
-  Kleisli f <* Kleisli g = Kleisli $ \x -> f x <* g x
-  {-# INLINE (<*) #-}
+-- pure :: Applicative m => Kleisli m a a
+-- pure = Kleisli Control.Category.. const Control.Category.. GHC.Base.pure
+-- {-# INLINE pure #-} -- TODO
+Kleisli f <*> Kleisli g = Kleisli $ \x -> f x GHC.Base.<*> g x
+{-# INLINE (<*>) #-}
+Kleisli f *> Kleisli g = Kleisli $ \x -> f x GHC.Base.*> g x
+{-# INLINE (*>) #-}
+Kleisli f <* Kleisli g = Kleisli $ \x -> f x GHC.Base.<* g x
+{-# INLINE (<*) #-}
 
 -- | @since 4.14.0.0

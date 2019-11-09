@@ -1,5 +1,5 @@
 -- Instance of class Bifunctor for Either ()
-module InstBifunctorEither.hs where
+module InstBifunctorEither where
 import Control.Applicative  ( Const(..) )
 import GHC.Generics ( K1(..) )
 
@@ -47,7 +47,7 @@ import GHC.Generics ( K1(..) )
 
 import Data.Bifunctor ( Bifunctor(..) )
 
-    bimap f _ (Left a) = Left (f a)
-    bimap _ g (Right b) = Right (g b)
+bimap f _ (Left a) = Left (f a)
+bimap _ g (Right b) = Right (g b)
 
 -- | @since 4.8.0.0

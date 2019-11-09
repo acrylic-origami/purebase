@@ -1,5 +1,5 @@
 -- Instance of class Monoid for Endo ( a)
-module InstMonoidEndoa.hs where
+module InstMonoidEndoa where
 import GHC.Base hiding (Any)
 import GHC.Enum
 import GHC.Num
@@ -15,7 +15,7 @@ import GHC.Real
 
 import Data.Semigroup.Internal ( Endo(..) )
 
-        mempty = Endo id
+mempty = Endo id
 
 -- | Boolean monoid under conjunction ('&&').
 --

@@ -1,5 +1,5 @@
 -- Instance of class MonadZip for NE (.NonEmpty)
-module InstMonadZipNENonEmpty.hs where
+module InstMonadZipNENonEmpty where
 import Control.Monad (liftM, liftM2)
 import Data.Functor.Identity
 import Data.Monoid
@@ -23,9 +23,12 @@ import GHC.Generics
 --
 
 import Control.Monad.Zip ( MonadZip(..) )
+import Control.Monad ( Monad(..) )
 
-  mzip     = NE.zip
-  mzipWith = NE.zipWith
-  munzip   = NE.unzip
+mzip     = NE.zip
+mzipWith = NE.zipWith
+
+munzip :: Functor f => f (a,b) -> (f a, f b)
+munzip   = NE.unzip
 
 -- | @since 4.8.0.0

@@ -1,5 +1,5 @@
 -- Instance of class Bifoldable for Arg ()
-module InstBifoldableArg.hs where
+module InstBifoldableArg where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,6 +21,6 @@ import           GHC.Generics
 
 import Data.Semigroup ( Arg(..) )
 
-  bifoldMap f g (Arg a b) = f a <> g b
+bifoldMap f g (Arg a b) = f a <> g b
 
 -- | @since 4.10.0.0

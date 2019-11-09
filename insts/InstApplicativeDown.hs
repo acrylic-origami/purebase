@@ -1,5 +1,5 @@
 -- Instance of class Applicative for Down ()
-module InstApplicativeDown.hs where
+module InstApplicativeDown where
 import Data.Bits (Bits, FiniteBits)
 import Foreign.Storable (Storable)
 import GHC.Arr (Ix)
@@ -21,7 +21,9 @@ import GHC.Show
 
 import Data.Ord ( Down(..) )
 
-    pure = Down
-    (<*>) = coerce
+pure = Down
+
+(<*>) :: Down (a -> b) -> Down a -> Down b
+(<*>) = coerce
 
 -- | @since 4.11.0.0

@@ -1,5 +1,5 @@
 -- Instance of class MonadFix for Product ()
-module InstMonadFixProduct.hs where
+module InstMonadFixProduct where
 import Data.Either
 import Data.Function ( fix )
 import Data.Maybe
@@ -33,6 +33,6 @@ import System.IO
 
 import Control.Monad.Fix ( MonadFix(..) )
 
-    mfix f   = Product (fix (getProduct . f))
+mfix f   = Product (fix (getProduct . f))
 
 -- | @since 4.8.0.0

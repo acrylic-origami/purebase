@@ -1,5 +1,5 @@
 -- Instance of class MonadZip for Product ()
-module InstMonadZipProduct.hs where
+module InstMonadZipProduct where
 import Control.Monad (liftM, liftM2)
 import Data.Functor.Identity
 import Data.Monoid
@@ -23,7 +23,10 @@ import GHC.Generics
 --
 
 import Control.Monad.Zip ( MonadZip(..) )
+import Data.Semigroup ( Product(..) )
+import Control.Monad ( Monad(..) )
 
-    mzipWith = liftM2
+mzipWith :: (a -> b -> c) -> Data.Semigroup.Product a -> Data.Semigroup.Product b -> Data.Semigroup.Product c
+mzipWith = liftM2
 
 -- | @since 4.8.0.0

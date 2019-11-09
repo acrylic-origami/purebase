@@ -1,5 +1,5 @@
 -- Instance of class Enum for Last (a)
-module InstEnumLasta.hs where
+module InstEnumLasta where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,13 +21,14 @@ import           GHC.Generics
 
 import Data.Semigroup ( Last(..) )
 
-  succ (Last a) = Last (succ a)
-  pred (Last a) = Last (pred a)
-  toEnum = Last . toEnum
-  fromEnum = fromEnum . getLast
-  enumFrom (Last a) = Last <$> enumFrom a
-  enumFromThen (Last a) (Last b) = Last <$> enumFromThen a b
-  enumFromTo (Last a) (Last b) = Last <$> enumFromTo a b
-  enumFromThenTo (Last a) (Last b) (Last c) = Last <$> enumFromThenTo a b c
+-- succ (Last a) = Last (succ a)
+-- pred (Last a) = Last (pred a)
+-- toEnum = Last . toEnum
+-- fromEnum = fromEnum . getLast
+-- enumFrom (Last a) = Last <$> enumFrom a
+-- enumFromThen (Last a) (Last b) = Last <$> enumFromThen a b
+-- enumFromTo (Last a) (Last b) = Last <$> enumFromTo a b
+-- enumFromThenTo (Last a) (Last b) (Last c) = Last <$> enumFromThenTo a b c
+-- TODO
 
 -- | @since 4.9.0.0

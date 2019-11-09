@@ -1,5 +1,5 @@
 -- Instance of class Alternative for Product (f g)
-module InstAlternativeProductfg.hs where
+module InstAlternativeProductfg where
 import Control.Applicative
 import Control.Monad (MonadPlus(..))
 import Control.Monad.Fix (MonadFix(..))
@@ -13,7 +13,8 @@ import Text.Read (Read(..), readListDefault, readListPrecDefault)
 
 import Data.Functor.Product ( Product(..) )
 
-    empty = Pair empty empty
-    Pair x1 y1 <|> Pair x2 y2 = Pair (x1 <|> x2) (y1 <|> y2)
+empty :: (Alternative f, Alternative g) => Product f g a
+empty = Pair Control.Applicative.empty Control.Applicative.empty
+Pair x1 y1 <|> Pair x2 y2 = Pair (x1 Control.Applicative.<|> x2) (y1 Control.Applicative.<|> y2)
 
 -- | @since 4.9.0.0

@@ -1,5 +1,5 @@
 -- Instance of class Applicative for StateL ( s)
-module InstApplicativeStateLs.hs where
+module InstApplicativeStateLs where
 import Data.Coerce (Coercible, coerce)
 import GHC.Base ( Applicative(..), Functor(..), Maybe(..), Monoid(..), Ord(..)
                 , Semigroup(..), ($), otherwise )
@@ -13,14 +13,14 @@ import GHC.Base ( Applicative(..), Functor(..), Maybe(..), Monoid(..), Ord(..)
 
 import Data.Functor.Utils ( StateL(..) )
 
-    pure x = StateL (\ s -> (s, x))
-    StateL kf <*> StateL kv = StateL $ \ s ->
-        let (s', f) = kf s
-            (s'', v) = kv s'
-        in (s'', f v)
-    liftA2 f (StateL kx) (StateL ky) = StateL $ \s ->
-        let (s', x) = kx s
-            (s'', y) = ky s'
-        in (s'', f x y)
+pure x = StateL (\ s -> (s, x))
+StateL kf <*> StateL kv = StateL $ \ s ->
+  let (s', f) = kf s
+      (s'', v) = kv s'
+  in (s'', f v)
+liftA2 f (StateL kx) (StateL ky) = StateL $ \s ->
+  let (s', x) = kx s
+      (s'', y) = ky s'
+  in (s'', f x y)
 
 -- right-to-left state-transforming monad

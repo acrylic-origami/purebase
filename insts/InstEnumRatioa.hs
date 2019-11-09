@@ -1,5 +1,6 @@
+{-# LANGUAGE CPP #-}
 -- Instance of class Enum for Ratio (a)
-module InstEnumRatioa.hs where
+module InstEnumRatioa where
 import GHC.Base
 import GHC.Num
 import GHC.List
@@ -14,19 +15,18 @@ import GHC.Integer.GMP.Internals
 #endif
 
 
-import GHC.Real ( Ratio(..) )
+import GHC.Real ( Ratio(..), numericEnumFrom, numericEnumFromThen, numericEnumFromTo, numericEnumFromThenTo )
 
-    {-# SPECIALIZE instance Enum Rational #-}
-    succ x              =  x + 1
-    pred x              =  x - 1
+succ x              =  x + 1
+pred x              =  x - 1
 
-    toEnum n            =  fromIntegral n :% 1
-    fromEnum            =  fromInteger . truncate
+toEnum n            =  fromIntegral n :% 1
+fromEnum            =  fromInteger . truncate
 
-    enumFrom            =  numericEnumFrom
-    enumFromThen        =  numericEnumFromThen
-    enumFromTo          =  numericEnumFromTo
-    enumFromThenTo      =  numericEnumFromThenTo
+enumFrom            =  numericEnumFrom
+enumFromThen        =  numericEnumFromThen
+enumFromTo          =  numericEnumFromTo
+enumFromThenTo      =  numericEnumFromThenTo
 
 --------------------------------------------------------------
 -- Coercions

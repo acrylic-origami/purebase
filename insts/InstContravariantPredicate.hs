@@ -1,5 +1,5 @@
 -- Instance of class Contravariant for Predicate ()
-module InstContravariantPredicate.hs where
+module InstContravariantPredicate where
 import Control.Applicative
 import Control.Category
 import Data.Function (on)
@@ -49,7 +49,7 @@ import Prelude hiding ((.),id)
 -- condition holds.
 
 
-import Data.Functor.Contravariant ( Contravariant(..) )
+import Data.Functor.Contravariant ( Contravariant(..), Predicate(..) )
 
-  contramap f g = Predicate $ getPredicate g . f
+contramap f g = Predicate $ getPredicate g . f
 

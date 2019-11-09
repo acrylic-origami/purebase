@@ -1,5 +1,5 @@
 -- Instance of class Monoid for Min (a)
-module InstMonoidMina.hs where
+module InstMonoidMina where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,6 +21,7 @@ import           GHC.Generics
 
 import Data.Semigroup ( Min(..) )
 
-  mempty = maxBound
+mempty :: (Ord a, Bounded a) => Min a
+mempty = maxBound
 
 -- | @since 4.9.0.0

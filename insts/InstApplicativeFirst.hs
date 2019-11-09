@@ -1,5 +1,5 @@
 -- Instance of class Applicative for First ()
-module InstApplicativeFirst.hs where
+module InstApplicativeFirst where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,10 +21,12 @@ import           GHC.Generics
 
 import Data.Semigroup ( First(..) )
 
-  pure x = First x
-  a <* _ = a
-  _ *> a = a
-  (<*>) = coerce
-  liftA2 = coerce
+pure x = First x
+a <* _ = a
+_ *> a = a
+(<*>) :: First (a -> b) -> First a -> First b
+(<*>) = coerce
+liftA2 :: (a -> b -> c) -> First a -> First b -> First c
+liftA2 = coerce
 
 -- | @since 4.9.0.0

@@ -1,5 +1,5 @@
 -- Instance of class Enum for Max (a)
-module InstEnumMaxa.hs where
+module InstEnumMaxa where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,13 +21,14 @@ import           GHC.Generics
 
 import Data.Semigroup ( Max(..) )
 
-  succ (Max a) = Max (succ a)
-  pred (Max a) = Max (pred a)
-  toEnum = Max . toEnum
-  fromEnum = fromEnum . getMax
-  enumFrom (Max a) = Max <$> enumFrom a
-  enumFromThen (Max a) (Max b) = Max <$> enumFromThen a b
-  enumFromTo (Max a) (Max b) = Max <$> enumFromTo a b
-  enumFromThenTo (Max a) (Max b) (Max c) = Max <$> enumFromThenTo a b c
+-- succ (Max a) = Max (succ a)
+-- pred (Max a) = Max (pred a)
+-- toEnum = Max . toEnum
+-- fromEnum = fromEnum . getMax
+-- enumFrom (Max a) = Max <$> enumFrom a
+-- enumFromThen (Max a) (Max b) = Max <$> enumFromThen a b
+-- enumFromTo (Max a) (Max b) = Max <$> enumFromTo a b
+-- enumFromThenTo (Max a) (Max b) (Max c) = Max <$> enumFromThenTo a b c
+-- TODO
 
 -- | @since 4.9.0.0

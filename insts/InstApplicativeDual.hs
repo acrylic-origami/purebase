@@ -1,5 +1,5 @@
 -- Instance of class Applicative for Dual ()
-module InstApplicativeDual.hs where
+module InstApplicativeDual where
 import GHC.Base hiding (Any)
 import GHC.Enum
 import GHC.Num
@@ -15,7 +15,8 @@ import GHC.Real
 
 import Data.Semigroup.Internal ( Dual(..) )
 
-    pure     = Dual
-    (<*>)    = coerce
+pure     = Dual
+(<*>) :: Dual (a -> b) -> Dual a -> Dual b
+(<*>)    = coerce
 
 -- | @since 4.8.0.0

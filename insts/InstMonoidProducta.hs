@@ -1,5 +1,5 @@
 -- Instance of class Monoid for Product (a)
-module InstMonoidProducta.hs where
+module InstMonoidProducta where
 import GHC.Base hiding (Any)
 import GHC.Enum
 import GHC.Num
@@ -15,6 +15,6 @@ import GHC.Real
 
 import Data.Semigroup.Internal ( Product(..) )
 
-        mempty = Product 1
+mempty = Product 1
 
 -- | @since 4.8.0.0

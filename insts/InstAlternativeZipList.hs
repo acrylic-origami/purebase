@@ -1,5 +1,5 @@
 -- Instance of class Alternative for ZipList ()
-module InstAlternativeZipList.hs where
+module InstAlternativeZipList where
 import Control.Category hiding ((.), id)
 import Control.Arrow
 import Data.Maybe
@@ -19,8 +19,8 @@ import GHC.Show (Show)
 
 import Control.Applicative ( ZipList(..) )
 
-   empty = ZipList []
-   ZipList xs <|> ZipList ys = ZipList (xs ++ drop (length xs) ys)
+empty = ZipList []
+ZipList xs <|> ZipList ys = ZipList (xs ++ drop (length xs) ys)
 
 -- extra functions
 

@@ -1,5 +1,5 @@
 -- Instance of class Foldable for Alt (f)
-module InstFoldableAltf.hs where
+module InstFoldableAltf where
 import Data.Bool
 import Data.Either
 import Data.Eq
@@ -11,9 +11,9 @@ import Data.Ord
 import Data.Proxy
 
 import GHC.Arr  ( Array(..), elems, numElements,
-                  foldlElems, foldrElems,
-                  foldlElems', foldrElems',
-                  foldl1Elems, foldr1Elems)
+  foldlElems, foldrElems,
+  foldlElems', foldrElems',
+  foldl1Elems, foldr1Elems)
 import GHC.Base hiding ( foldr )
 import GHC.Generics
 import GHC.Num  ( Num(..) )
@@ -21,6 +21,6 @@ import GHC.Num  ( Num(..) )
 
 import Data.Foldable ( Foldable(..) )
 
-    foldMap f = foldMap f . getAlt
+foldMap f = Data.Foldable.foldMap f . getAlt
 
 -- | @since 4.12.0.0

@@ -1,5 +1,7 @@
+{-# LANGUAGE CPP #-}
+
 -- Instance of class Eq for TypeRep ( a)
-module InstEqTypeRepa.hs where
+module InstEqTypeRepa where
 import GHC.Base
 import qualified GHC.Arr as A
 import GHC.Types ( TYPE )
@@ -24,6 +26,6 @@ import  GHC.Fingerprint
 
 import Data.Typeable.Internal ( TypeRep(..) )
 
-  _ == _  = True
-  {-# INLINABLE (==) #-}
+_ == _  = True
+{-# INLINABLE (==) #-}
 

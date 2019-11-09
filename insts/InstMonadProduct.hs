@@ -1,5 +1,5 @@
 -- Instance of class Monad for Product ()
-module InstMonadProduct.hs where
+module InstMonadProduct where
 import GHC.Base hiding (Any)
 import GHC.Enum
 import GHC.Num
@@ -15,7 +15,7 @@ import GHC.Real
 
 import Data.Semigroup.Internal ( Product(..) )
 
-    m >>= k  = k (getProduct m)
+m >>= k  = k (getProduct m)
 
 
 -- | Monoid under '<|>'.

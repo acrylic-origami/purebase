@@ -1,5 +1,5 @@
 -- Instance of class Functor for Product ()
-module InstFunctorProduct.hs where
+module InstFunctorProduct where
 import GHC.Base hiding (Any)
 import GHC.Enum
 import GHC.Num
@@ -15,6 +15,7 @@ import GHC.Real
 
 import Data.Semigroup.Internal ( Product(..) )
 
-    fmap     = coerce
+fmap :: (a -> b) -> Product a -> Product b
+fmap     = coerce
 
 -- | @since 4.8.0.0

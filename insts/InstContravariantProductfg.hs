@@ -1,5 +1,5 @@
 -- Instance of class Contravariant for Product (f g)
-module InstContravariantProductfg.hs where
+module InstContravariantProductfg where
 import Control.Applicative
 import Control.Category
 import Data.Function (on)
@@ -51,5 +51,5 @@ import Prelude hiding ((.),id)
 
 import Data.Functor.Contravariant ( Contravariant(..) )
 
-    contramap f (Pair a b) = Pair (contramap f a) (contramap f b)
+contramap f (Pair a b) = Pair (Data.Functor.Contravariant.contramap f a) (Data.Functor.Contravariant.contramap f b)
 

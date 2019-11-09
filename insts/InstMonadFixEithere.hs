@@ -1,5 +1,5 @@
 -- Instance of class MonadFix for Either ( e)
-module InstMonadFixEithere.hs where
+module InstMonadFixEithere where
 import Data.Either
 import Data.Function ( fix )
 import Data.Maybe
@@ -33,9 +33,9 @@ import System.IO
 
 import Control.Monad.Fix ( MonadFix(..) )
 
-    mfix f = let a = f (unRight a) in a
-             where unRight (Right x) = x
-                   unRight (Left  _) = errorWithoutStackTrace "mfix Either: Left"
+mfix f = let a = f (unRight a) in a
+  where unRight (Right x) = x
+        unRight (Left  _) = errorWithoutStackTrace "mfix Either: Left"
 
 -- | @since 2.01
 -- instance MonadFix (ST s) where

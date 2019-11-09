@@ -1,5 +1,5 @@
 -- Instance of class MonadFix for Maybe ()
-module InstMonadFixMaybe.hs where
+module InstMonadFixMaybe where
 import Data.Either
 import Data.Function ( fix )
 import Data.Maybe
@@ -33,8 +33,8 @@ import System.IO
 
 import Control.Monad.Fix ( MonadFix(..) )
 
-    mfix f = let a = f (unJust a) in a
-             where unJust (Just x) = x
-                   unJust Nothing  = errorWithoutStackTrace "mfix Maybe: Nothing"
+mfix f = let a = f (unJust a) in a
+  where unJust (Just x) = x
+        unJust Nothing  = errorWithoutStackTrace "mfix Maybe: Nothing"
 
 -- | @since 2.01

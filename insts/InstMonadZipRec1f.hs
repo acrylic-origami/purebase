@@ -1,5 +1,5 @@
 -- Instance of class MonadZip for Rec1 (f)
-module InstMonadZipRec1f.hs where
+module InstMonadZipRec1f where
 import Control.Monad (liftM, liftM2)
 import Data.Functor.Identity
 import Data.Monoid
@@ -24,6 +24,7 @@ import GHC.Generics
 
 import Control.Monad.Zip ( MonadZip(..) )
 
-    mzipWith f (Rec1 fa) (Rec1 fb) = Rec1 (mzipWith f fa fb)
+mzipWith :: (MonadZip f) => (a -> b -> c) -> Rec1 f a -> Rec1 f b -> Rec1 f c
+mzipWith f (Rec1 fa) (Rec1 fb) = Rec1 (Control.Monad.Zip.mzipWith f fa fb)
 
 -- | @since 4.9.0.0

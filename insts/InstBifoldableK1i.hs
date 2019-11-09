@@ -1,5 +1,5 @@
 -- Instance of class Bifoldable for K1 ( i)
-module InstBifoldableK1i.hs where
+module InstBifoldableK1i where
 import Control.Applicative
 import Data.Functor.Utils (Max(..), Min(..), (#.))
 import Data.Maybe (fromMaybe)
@@ -43,6 +43,6 @@ import GHC.Generics (K1(..))
 
 import Data.Bifoldable ( Bifoldable(..) )
 
-  bifoldMap f _ (K1 c) = f c
+bifoldMap f _ (K1 c) = f c
 
 -- | @since 4.10.0.0

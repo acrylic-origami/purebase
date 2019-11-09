@@ -1,5 +1,5 @@
 -- Instance of class MonadZip for f (:*: g)
-module InstMonadZipfg.hs where
+module InstMonadZipfg where
 import Control.Monad (liftM, liftM2)
 import Data.Functor.Identity
 import Data.Monoid
@@ -24,7 +24,8 @@ import GHC.Generics
 
 import Control.Monad.Zip ( MonadZip(..) )
 
-    mzipWith f (x1 :*: y1) (x2 :*: y2) = mzipWith f x1 x2 :*: mzipWith f y1 y2
+mzipWith :: (MonadZip f, MonadZip g) => (a -> b -> c) -> (:*:) f g a -> (:*:) f g b -> (:*:) f g c
+mzipWith f (x1 :*: y1) (x2 :*: y2) = Control.Monad.Zip.mzipWith f x1 x2 :*: Control.Monad.Zip.mzipWith f y1 y2
 
 -- instances for Data.Ord
 

@@ -1,5 +1,5 @@
 -- Instance of class MonadFix for NonEmpty ()
-module InstMonadFixNonEmpty.hs where
+module InstMonadFixNonEmpty where
 import Data.Either
 import Data.Function ( fix )
 import Data.Maybe
@@ -33,10 +33,10 @@ import System.IO
 
 import Control.Monad.Fix ( MonadFix(..) )
 
-  mfix f = case fix (f . neHead) of
-             ~(x :| _) -> x :| mfix (neTail . f)
-    where
-      neHead ~(a :| _) = a
-      neTail ~(_ :| as) = as
+mfix f = case fix (f . neHead) of
+             ~(x :| _) -> x :| Control.Monad.Fix.mfix (neTail . f)
+  where
+    neHead ~(a :| _) = a
+    neTail ~(_ :| as) = as
 
 -- | @since 2.01

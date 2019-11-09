@@ -1,5 +1,5 @@
 -- Instance of class MonadZip for  ([])
-module InstMonadZip.hs where
+module InstMonadZip where
 import Control.Monad (liftM, liftM2)
 import Data.Functor.Identity
 import Data.Monoid
@@ -24,8 +24,8 @@ import GHC.Generics
 
 import Control.Monad.Zip ( MonadZip(..) )
 
-    mzip     = zip
-    mzipWith = zipWith
-    munzip   = unzip
+mzip     = zip
+mzipWith = zipWith
+munzip   = unzip
 
 -- | @since 4.9.0.0

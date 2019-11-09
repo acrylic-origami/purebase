@@ -1,5 +1,5 @@
 -- Instance of class Alternative for Option ()
-module InstAlternativeOption.hs where
+module InstAlternativeOption where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,8 +21,8 @@ import           GHC.Generics
 
 import Data.Semigroup ( Option(..) )
 
-  empty = Option Nothing
-  Option Nothing <|> b = b
-  a <|> _ = a
+empty = Option Nothing
+Option Nothing <|> b = b
+a <|> _ = a
 
 -- | @since 4.9.0.0

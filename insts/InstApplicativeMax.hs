@@ -1,5 +1,5 @@
 -- Instance of class Applicative for Max ()
-module InstApplicativeMax.hs where
+module InstApplicativeMax where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,10 +21,13 @@ import           GHC.Generics
 
 import Data.Semigroup ( Max(..) )
 
-  pure = Max
-  a <* _ = a
-  _ *> a = a
-  (<*>) = coerce
-  liftA2 = coerce
+pure = Max
+a <* _ = a
+_ *> a = a
+
+(<*>) :: Max (a -> b) -> Max a -> Max b
+(<*>) = coerce
+liftA2 :: (a -> b -> c) -> Max a -> Max b -> Max c
+liftA2 = coerce
 
 -- | @since 4.9.0.0

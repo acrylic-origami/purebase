@@ -1,5 +1,5 @@
 -- Instance of class Monoid for First ( a)
-module InstMonoidFirsta.hs where
+module InstMonoidFirsta where
 import GHC.Base hiding (Any)
 import GHC.Enum
 import GHC.Generics
@@ -63,7 +63,7 @@ import Data.Semigroup.Internal
 
 import Data.Monoid ( First(..) )
 
-        mempty = First Nothing
+mempty = First Nothing
 
 -- | Maybe monoid returning the rightmost non-Nothing value.
 --

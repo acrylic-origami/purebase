@@ -1,5 +1,6 @@
+{-# LANGUAGE CPP #-}
 -- Instance of class Fractional for Ratio (a)
-module InstFractionalRatioa.hs where
+module InstFractionalRatioa where
 import GHC.Base
 import GHC.Num
 import GHC.List
@@ -14,14 +15,13 @@ import GHC.Integer.GMP.Internals
 #endif
 
 
-import GHC.Real ( Fractional(..) )
+import GHC.Real ( Fractional(..), Ratio(..), (%), ratioZeroDenominatorError )
 
-    {-# SPECIALIZE instance Fractional Rational #-}
-    (x:%y) / (x':%y')   =  (x*y') % (y*x')
-    recip (0:%_)        = ratioZeroDenominatorError
-    recip (x:%y)
+(x:%y) / (x':%y')   =  (x*y') % (y*x')
+recip (0:%_)        = ratioZeroDenominatorError
+recip (x:%y)
         | x < 0         = negate y :% negate x
         | otherwise     = y :% x
-    fromRational (x:%y) =  fromInteger x % fromInteger y
+fromRational (x:%y) =  fromInteger x % fromInteger y
 
 -- | @since 2.0.1

@@ -1,5 +1,5 @@
 -- Instance of class MonadZip for Proxy ()
-module InstMonadZipProxy.hs where
+module InstMonadZipProxy where
 import Control.Monad (liftM, liftM2)
 import Data.Functor.Identity
 import Data.Monoid
@@ -24,7 +24,7 @@ import GHC.Generics
 
 import Control.Monad.Zip ( MonadZip(..) )
 
-    mzipWith _ _ _ = Proxy
+mzipWith _ _ _ = Proxy
 
 -- Instances for GHC.Generics
 -- | @since 4.9.0.0

@@ -1,5 +1,5 @@
 -- Instance of class Functor for First ()
-module InstFunctorFirst.hs where
+module InstFunctorFirst where
 import           Prelude             hiding (foldr1)
 
 import {-# SOURCE #-} GHC.Base (Semigroup(..))
@@ -21,6 +21,6 @@ import           GHC.Generics
 
 import Data.Semigroup ( First(..) )
 
-  fmap f (First x) = First (f x)
+fmap f (First x) = First (f x)
 
 -- | @since 4.9.0.0

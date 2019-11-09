@@ -1,5 +1,5 @@
 -- Instance of class MonadFix for Down ()
-module InstMonadFixDown.hs where
+module InstMonadFixDown where
 import Data.Either
 import Data.Function ( fix )
 import Data.Maybe
@@ -33,4 +33,5 @@ import System.IO
 
 import Control.Monad.Fix ( MonadFix(..) )
 
-    mfix f = Down (fix (getDown . f))
+mfix f = Down (fix (getDown . f)) where
+  getDown (Down x) = x
