@@ -101,6 +101,8 @@ import  GHC.Fingerprint
 
 #include "MachDeps.h"
 
+import Data.Typeable.Internal ( IsTYPE(..), TypeRep(..), Gift(..), SomeKindedTypeRep(..), AppOrCon(..), Typeable(..), SomeTypeRep(..) )
+
 {- *********************************************************************
 *                                                                      *
                 The TyCon type
@@ -178,48 +180,6 @@ rnfTyCon (TyCon _ _ m n _ k) = rnfModule m `seq` rnfTrName n `seq` rnfKindRep k
 
 -- | A concrete representation of a (monomorphic) type.
 -- 'TypeRep' supports reasonably efficient equality.
-data TypeRep (a :: k) where
-    -- The TypeRep of Type. See Note [Kind caching], Wrinkle 2
-    TrType :: TypeRep Type
-    TrTyCon :: { -- See Note [TypeRep fingerprints]
-                 trTyConFingerprint :: {-# UNPACK #-} !Fingerprint
-
-                 -- The TypeRep represents the application of trTyCon
-                 -- to the kind arguments trKindVars. So for
-                 -- 'Just :: Bool -> Maybe Bool, the trTyCon will be
-                 -- 'Just and the trKindVars will be [Bool].
-               , trTyCon :: !TyCon
-               , trKindVars :: [SomeTypeRep]
-               , trTyConKind :: !(TypeRep k) }  -- See Note [Kind caching]
-            -> TypeRep (a :: k)
-
-    -- | Invariant: Saturated arrow types (e.g. things of the form @a -> b@)
-    -- are represented with @'TrFun' a b@, not @TrApp (TrApp funTyCon a) b@.
-    TrApp   :: forall k1 k2 (a :: k1 -> k2) (b :: k1).
-               { -- See Note [TypeRep fingerprints]
-                 trAppFingerprint :: {-# UNPACK #-} !Fingerprint
-
-                 -- The TypeRep represents the application of trAppFun
-                 -- to trAppArg. For Maybe Int, the trAppFun will be Maybe
-                 -- and the trAppArg will be Int.
-               , trAppFun :: !(TypeRep (a :: k1 -> k2))
-               , trAppArg :: !(TypeRep (b :: k1))
-               , trAppKind :: !(TypeRep k2) }   -- See Note [Kind caching]
-            -> TypeRep (a b)
-
-    -- | @TrFun fpr a b@ represents a function type @a -> b@. We use this for
-    -- the sake of efficiency as functions are quite ubiquitous.
-    TrFun   :: forall (r1 :: RuntimeRep) (r2 :: RuntimeRep)
-                      (a :: TYPE r1) (b :: TYPE r2).
-               { -- See Note [TypeRep fingerprints]
-                 trFunFingerprint :: {-# UNPACK #-} !Fingerprint
-
-                 -- The TypeRep represents a function from trFunArg to
-                 -- trFunRes.
-               , trFunArg :: !(TypeRep a)
-               , trFunRes :: !(TypeRep b) }
-            -> TypeRep (a -> b)
-
 {- Note [TypeRep fingerprints]
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 We store a Fingerprint of each TypeRep in its constructor. This allows
@@ -287,45 +247,6 @@ represents an application.
 -- Compare keys for equality
 
 -- | @since 2.01
-instance Eq (TypeRep a) where
-  _ == _  = True
-  {-# INLINABLE (==) #-}
-
-instance TestEquality TypeRep where
-  a `testEquality` b
-    | Just HRefl <- eqTypeRep a b
-    = Just Refl
-    | otherwise
-    = Nothing
-  {-# INLINEABLE testEquality #-}
-
--- | @since 4.4.0.0
-instance Ord (TypeRep a) where
-  compare _ _ = EQ
-  {-# INLINABLE compare #-}
-
--- | A non-indexed type representation.
-data SomeTypeRep where
-    SomeTypeRep :: forall k (a :: k). !(TypeRep a) -> SomeTypeRep
-
-instance Eq SomeTypeRep where
-  SomeTypeRep a == SomeTypeRep b =
-      case a `eqTypeRep` b of
-          Just _  -> True
-          Nothing -> False
-
-instance Ord SomeTypeRep where
-  SomeTypeRep a `compare` SomeTypeRep b =
-    typeRepFingerprint a `compare` typeRepFingerprint b
-
--- | The function type constructor.
---
--- For instance,
---
--- @
--- typeRep \@(Int -> Char) === Fun (typeRep \@Int) (typeRep \@Char)
--- @
---
 pattern Fun :: forall k (fun :: k). ()
             => forall (r1 :: RuntimeRep) (r2 :: RuntimeRep)
                       (arg :: TYPE r1) (res :: TYPE r2).
@@ -451,12 +372,6 @@ pattern App :: forall k2 (t :: k2). ()
 pattern App f x <- (splitApp -> IsApp f x)
   where App f x = mkTrAppChecked f x
 
-data AppOrCon (a :: k) where
-    IsApp :: forall k k' (f :: k' -> k) (x :: k'). ()
-          => TypeRep f -> TypeRep x -> AppOrCon (f x)
-    -- See Note [Con evidence]
-    IsCon :: IsApplication a ~ "" => TyCon -> [SomeTypeRep] -> AppOrCon a
-
 type family IsApplication (x :: k) :: Symbol where
   IsApplication (_ _) = "An error message about this unifying with \"\" "
      `AppendSymbol` "means that you tried to match a TypeRep with Con or "
@@ -483,9 +398,6 @@ withTypeable rep k = unsafeCoerce k' rep
         k' = Gift k
 
 -- | A helper to satisfy the type checker in 'withTypeable'.
-newtype Gift a (r :: TYPE rep) = Gift (Typeable a => r)
-
--- | Pattern match on a type constructor
 pattern Con :: forall k (a :: k). ()
             => IsApplication a ~ "" -- See Note [Con evidence]
             => TyCon -> TypeRep a
@@ -630,10 +542,6 @@ unsafeCoerceRep (SomeTypeRep r) = unsafeCoerce r
 unkindedTypeRep :: SomeKindedTypeRep k -> SomeTypeRep
 unkindedTypeRep (SomeKindedTypeRep x) = SomeTypeRep x
 
-data SomeKindedTypeRep k where
-    SomeKindedTypeRep :: forall k (a :: k). TypeRep a
-                      -> SomeKindedTypeRep k
-
 kApp :: SomeKindedTypeRep (k -> k')
      -> SomeKindedTypeRep k
      -> SomeKindedTypeRep k'
@@ -721,10 +629,6 @@ bareArrow (TrFun _ a b) =
     rep2 = getRuntimeRep $ typeRepKind b :: TypeRep r2
 bareArrow _ = error "Data.Typeable.Internal.bareArrow: impossible"
 
-data IsTYPE (a :: Type) where
-    IsTYPE :: forall (r :: RuntimeRep). TypeRep r -> IsTYPE (TYPE r)
-
--- | Is a type of the form @TYPE rep@?
 isTYPE :: TypeRep (a :: Type) -> Maybe (IsTYPE a)
 isTYPE TrType = Just (IsTYPE trLiftedRep)
 isTYPE (TrApp {trAppFun=f, trAppArg=r})
@@ -746,9 +650,6 @@ getRuntimeRep _ = error "Data.Typeable.Internal.getRuntimeRep: impossible"
 
 -- | The class 'Typeable' allows a concrete representation of a type to
 -- be calculated.
-class Typeable (a :: k) where
-  typeRep# :: TypeRep a
-
 typeRep :: Typeable a => TypeRep a
 typeRep = typeRep#
 
@@ -769,9 +670,7 @@ someTypeRepFingerprint (SomeTypeRep t) = typeRepFingerprint t
 ----------------- Showing TypeReps --------------------
 
 -- This follows roughly the precedence structure described in Note [Precedence
--- in types].
-instance Show (TypeRep (a :: k)) where
-    showsPrec = showTypeable
+-- in types].    showsPrec = showTypeable
 
 
 showTypeable :: Int -> TypeRep (a :: k) -> ShowS
@@ -803,9 +702,6 @@ showTypeable p (TrApp {trAppFun = f, trAppArg = x})
     showsPrec 10 x
 
 -- | @since 4.10.0.0
-instance Show SomeTypeRep where
-  showsPrec p (SomeTypeRep ty) = showsPrec p ty
-
 splitApps :: TypeRep a -> (TyCon, [SomeTypeRep])
 splitApps = go []
   where

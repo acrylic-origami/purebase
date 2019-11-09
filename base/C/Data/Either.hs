@@ -38,10 +38,14 @@ import GHC.Read
 -- Allow the use of some Prelude functions in doctests.
 -- >>> import Prelude ( (+), (*), length, putStrLn )
 
+import Data.Either ( Either(..) )
+
 {-
 -- just for testing
 import Test.QuickCheck
 -}
+
+import Data.Either ( Either(..) )
 
 {-|
 
@@ -122,58 +126,6 @@ we attempt to parse @\'m\'@ as an 'Int' will fail:
 Left "parse error"
 
 -}
-data  Either a b  =  Left a | Right b
-  deriving ( Eq   -- ^ @since 2.01
-           , Ord  -- ^ @since 2.01
-           , Read -- ^ @since 3.0
-           , Show -- ^ @since 3.0
-           )
-
--- | @since 3.0
-instance Functor (Either a) where
-    fmap _ (Left x) = Left x
-    fmap f (Right y) = Right (f y)
-
--- | @since 4.9.0.0
-instance Semigroup (Either a b) where
-    Left _ <> b = b
-    a      <> _ = a
-#if !defined(__HADDOCK_VERSION__)
-    -- workaround https://github.com/haskell/haddock/issues/680
-    stimes n x
-      | n <= 0 = errorWithoutStackTrace "stimes: positive multiplier expected"
-      | otherwise = x
-#endif
-
--- | @since 3.0
-instance Applicative (Either e) where
-    pure          = Right
-    Left  e <*> _ = Left e
-    Right f <*> r = fmap f r
-
--- | @since 4.4.0.0
-instance Monad (Either e) where
-    Left  l >>= _ = Left l
-    Right r >>= k = k r
-
--- | Case analysis for the 'Either' type.
--- If the value is @'Left' a@, apply the first function to @a@;
--- if it is @'Right' b@, apply the second function to @b@.
---
--- ==== __Examples__
---
--- We create two values of type @'Either' 'String' 'Int'@, one using the
--- 'Left' constructor and another using the 'Right' constructor. Then
--- we apply \"either\" the 'Prelude.length' function (if we have a 'String')
--- or the \"times-two\" function (if we have an 'Int'):
---
--- >>> let s = Left "foo" :: Either String Int
--- >>> let n = Right 3 :: Either String Int
--- >>> either length (*2) s
--- 3
--- >>> either length (*2) n
--- 6
---
 either                  :: (a -> c) -> (b -> c) -> Either a b -> c
 either f _ (Left x)     =  f x
 either _ g (Right y)    =  g y

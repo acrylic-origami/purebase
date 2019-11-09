@@ -60,90 +60,17 @@ import GHC.Generics ( K1(..) )
 -- 'second' (f '.' g) ≡ 'second' f '.' 'second' g
 -- @
 --
--- @since 4.8.0.0
-class Bifunctor p where
-    {-# MINIMAL bimap | first, second #-}
+-- @since 4.8.0.0    bimap f g ~(x1, a, b) = (x1, f a, g b)
 
-    -- | Map over both arguments at the same time.
-    --
-    -- @'bimap' f g ≡ 'first' f '.' 'second' g@
-    --
-    -- ==== __Examples__
-    -- >>> bimap toUpper (+1) ('j', 3)
-    -- ('J',4)
-    --
-    -- >>> bimap toUpper (+1) (Left 'j')
-    -- Left 'J'
-    --
-    -- >>> bimap toUpper (+1) (Right 3)
-    -- Right 4
-    bimap :: (a -> b) -> (c -> d) -> p a c -> p b d
-    bimap f g = first f . second g
+-- | @since 4.8.0.0    bimap f g ~(x1, x2, a, b) = (x1, x2, f a, g b)
 
+-- | @since 4.8.0.0    bimap f g ~(x1, x2, x3, a, b) = (x1, x2, x3, f a, g b)
 
-    -- | Map covariantly over the first argument.
-    --
-    -- @'first' f ≡ 'bimap' f 'id'@
-    --
-    -- ==== __Examples__
-    -- >>> first toUpper ('j', 3)
-    -- ('J',3)
-    --
-    -- >>> first toUpper (Left 'j')
-    -- Left 'J'
-    first :: (a -> b) -> p a c -> p b c
-    first f = bimap f id
+-- | @since 4.8.0.0    bimap f g ~(x1, x2, x3, x4, a, b) = (x1, x2, x3, x4, f a, g b)
 
-
-    -- | Map covariantly over the second argument.
-    --
-    -- @'second' ≡ 'bimap' 'id'@
-    --
-    -- ==== __Examples__
-    -- >>> second (+1) ('j', 3)
-    -- ('j',4)
-    --
-    -- >>> second (+1) (Right 3)
-    -- Right 4
-    second :: (b -> c) -> p a b -> p a c
-    second = bimap id
-
+-- | @since 4.8.0.0    bimap f g ~(x1, x2, x3, x4, x5, a, b) = (x1, x2, x3, x4, x5, f a, g b)
 
 
 -- | @since 4.8.0.0
-instance Bifunctor (,) where
-    bimap f g ~(a, b) = (f a, g b)
+import Data.Bifunctor ( Bifunctor(..) )
 
--- | @since 4.8.0.0
-instance Bifunctor ((,,) x1) where
-    bimap f g ~(x1, a, b) = (x1, f a, g b)
-
--- | @since 4.8.0.0
-instance Bifunctor ((,,,) x1 x2) where
-    bimap f g ~(x1, x2, a, b) = (x1, x2, f a, g b)
-
--- | @since 4.8.0.0
-instance Bifunctor ((,,,,) x1 x2 x3) where
-    bimap f g ~(x1, x2, x3, a, b) = (x1, x2, x3, f a, g b)
-
--- | @since 4.8.0.0
-instance Bifunctor ((,,,,,) x1 x2 x3 x4) where
-    bimap f g ~(x1, x2, x3, x4, a, b) = (x1, x2, x3, x4, f a, g b)
-
--- | @since 4.8.0.0
-instance Bifunctor ((,,,,,,) x1 x2 x3 x4 x5) where
-    bimap f g ~(x1, x2, x3, x4, x5, a, b) = (x1, x2, x3, x4, x5, f a, g b)
-
-
--- | @since 4.8.0.0
-instance Bifunctor Either where
-    bimap f _ (Left a) = Left (f a)
-    bimap _ g (Right b) = Right (g b)
-
--- | @since 4.8.0.0
-instance Bifunctor Const where
-    bimap f _ (Const a) = Const (f a)
-
--- | @since 4.9.0.0
-instance Bifunctor (K1 i) where
-    bimap f _ (K1 c) = K1 (f c)

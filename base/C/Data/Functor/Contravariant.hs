@@ -93,26 +93,8 @@ import Prelude hiding ((.),id)
 -- 'contramap' and the first law, so you need only check that the former
 -- condition holds.
 
-class Contravariant f where
-  contramap :: (a -> b) -> f b -> f a
+import Data.Functor.Contravariant ( Contravariant(..), Predicate(..), Comparison(..), Equivalence(..), Op(..) )
 
-  -- | Replace all locations in the output with the same value.
-  -- The default definition is @'contramap' . 'const'@, but this may be
-  -- overridden with a more efficient version.
-  (>$) :: b -> f b -> f a
-  (>$) = contramap . const
-
--- | If @f@ is both 'Functor' and 'Contravariant' then by the time you factor
--- in the laws of each of those classes, it can't actually use its argument in
--- any meaningful capacity.
---
--- This method is surprisingly useful. Where both instances exist and are
--- lawful we have the following laws:
---
--- @
--- 'fmap' f ≡ 'phantom'
--- 'contramap' f ≡ 'phantom'
--- @
 phantom :: (Functor f, Contravariant f) => f a -> f b
 phantom x = () <$ x $< ()
 
@@ -134,70 +116,11 @@ deriving instance Contravariant f => Contravariant (Alt f)
 deriving instance Contravariant f => Contravariant (Rec1 f)
 deriving instance Contravariant f => Contravariant (M1 i c f)
 
-instance Contravariant V1 where
-  contramap _ x = case x of
-
-instance Contravariant U1 where
-  contramap _ _ = U1
-
-instance Contravariant (K1 i c) where
-  contramap _ (K1 c) = K1 c
-
-instance (Contravariant f, Contravariant g) => Contravariant (f :*: g) where
-  contramap f (xs :*: ys) = contramap f xs :*: contramap f ys
-
-instance (Functor f, Contravariant g) => Contravariant (f :.: g) where
-  contramap f (Comp1 fg) = Comp1 (fmap (contramap f) fg)
-
-instance (Contravariant f, Contravariant g) => Contravariant (f :+: g) where
-  contramap f (L1 xs) = L1 (contramap f xs)
-  contramap f (R1 ys) = R1 (contramap f ys)
-
-instance (Contravariant f, Contravariant g) => Contravariant (Sum f g) where
-  contramap f (InL xs) = InL (contramap f xs)
-  contramap f (InR ys) = InR (contramap f ys)
-
-instance (Contravariant f, Contravariant g)
-  => Contravariant (Product f g) where
-    contramap f (Pair a b) = Pair (contramap f a) (contramap f b)
-
-instance Contravariant (Const a) where
-  contramap _ (Const a) = Const a
-
-instance (Functor f, Contravariant g) => Contravariant (Compose f g) where
-  contramap f (Compose fga) = Compose (fmap (contramap f) fga)
-
-instance Contravariant Proxy where
-  contramap _ _ = Proxy
-
-newtype Predicate a = Predicate { getPredicate :: a -> Bool }
-
--- | A 'Predicate' is a 'Contravariant' 'Functor', because 'contramap' can
--- apply its function argument to the input of the predicate.
-instance Contravariant Predicate where
-  contramap f g = Predicate $ getPredicate g . f
-
-instance Semigroup (Predicate a) where
-  Predicate p <> Predicate q = Predicate $ \a -> p a && q a
-
-instance Monoid (Predicate a) where
-  mempty = Predicate $ const True
-
--- | Defines a total ordering on a type as per 'compare'.
---
--- This condition is not checked by the types. You must ensure that the
--- supplied values are valid total orderings yourself.
-newtype Comparison a = Comparison { getComparison :: a -> a -> Ordering }
-
 deriving instance Semigroup (Comparison a)
 deriving instance Monoid (Comparison a)
 
 -- | A 'Comparison' is a 'Contravariant' 'Functor', because 'contramap' can
 -- apply its function argument to each input of the comparison function.
-instance Contravariant Comparison where
-  contramap f g = Comparison $ on (getComparison g) f
-
--- | Compare using 'compare'.
 defaultComparison :: Ord a => Comparison a
 defaultComparison = Comparison compare
 
@@ -213,23 +136,6 @@ defaultComparison = Comparison compare
 --
 -- The types alone do not enforce these laws, so you'll have to check them
 -- yourself.
-newtype Equivalence a = Equivalence { getEquivalence :: a -> a -> Bool }
-
--- | Equivalence relations are 'Contravariant', because you can
--- apply the contramapped function to each input to the equivalence
--- relation.
-instance Contravariant Equivalence where
-  contramap f g = Equivalence $ on (getEquivalence g) f
-
-instance Semigroup (Equivalence a) where
-  Equivalence p <> Equivalence q = Equivalence $ \a b -> p a b && q a b
-
-instance Monoid (Equivalence a) where
-  mempty = Equivalence (\_ _ -> True)
-
--- | Check for equivalence with '=='.
---
--- Note: The instances for 'Double' and 'Float' violate reflexivity for @NaN@.
 defaultEquivalence :: Eq a => Equivalence a
 defaultEquivalence = Equivalence (==)
 
@@ -237,47 +143,6 @@ comparisonEquivalence :: Comparison a -> Equivalence a
 comparisonEquivalence (Comparison p) = Equivalence $ \a b -> p a b == EQ
 
 -- | Dual function arrows.
-newtype Op a b = Op { getOp :: b -> a }
-
 deriving instance Semigroup a => Semigroup (Op a b)
 deriving instance Monoid a => Monoid (Op a b)
 
-instance Category Op where
-  id = Op id
-  Op f . Op g = Op (g . f)
-
-instance Contravariant (Op a) where
-  contramap f g = Op (getOp g . f)
-
-instance Num a => Num (Op a b) where
-  Op f + Op g = Op $ \a -> f a + g a
-  Op f * Op g = Op $ \a -> f a * g a
-  Op f - Op g = Op $ \a -> f a - g a
-  abs (Op f) = Op $ abs . f
-  signum (Op f) = Op $ signum . f
-  fromInteger = Op . const . fromInteger
-
-instance Fractional a => Fractional (Op a b) where
-  Op f / Op g = Op $ \a -> f a / g a
-  recip (Op f) = Op $ recip . f
-  fromRational = Op . const . fromRational
-
-instance Floating a => Floating (Op a b) where
-  pi = Op $ const pi
-  exp (Op f) = Op $ exp . f
-  sqrt (Op f) = Op $ sqrt . f
-  log (Op f) = Op $ log . f
-  sin (Op f) = Op $ sin . f
-  tan (Op f) = Op $ tan . f
-  cos (Op f) = Op $ cos . f
-  asin (Op f) = Op $ asin . f
-  atan (Op f) = Op $ atan . f
-  acos (Op f) = Op $ acos . f
-  sinh (Op f) = Op $ sinh . f
-  tanh (Op f) = Op $ tanh . f
-  cosh (Op f) = Op $ cosh . f
-  asinh (Op f) = Op $ asinh . f
-  atanh (Op f) = Op $ atanh . f
-  acosh (Op f) = Op $ acosh . f
-  Op f ** Op g = Op $ \a -> f a ** g a
-  logBase (Op f) (Op g) = Op $ \a -> logBase (f a) (g a)

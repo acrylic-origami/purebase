@@ -145,6 +145,8 @@ import {-# SOURCE #-} Data.Semigroup.Internal ( stimesDefault
                                               , stimesIdempotentMonoid
                                               )
 
+import GHC.Base ( Int(..), Functor(..), Char(..), MonadPlus(..), NonEmpty(..), Maybe(..), Alternative(..), Monoid(..), Bool(..), Opaque(..), IO(..), Applicative(..), Monad(..), Ordering(..) )
+
 infixr 9  .
 infixr 5  ++
 infixl 4  <$
@@ -169,8 +171,6 @@ this for packages ghc-prim, integer-gmp, integer-simple, which aren't
 allowed to contain any Integer literals.)
 
 Likewise we implicitly need Integer when deriving things like Eq
-instances.
-
 The danger is that if the build system doesn't know about the dependency
 on Integer, it'll compile some base module before GHC.Integer.Type,
 resulting in:
@@ -195,14 +195,7 @@ Similar to GHC.Integer.
 
 #if 0
 -- for use when compiling GHC.Base itself doesn't work
-data  Bool  =  False | True
-data Ordering = LT | EQ | GT
-data Char = C# Char#
 type  String = [Char]
-data Int = I# Int#
-data  ()  =  ()
-data [] a = MkNil
-
 not True = False
 (&&) True True = True
 otherwise = True
@@ -264,44 +257,6 @@ foldr = errorWithoutStackTrace "urk"
 -- of 'Monoid', e.g. 'Data.Semigroup.Sum' and 'Data.Semigroup.Product'.
 --
 -- __NOTE__: 'Semigroup' is a superclass of 'Monoid' since /base-4.11.0.0/.
-class Semigroup a => Monoid a where
-        -- | Identity of 'mappend'
-        mempty  :: a
-
-        -- | An associative operation
-        --
-        -- __NOTE__: This method is redundant and has the default
-        -- implementation @'mappend' = ('<>')@ since /base-4.11.0.0/.
-        -- Should it be implemented manually, since 'mappend' is a synonym for
-        -- ('<>'), it is expected that the two functions are defined the same
-        -- way. In a future GHC release 'mappend' will be removed from 'Monoid'.
-        mappend :: a -> a -> a
-        mappend = (<>)
-        {-# INLINE mappend #-}
-
-        -- | Fold a list using the monoid.
-        --
-        -- For most types, the default definition for 'mconcat' will be
-        -- used, but the function is included in the class definition so
-        -- that an optimized version can be provided for specific types.
-        mconcat :: [a] -> a
-        mconcat = foldr mappend mempty
-
--- | @since 4.9.0.0
-instance Semigroup [a] where
-        (<>) = (++)
-        {-# INLINE (<>) #-}
-
-        -- stimes = stimesList
-
--- | @since 2.01
-instance Monoid [a] where
-        {-# INLINE mempty #-}
-        mempty  = []
-        {-# INLINE mconcat #-}
-        mconcat xss = [x | xs <- xss, x <- xs]
--- See Note: [List comprehensions and inlining]
-
 {-
 Note: [List comprehensions and inlining]
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -322,129 +277,6 @@ efficient translations anyway.
 -}
 
 -- | @since 4.9.0.0
-instance Semigroup (NonEmpty a) where
-        (a :| as) <> ~(b :| bs) = a :| (as ++ b : bs)
-
--- | @since 4.9.0.0
-instance Semigroup b => Semigroup (a -> b) where
-        f <> g = \x -> f x <> g x
-        -- stimes n f e = stimes n (f e)
-
--- | @since 2.01
-instance Monoid b => Monoid (a -> b) where
-        mempty _ = mempty
-
--- | @since 4.9.0.0
-instance Semigroup () where
-        _ <> _      = ()
-        -- sconcat _   = ()
-        -- stimes  _ _ = ()
-
--- | @since 2.01
-instance Monoid () where
-        -- Should it be strict?
-        mempty        = ()
-        mconcat _     = ()
-
--- | @since 4.9.0.0
-instance (Semigroup a, Semigroup b) => Semigroup (a, b) where
-        (a,b) <> (a',b') = (a<>a',b<>b')
-        -- stimes n (a,b) = (stimes n a, stimes n b)
-
--- | @since 2.01
-instance (Monoid a, Monoid b) => Monoid (a,b) where
-        mempty = (mempty, mempty)
-
--- | @since 4.9.0.0
-instance (Semigroup a, Semigroup b, Semigroup c) => Semigroup (a, b, c) where
-        (a,b,c) <> (a',b',c') = (a<>a',b<>b',c<>c')
-        -- stimes n (a,b,c) = (stimes n a, stimes n b, stimes n c)
-
--- | @since 2.01
-instance (Monoid a, Monoid b, Monoid c) => Monoid (a,b,c) where
-        mempty = (mempty, mempty, mempty)
-
--- | @since 4.9.0.0
-instance (Semigroup a, Semigroup b, Semigroup c, Semigroup d)
-         => Semigroup (a, b, c, d) where
-        (a,b,c,d) <> (a',b',c',d') = (a<>a',b<>b',c<>c',d<>d')
-        -- stimes n (a,b,c,d) = (stimes n a, stimes n b, stimes n c, stimes n d)
-
--- | @since 2.01
-instance (Monoid a, Monoid b, Monoid c, Monoid d) => Monoid (a,b,c,d) where
-        mempty = (mempty, mempty, mempty, mempty)
-
--- | @since 4.9.0.0
-instance (Semigroup a, Semigroup b, Semigroup c, Semigroup d, Semigroup e)
-         => Semigroup (a, b, c, d, e) where
-        (a,b,c,d,e) <> (a',b',c',d',e') = (a<>a',b<>b',c<>c',d<>d',e<>e')
-        -- stimes n (a,b,c,d,e) =
-            (stimes n a, stimes n b, stimes n c, stimes n d, stimes n e)
-
--- | @since 2.01
-instance (Monoid a, Monoid b, Monoid c, Monoid d, Monoid e) =>
-                Monoid (a,b,c,d,e) where
-        mempty = (mempty, mempty, mempty, mempty, mempty)
-
-
--- | @since 4.9.0.0
-instance Semigroup Ordering where
-    LT <> _ = LT
-    EQ <> y = y
-    GT <> _ = GT
-
-    -- stimes = stimesIdempotentMonoid
-
--- lexicographical ordering
--- | @since 2.01
-instance Monoid Ordering where
-    mempty             = EQ
-
--- | @since 4.9.0.0
-instance Semigroup a => Semigroup (Maybe a) where
-    Nothing <> b       = b
-    a       <> Nothing = a
-    Just a  <> Just b  = Just (a <> b)
-
-    -- stimes = stimesMaybe
-
--- | Lift a semigroup into 'Maybe' forming a 'Monoid' according to
--- <http://en.wikipedia.org/wiki/Monoid>: \"Any semigroup @S@ may be
--- turned into a monoid simply by adjoining an element @e@ not in @S@
--- and defining @e*e = e@ and @e*s = s = s*e@ for all @s ∈ S@.\"
---
--- /Since 4.11.0/: constraint on inner @a@ value generalised from
--- 'Monoid' to 'Semigroup'.
---
--- @since 2.01
-instance Semigroup a => Monoid (Maybe a) where
-    mempty = Nothing
-
--- | For tuples, the 'Monoid' constraint on @a@ determines
--- how the first values merge.
--- For example, 'String's concatenate:
---
--- > ("hello ", (+15)) <*> ("world!", 2002)
--- > ("hello world!",2017)
---
--- @since 2.01
-instance Monoid a => Applicative ((,) a) where
-    pure x = (mempty, x)
-    (u, f) <*> (v, x) = (u <> v, f x)
-    liftA2 f (u, x) (v, y) = (u <> v, f x y)
-
--- | @since 4.9.0.0
-instance Monoid a => Monad ((,) a) where
-    (u, a) >>= k = case k a of (v, b) -> (u <> v, b)
-
--- | @since 4.10.0.0
-instance Semigroup a => Semigroup (IO a) where
-    (<>) = liftA2 (<>)
-
--- | @since 4.9.0.0
-instance Monoid a => Monoid (IO a) where
-    mempty = pure mempty
-
 {- | A type @f@ is a Functor if it provides a function @fmap@ which, given any types @a@ and @b@
 lets you apply any function from @(a -> b)@ to turn an @f a@ into an @f b@, preserving the
 structure of @f@. Furthermore @f@ needs to adhere to the following:
@@ -456,193 +288,6 @@ Note, that the second law follows from the free theorem of the type 'fmap' and
 the first law, so you need only check that the former condition holds.
 -}
 
-class  Functor f  where
-    -- | Using @ApplicativeDo@: \'@'fmap' f as@\' can be understood as
-    -- the @do@ expression
-    --
-    -- @
-    -- do a <- as
-    --    pure (f a)
-    -- @
-    --
-    -- with an inferred @Functor@ constraint.
-    fmap        :: (a -> b) -> f a -> f b
-
-    -- | Replace all locations in the input with the same value.
-    -- The default definition is @'fmap' . 'const'@, but this may be
-    -- overridden with a more efficient version.
-    --
-    -- Using @ApplicativeDo@: \'@a '<$' bs@\' can be understood as the
-    -- @do@ expression
-    --
-    -- @
-    -- do bs
-    --    pure a
-    -- @
-    --
-    -- with an inferred @Functor@ constraint.
-    (<$)        :: a -> f b -> f a
-    (<$)        =  fmap . const
-
--- | A functor with application, providing operations to
---
--- * embed pure expressions ('pure'), and
---
--- * sequence computations and combine their results ('<*>' and 'liftA2').
---
--- A minimal complete definition must include implementations of 'pure'
--- and of either '<*>' or 'liftA2'. If it defines both, then they must behave
--- the same as their default definitions:
---
---      @('<*>') = 'liftA2' 'id'@
---
---      @'liftA2' f x y = f 'Prelude.<$>' x '<*>' y@
---
--- Further, any definition must satisfy the following:
---
--- [Identity]
---
---      @'pure' 'id' '<*>' v = v@
---
--- [Composition]
---
---      @'pure' (.) '<*>' u '<*>' v '<*>' w = u '<*>' (v '<*>' w)@
---
--- [Homomorphism]
---
---      @'pure' f '<*>' 'pure' x = 'pure' (f x)@
---
--- [Interchange]
---
---      @u '<*>' 'pure' y = 'pure' ('$' y) '<*>' u@
---
---
--- The other methods have the following default definitions, which may
--- be overridden with equivalent specialized implementations:
---
---   * @u '*>' v = ('id' '<$' u) '<*>' v@
---
---   * @u '<*' v = 'liftA2' 'const' u v@
---
--- As a consequence of these laws, the 'Functor' instance for @f@ will satisfy
---
---   * @'fmap' f x = 'pure' f '<*>' x@
---
---
--- It may be useful to note that supposing
---
---      @forall x y. p (q x y) = f x . g y@
---
--- it follows from the above that
---
---      @'liftA2' p ('liftA2' q u v) = 'liftA2' f u . 'liftA2' g v@
---
---
--- If @f@ is also a 'Monad', it should satisfy
---
---   * @'pure' = 'return'@
---
---   * @m1 '<*>' m2 = m1 '>>=' (\x1 -> m2 '>>=' (\x2 -> 'return' (x1 x2)))@
---
---   * @('*>') = ('>>')@
---
--- (which implies that 'pure' and '<*>' satisfy the applicative functor laws).
-
-class Functor f => Applicative f where
-    {-# MINIMAL pure, ((<*>) | liftA2) #-}
-    -- | Lift a value.
-    pure :: a -> f a
-
-    -- | Sequential application.
-    --
-    -- A few functors support an implementation of '<*>' that is more
-    -- efficient than the default one.
-    --
-    -- Using @ApplicativeDo@: \'@fs '<*>' as@\' can be understood as
-    -- the @do@ expression
-    --
-    -- @
-    -- do f <- fs
-    --    a <- as
-    --    pure (f a)
-    -- @
-    (<*>) :: f (a -> b) -> f a -> f b
-    (<*>) = liftA2 id
-
-    -- | Lift a binary function to actions.
-    --
-    -- Some functors support an implementation of 'liftA2' that is more
-    -- efficient than the default one. In particular, if 'fmap' is an
-    -- expensive operation, it is likely better to use 'liftA2' than to
-    -- 'fmap' over the structure and then use '<*>'.
-    --
-    -- This became a typeclass method in 4.10.0.0. Prior to that, it was
-    -- a function defined in terms of '<*>' and 'fmap'.
-    --
-    -- Using @ApplicativeDo@: \'@'liftA2' f as bs@\' can be understood
-    -- as the @do@ expression
-    --
-    -- @
-    -- do a <- as
-    --    b <- bs
-    --    pure (f a b)
-    -- @
-
-    liftA2 :: (a -> b -> c) -> f a -> f b -> f c
-    liftA2 f x = (<*>) (fmap f x)
-
-    -- | Sequence actions, discarding the value of the first argument.
-    --
-    -- \'@as '*>' bs@\' can be understood as the @do@ expression
-    --
-    -- @
-    -- do as
-    --    bs
-    -- @
-    --
-    -- This is a tad complicated for our @ApplicativeDo@ extension
-    -- which will give it a @Monad@ constraint. For an @Applicative@
-    -- constraint we write it of the form
-    --
-    -- @
-    -- do _ <- as
-    --    b <- bs
-    --    pure b
-    -- @
-    (*>) :: f a -> f b -> f b
-    a1 *> a2 = (id <$ a1) <*> a2
-    -- This is essentially the same as liftA2 (flip const), but if the
-    -- Functor instance has an optimized (<$), it may be better to use
-    -- that instead. Before liftA2 became a method, this definition
-    -- was strictly better, but now it depends on the functor. For a
-    -- functor supporting a sharing-enhancing (<$), this definition
-    -- may reduce allocation by preventing a1 from ever being fully
-    -- realized. In an implementation with a boring (<$) but an optimizing
-    -- liftA2, it would likely be better to define (*>) using liftA2.
-
-    -- | Sequence actions, discarding the value of the second argument.
-    --
-    -- Using @ApplicativeDo@: \'@as '<*' bs@\' can be understood as
-    -- the @do@ expression
-    --
-    -- @
-    -- do a <- as
-    --    bs
-    --    pure a
-    -- @
-    (<*) :: f a -> f b -> f a
-    (<*) = liftA2 const
-
--- | A variant of '<*>' with the arguments reversed.
---
--- Using @ApplicativeDo@: \'@as '<**>' fs@\' can be understood as the
--- @do@ expression
---
--- @
--- do a <- as
---    f <- fs
---    pure (f a)
--- @
 (<**>) :: Applicative f => f a -> f (a -> b) -> f b
 (<**>) = liftA2 (\a f -> f a)
 -- Don't use $ here, see the note at the top of the page
@@ -757,36 +402,6 @@ and that 'pure' and ('<*>') satisfy the applicative functor laws.
 The instances of 'Monad' for lists, 'Data.Maybe.Maybe' and 'System.IO.IO'
 defined in the "Prelude" satisfy these laws.
 -}
-class Applicative m => Monad m where
-    -- | Sequentially compose two actions, passing any value produced
-    -- by the first as an argument to the second.
-    --
-    -- \'@as '>>=' bs@\' can be understood as the @do@ expression
-    --
-    -- @
-    -- do a <- as
-    --    bs a
-    -- @
-    (>>=)       :: forall a b. m a -> (a -> m b) -> m b
-
-    -- | Sequentially compose two actions, discarding any value produced
-    -- by the first, like sequencing operators (such as the semicolon)
-    -- in imperative languages.
-    --
-    -- \'@as '>>' bs@\' can be understood as the @do@ expression
-    --
-    -- @
-    -- do as
-    --    bs
-    -- @
-    (>>)        :: forall a b. m a -> m b -> m b
-    m >> k = m >>= \_ -> k -- See Note [Recursive bindings for Applicative/Monad]
-    {-# INLINE (>>) #-}
-
-    -- | Inject a value into the monadic type.
-    return      :: a -> m a
-    return      = pure
-
 {- Note [Recursive bindings for Applicative/Monad]
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -900,52 +515,17 @@ ap m1 m2          = liftA2 ($) m1 m2
 
 -- instances for Prelude types
 
--- | @since 2.01
-instance Functor ((->) r) where
-    fmap = (.)
+-- | @since 2.01    fmap = (.)
 
--- | @since 2.01
-instance Applicative ((->) r) where
-    pure = const
+-- | @since 2.01    pure = const
     (<*>) f g x = f x (g x)
     liftA2 q f g x = q (f x) (g x)
 
--- | @since 2.01
-instance Monad ((->) r) where
-    f >>= k = \ r -> k (f r) r
+-- | @since 2.01    f >>= k = \ r -> k (f r) r
+
+-- | @since 2.01    fmap f (x,y) = (x, f y)
 
 -- | @since 2.01
-instance Functor ((,) a) where
-    fmap f (x,y) = (x, f y)
-
--- | @since 2.01
-instance  Functor Maybe  where
-    fmap _ Nothing       = Nothing
-    fmap f (Just a)      = Just (f a)
-
--- | @since 2.01
-instance Applicative Maybe where
-    pure = Just
-
-    Just f  <*> m       = fmap f m
-    Nothing <*> _m      = Nothing
-
-    liftA2 f (Just x) (Just y) = Just (f x y)
-    liftA2 _ _ _ = Nothing
-
-    Just _m1 *> m2      = m2
-    Nothing  *> _m2     = Nothing
-
--- | @since 2.01
-instance  Monad Maybe  where
-    (Just x) >>= k      = k x
-    Nothing  >>= _      = Nothing
-
-    (>>) = (*>)
-
--- -----------------------------------------------------------------------------
--- The Alternative class definition
-
 infixl 3 <|>
 
 -- | A monoid on applicative functors.
@@ -956,62 +536,6 @@ infixl 3 <|>
 -- * @'some' v = (:) 'Prelude.<$>' v '<*>' 'many' v@
 --
 -- * @'many' v = 'some' v '<|>' 'pure' []@
-class Applicative f => Alternative f where
-    -- | The identity of '<|>'
-    empty :: f a
-    -- | An associative binary operation
-    (<|>) :: f a -> f a -> f a
-
-    -- | One or more.
-    some :: f a -> f [a]
-    some v = some_v
-      where
-        many_v = some_v <|> pure []
-        some_v = liftA2 (:) v many_v
-
-    -- | Zero or more.
-    many :: f a -> f [a]
-    many v = many_v
-      where
-        many_v = some_v <|> pure []
-        some_v = liftA2 (:) v many_v
-
-
--- | @since 2.01
-instance Alternative Maybe where
-    empty = Nothing
-    Nothing <|> r = r
-    l       <|> _ = l
-
--- -----------------------------------------------------------------------------
--- The MonadPlus class definition
-
--- | Monads that also support choice and failure.
-class (Alternative m, Monad m) => MonadPlus m where
-   -- | The identity of 'mplus'.  It should also satisfy the equations
-   --
-   -- > mzero >>= f  =  mzero
-   -- > v >> mzero   =  mzero
-   --
-   -- The default definition is
-   --
-   -- @
-   -- mzero = 'empty'
-   -- @
-   mzero :: m a
-   mzero = empty
-
-   -- | An associative operation. The default definition is
-   --
-   -- @
-   -- mplus = ('<|>')
-   -- @
-   mplus :: m a -> m a -> m a
-   mplus = (<|>)
-
--- | @since 2.01
-instance MonadPlus Maybe
-
 ---------------------------------------------
 -- The non-empty list type
 
@@ -1020,65 +544,6 @@ infixr 5 :|
 -- | Non-empty (and non-strict) list type.
 --
 -- @since 4.9.0.0
-data NonEmpty a = a :| [a]
-  deriving ( Eq  -- ^ @since 4.9.0.0
-           , Ord -- ^ @since 4.9.0.0
-           )
-
--- | @since 4.9.0.0
-instance Functor NonEmpty where
-  fmap f ~(a :| as) = f a :| fmap f as
-  b <$ ~(_ :| as)   = b   :| (b <$ as)
-
--- | @since 4.9.0.0
-instance Applicative NonEmpty where
-  pure a = a :| []
-  (<*>) = ap
-  liftA2 = liftM2
-
--- | @since 4.9.0.0
-instance Monad NonEmpty where
-  ~(a :| as) >>= f = b :| (bs ++ bs')
-    where b :| bs = f a
-          bs' = as >>= toList . f
-          toList ~(c :| cs) = c : cs
-
-----------------------------------------------
--- The list type
-
--- | @since 2.01
-instance Functor [] where
-    {-# INLINE fmap #-}
-    fmap = map
-
--- See Note: [List comprehensions and inlining]
--- | @since 2.01
-instance Applicative [] where
-    {-# INLINE pure #-}
-    pure x    = [x]
-    {-# INLINE (<*>) #-}
-    fs <*> xs = [f x | f <- fs, x <- xs]
-    {-# INLINE liftA2 #-}
-    liftA2 f xs ys = [f x y | x <- xs, y <- ys]
-    {-# INLINE (*>) #-}
-    xs *> ys  = [y | _ <- xs, y <- ys]
-
--- See Note: [List comprehensions and inlining]
--- | @since 2.01
-instance Monad []  where
-    {-# INLINE (>>=) #-}
-    xs >>= f             = [y | x <- xs, y <- f x]
-    {-# INLINE (>>) #-}
-    (>>) = (*>)
-
--- | @since 2.01
-instance Alternative [] where
-    empty = []
-    (<|>) = (++)
-
--- | @since 2.01
-instance MonadPlus []
-
 {-
 A few list functions that appear here because they are used here.
 The rest of the prelude list functions are in GHC.List.
@@ -1363,14 +828,6 @@ breakpoint r = r
 breakpointCond :: Bool -> a -> a
 breakpointCond _ r = r
 
-data Opaque = forall a. O a
--- | @const x@ is a unary function which evaluates to @x@ for all inputs.
---
--- >>> const 42 "hello"
--- 42
---
--- >>> map (const 42) [0..3]
--- [42,42,42,42]
 const                   :: a -> b -> a
 const x _               =  x
 
@@ -1429,34 +886,6 @@ asTypeOf                =  const
 ----------------------------------------------
 
 -- | @since 2.01
-instance  Functor IO where
-   fmap f x = x >>= (pure . f)
-
--- | @since 2.01
-instance Applicative IO where
-    {-# INLINE pure #-}
-    {-# INLINE (*>) #-}
-    {-# INLINE liftA2 #-}
-    pure  = returnIO
-    (*>)  = thenIO
-    (<*>) = ap
-    liftA2 = liftM2
-
--- | @since 2.01
-instance  Monad IO  where
-    {-# INLINE (>>)   #-}
-    {-# INLINE (>>=)  #-}
-    (>>)      = (*>)
-    (>>=)     = bindIO
-
--- | @since 4.9.0.0
-instance Alternative IO where
-    empty = failIO "mzero"
-    (<|>) = mplusIO
-
--- | @since 4.9.0.0
-instance MonadPlus IO
-
 returnIO :: a -> IO a
 returnIO x = IO (\ s -> (# s, x #))
 

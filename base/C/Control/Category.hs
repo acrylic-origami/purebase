@@ -25,7 +25,9 @@ import Data.Type.Coercion
 import Data.Type.Equality
 import Data.Coerce (coerce)
 
-infixr 9 .
+import Control.Category ( Category(..) )
+
+-- infixr 9 .
 infixr 1 >>>, <<<
 
 -- | A class for categories. Instances should satisfy the laws
@@ -34,13 +36,6 @@ infixr 1 >>>, <<<
 -- [Left identity]  @'id' '.' f  =  f@
 -- [Associativity]  @f '.' (g '.' h)  =  (f '.' g) '.' h@
 --
-class Category cat where
-    -- | the identity morphism
-    id :: cat a a
-
-    -- | morphism composition
-    (.) :: cat b c -> cat a b -> cat a c
-
 {-# RULES
 "identity/left" forall p .
                 id . p = p
@@ -51,26 +46,6 @@ class Category cat where
  #-}
 
 -- | @since 3.0
-instance Category (->) where
-    id = C.GHC.Base.id
-    (.) = (C.GHC.Base..)
-
--- | @since 4.7.0.0
-instance Category (:~:) where
-  id          = Refl
-  Refl . Refl = Refl
-
--- | @since 4.10.0.0
-instance Category (:~~:) where
-  id            = HRefl
-  HRefl . HRefl = HRefl
-
--- | @since 4.7.0.0
-instance Category Coercion where
-  id = Coercion
-  (.) Coercion = coerce
-
--- | Right-to-left composition
 (<<<) :: Category cat => cat b c -> cat a b -> cat a c
 (<<<) = (.)
 

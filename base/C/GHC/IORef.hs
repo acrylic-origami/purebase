@@ -35,13 +35,8 @@ import GHC.IO
 -- IORefs
 
 -- |A mutable variable in the 'IO' monad
-newtype IORef a = IORef (STRef RealWorld a)
-  deriving Eq
-  -- ^ Pointer equality.
-  --
-  -- @since 4.0.0.0
+import GHC.IORef ( IORef(..), Box(..) )
 
--- |Build a new 'IORef'
 newIORef    :: a -> IO (IORef a)
 newIORef v = stToIO (newSTRef v) >>= \ var -> return (IORef var)
 
@@ -106,19 +101,6 @@ atomicSwapIORef (IORef (STRef ref)) new = IO $ \s ->
   case atomicModifyMutVar2# ref (\_old -> Box new) s of
     (# s', old, Box _new #) -> (# s', old #)
 
-data Box a = Box a
-
--- | Strict version of 'Data.IORef.atomicModifyIORef'. This forces both
--- the value stored in the 'IORef' and the value returned. The new value
--- is installed in the 'IORef' before the returned value is forced.
--- So
---
--- @atomicModifyIORef' ref (\x -> (x+1, undefined))@
---
--- will increment the 'IORef' and then throw an exception in the calling
--- thread.
---
--- @since 4.6.0.0
 atomicModifyIORef' :: IORef a -> (a -> (a,b)) -> IO b
 -- See Note [atomicModifyIORef' definition]
 atomicModifyIORef' ref f = do

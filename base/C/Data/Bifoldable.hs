@@ -88,97 +88,19 @@ import GHC.Generics (K1(..))
 -- 'bifoldMap' f g . 'Data.Bifunctor.bimap' h i ≡ 'bifoldMap' (f . h) (g . i)
 -- @
 --
--- @since 4.10.0.0
-class Bifoldable p where
-  {-# MINIMAL bifoldr | bifoldMap #-}
+-- @since 4.10.0.0  bifoldMap f g ~(_,a,b) = f a `mappend` g b
 
-  -- | Combines the elements of a structure using a monoid.
-  --
-  -- @'bifold' ≡ 'bifoldMap' 'id' 'id'@
-  --
-  -- @since 4.10.0.0
-  bifold :: Monoid m => p m m -> m
-  bifold = bifoldMap id id
+-- | @since 4.10.0.0  bifoldMap f g ~(_,_,a,b) = f a `mappend` g b
 
-  -- | Combines the elements of a structure, given ways of mapping them to a
-  -- common monoid.
-  --
-  -- @'bifoldMap' f g
-  --     ≡ 'bifoldr' ('mappend' . f) ('mappend' . g) 'mempty'@
-  --
-  -- @since 4.10.0.0
-  bifoldMap :: Monoid m => (a -> m) -> (b -> m) -> p a b -> m
-  bifoldMap f g = bifoldr (mappend . f) (mappend . g) mempty
+-- | @since 4.10.0.0  bifoldMap f g ~(_,_,_,a,b) = f a `mappend` g b
 
-  -- | Combines the elements of a structure in a right associative manner.
-  -- Given a hypothetical function @toEitherList :: p a b -> [Either a b]@
-  -- yielding a list of all elements of a structure in order, the following
-  -- would hold:
-  --
-  -- @'bifoldr' f g z ≡ 'foldr' ('either' f g) z . toEitherList@
-  --
-  -- @since 4.10.0.0
-  bifoldr :: (a -> c -> c) -> (b -> c -> c) -> c -> p a b -> c
-  bifoldr f g z t = appEndo (bifoldMap (Endo #. f) (Endo #. g) t) z
+-- | @since 4.10.0.0  bifoldMap f g ~(_,_,_,_,a,b) = f a `mappend` g b
 
-  -- | Combines the elements of a structure in a left associative manner. Given
-  -- a hypothetical function @toEitherList :: p a b -> [Either a b]@ yielding a
-  -- list of all elements of a structure in order, the following would hold:
-  --
-  -- @'bifoldl' f g z
-  --     ≡ 'foldl' (\acc -> 'either' (f acc) (g acc)) z . toEitherList@
-  --
-  -- Note that if you want an efficient left-fold, you probably want to use
-  -- 'bifoldl'' instead of 'bifoldl'. The reason is that the latter does not
-  -- force the "inner" results, resulting in a thunk chain which then must be
-  -- evaluated from the outside-in.
-  --
-  -- @since 4.10.0.0
-  bifoldl :: (c -> a -> c) -> (c -> b -> c) -> c -> p a b -> c
-  bifoldl f g z t = appEndo (getDual (bifoldMap (Dual . Endo . flip f)
-                                                (Dual . Endo . flip g) t)) z
+-- | @since 4.10.0.0  bifoldMap f g ~(_,_,_,_,_,a,b) = f a `mappend` g b
 
 -- | @since 4.10.0.0
-instance Bifoldable (,) where
-  bifoldMap f g ~(a, b) = f a `mappend` g b
+import Data.Bifoldable ( Bifoldable(..) )
 
--- | @since 4.10.0.0
-instance Bifoldable Const where
-  bifoldMap f _ (Const a) = f a
-
--- | @since 4.10.0.0
-instance Bifoldable (K1 i) where
-  bifoldMap f _ (K1 c) = f c
-
--- | @since 4.10.0.0
-instance Bifoldable ((,,) x) where
-  bifoldMap f g ~(_,a,b) = f a `mappend` g b
-
--- | @since 4.10.0.0
-instance Bifoldable ((,,,) x y) where
-  bifoldMap f g ~(_,_,a,b) = f a `mappend` g b
-
--- | @since 4.10.0.0
-instance Bifoldable ((,,,,) x y z) where
-  bifoldMap f g ~(_,_,_,a,b) = f a `mappend` g b
-
--- | @since 4.10.0.0
-instance Bifoldable ((,,,,,) x y z w) where
-  bifoldMap f g ~(_,_,_,_,a,b) = f a `mappend` g b
-
--- | @since 4.10.0.0
-instance Bifoldable ((,,,,,,) x y z w v) where
-  bifoldMap f g ~(_,_,_,_,_,a,b) = f a `mappend` g b
-
--- | @since 4.10.0.0
-instance Bifoldable Either where
-  bifoldMap f _ (Left a) = f a
-  bifoldMap _ g (Right b) = g b
-
--- | As 'bifoldr', but strict in the result of the reduction functions at each
--- step.
---
--- @since 4.10.0.0
 bifoldr' :: Bifoldable t => (a -> c -> c) -> (b -> c -> c) -> c -> t a b -> c
 bifoldr' f g z0 xs = bifoldl f' g' id xs z0 where
   f' k x z = k $! f x z

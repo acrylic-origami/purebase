@@ -39,28 +39,8 @@ import Data.Maybe
 --
 -- is safe; it never loses any of the resource.
 --
-newtype QSemN = QSemN (MVar (Int, [(Int, MVar ())], [(Int, MVar ())]))
+import Control.Concurrent.QSemN ( QSemN(..) )
 
--- The semaphore state (i, xs, ys):
---
---   i is the current resource value
---
---   (xs,ys) is the queue of blocked threads, where the queue is
---           given by xs ++ reverse ys.  We can enqueue new blocked threads
---           by consing onto ys, and dequeue by removing from the head of xs.
---
--- A blocked thread is represented by an empty (MVar ()).  To unblock
--- the thread, we put () into the MVar.
---
--- A thread can dequeue itself by also putting () into the MVar, which
--- it must do if it receives an exception while blocked in waitQSemN.
--- This means that when unblocking a thread in signalQSemN we must
--- first check whether the MVar is already full; the MVar lock on the
--- semaphore itself resolves race conditions between signalQSemN and a
--- thread attempting to dequeue itself.
-
--- |Build a new 'QSemN' with a supplied initial quantity.
---  The initial quantity must be at least 0.
 newQSemN :: Int -> IO QSemN
 newQSemN initial
   | initial < 0 = fail "newQSemN: Initial quantity must be non-negative"
