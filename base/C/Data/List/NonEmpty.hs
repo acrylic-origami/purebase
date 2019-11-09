@@ -93,21 +93,21 @@ module C.Data.List.NonEmpty (
    ) where
 
 
-import           C.Prelude             hiding (break, cycle, drop, dropWhile,
+import           Prelude             hiding (break, cycle, drop, dropWhile,
                                       filter, foldl, foldr, head, init, iterate,
                                       last, length, map, repeat, reverse,
                                       scanl, scanl1, scanr, scanr1, span,
                                       splitAt, tail, take, takeWhile,
                                       unzip, zip, zipWith, (!!))
-import qualified C.Prelude
+import qualified Prelude
 
-import           C.Control.Applicative (Applicative (..), Alternative (many))
-import           C.Data.Foldable       hiding (length, toList)
-import qualified C.Data.Foldable       as Foldable
-import           C.Data.Function       (on)
+import           Control.Applicative (Applicative (..), Alternative (many))
+import           Data.Foldable       hiding (length, toList)
+import qualified Data.Foldable       as Foldable
+import           Data.Function       (on)
 import qualified Data.List           as List
-import           C.Data.Ord            (comparing)
-import           C.GHC.Base            (NonEmpty(..))
+import           Data.Ord            (comparing)
+import           GHC.Base            (NonEmpty(..))
 
 infixr 5 <|
 

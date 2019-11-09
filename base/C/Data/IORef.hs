@@ -35,9 +35,9 @@ module C.Data.IORef
 
         ) where
 
-import C.GHC.Base
+import GHC.Base
 import GHC.STRef -- all special-cases
-import C.GHC.IORef -- mix of special and non-special cases
+import GHC.IORef -- mix of special and non-special cases
 import GHC.Weak
 
 -- |Make a 'Weak' pointer to an 'IORef', using the second argument as a finalizer

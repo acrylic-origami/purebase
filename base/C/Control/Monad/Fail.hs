@@ -38,7 +38,7 @@
 --
 module C.Control.Monad.Fail ( MonadFail(fail) ) where
 
-import C.GHC.Base (String, Monad(), Maybe(Nothing), IO())
+import GHC.Base (String, Monad(), Maybe(Nothing), IO())
 import  GHC.IO (failIO)
 
 -- | When a value is bound in @do@-notation, the pattern on the left

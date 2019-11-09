@@ -127,9 +127,10 @@ import GHC.Classes
 import GHC.CString
 import GHC.Magic
 import GHC.Prim
+import Prelude (Semigroup(..))
 -- import GHC.Prim.Ext
 import GHC.Err
-import C.GHC.Maybe
+import GHC.Maybe
 import GHC.IO (failIO,mplusIO)
 
 import GHC.Tuple ()              -- Note [Depend on GHC.Tuple]
@@ -138,7 +139,7 @@ import GHC.Natural ()            -- Note [Depend on GHC.Natural]
 
 -- for 'class Semigroup'
 import GHC.Real (Integral)
-import {-# SOURCE #-} C.Data.Semigroup.Internal ( stimesDefault
+import {-# SOURCE #-} Data.Semigroup.Internal ( stimesDefault
                                               , stimesMaybe
                                               , stimesList
                                               , stimesIdempotentMonoid
@@ -210,8 +211,6 @@ build = errorWithoutStackTrace "urk"
 foldr = errorWithoutStackTrace "urk"
 #endif
 
-infixr 6 <>
-
 -- | The class of semigroups (types with an associative binary operation).
 --
 -- Instances should satisfy the following:
@@ -219,32 +218,33 @@ infixr 6 <>
 -- [Associativity] @x '<>' (y '<>' z) = (x '<>' y) '<>' z@
 --
 -- @since 4.9.0.0
-class Semigroup a where
-        -- | An associative operation.
-        (<>) :: a -> a -> a
 
-        -- | Reduce a non-empty list with '<>'
-        --
-        -- The default definition should be sufficient, but this can be
-        -- overridden for efficiency.
-        --
-        sconcat :: NonEmpty a -> a
-        sconcat (a :| as) = go a as where
-          go b (c:cs) = b <> go c cs
-          go b []     = b
+-- class Semigroup a where
+--         -- | An associative operation.
+--         (<>) :: a -> a -> a
 
-        -- | Repeat a value @n@ times.
-        --
-        -- Given that this works on a 'Semigroup' it is allowed to fail if
-        -- you request 0 or fewer repetitions, and the default definition
-        -- will do so.
-        --
-        -- By making this a member of the class, idempotent semigroups
-        -- and monoids can upgrade this to execute in \(\mathcal{O}(1)\) by
-        -- picking @stimes = 'Data.Semigroup.stimesIdempotent'@ or @stimes =
-        -- 'stimesIdempotentMonoid'@ respectively.
-        stimes :: Integral b => b -> a -> a
-        stimes = stimesDefault
+--         -- | Reduce a non-empty list with '<>'
+--         --
+--         -- The default definition should be sufficient, but this can be
+--         -- overridden for efficiency.
+--         --
+--         sconcat :: NonEmpty a -> a
+--         sconcat (a :| as) = go a as where
+--           go b (c:cs) = b <> go c cs
+--           go b []     = b
+
+--         -- | Repeat a value @n@ times.
+--         --
+--         -- Given that this works on a 'Semigroup' it is allowed to fail if
+--         -- you request 0 or fewer repetitions, and the default definition
+--         -- will do so.
+--         --
+--         -- By making this a member of the class, idempotent semigroups
+--         -- and monoids can upgrade this to execute in \(\mathcal{O}(1)\) by
+--         -- picking @stimes = 'Data.Semigroup.stimesIdempotent'@ or @stimes =
+--         -- 'stimesIdempotentMonoid'@ respectively.
+--         stimes :: Integral b => b -> a -> a
+--         stimes = stimesDefault
 
 
 -- | The class of monoids (types with an associative binary operation that
@@ -292,7 +292,7 @@ instance Semigroup [a] where
         (<>) = (++)
         {-# INLINE (<>) #-}
 
-        stimes = stimesList
+        -- stimes = stimesList
 
 -- | @since 2.01
 instance Monoid [a] where
@@ -328,7 +328,7 @@ instance Semigroup (NonEmpty a) where
 -- | @since 4.9.0.0
 instance Semigroup b => Semigroup (a -> b) where
         f <> g = \x -> f x <> g x
-        stimes n f e = stimes n (f e)
+        -- stimes n f e = stimes n (f e)
 
 -- | @since 2.01
 instance Monoid b => Monoid (a -> b) where
@@ -337,8 +337,8 @@ instance Monoid b => Monoid (a -> b) where
 -- | @since 4.9.0.0
 instance Semigroup () where
         _ <> _      = ()
-        sconcat _   = ()
-        stimes  _ _ = ()
+        -- sconcat _   = ()
+        -- stimes  _ _ = ()
 
 -- | @since 2.01
 instance Monoid () where
@@ -349,7 +349,7 @@ instance Monoid () where
 -- | @since 4.9.0.0
 instance (Semigroup a, Semigroup b) => Semigroup (a, b) where
         (a,b) <> (a',b') = (a<>a',b<>b')
-        stimes n (a,b) = (stimes n a, stimes n b)
+        -- stimes n (a,b) = (stimes n a, stimes n b)
 
 -- | @since 2.01
 instance (Monoid a, Monoid b) => Monoid (a,b) where
@@ -358,7 +358,7 @@ instance (Monoid a, Monoid b) => Monoid (a,b) where
 -- | @since 4.9.0.0
 instance (Semigroup a, Semigroup b, Semigroup c) => Semigroup (a, b, c) where
         (a,b,c) <> (a',b',c') = (a<>a',b<>b',c<>c')
-        stimes n (a,b,c) = (stimes n a, stimes n b, stimes n c)
+        -- stimes n (a,b,c) = (stimes n a, stimes n b, stimes n c)
 
 -- | @since 2.01
 instance (Monoid a, Monoid b, Monoid c) => Monoid (a,b,c) where
@@ -368,7 +368,7 @@ instance (Monoid a, Monoid b, Monoid c) => Monoid (a,b,c) where
 instance (Semigroup a, Semigroup b, Semigroup c, Semigroup d)
          => Semigroup (a, b, c, d) where
         (a,b,c,d) <> (a',b',c',d') = (a<>a',b<>b',c<>c',d<>d')
-        stimes n (a,b,c,d) = (stimes n a, stimes n b, stimes n c, stimes n d)
+        -- stimes n (a,b,c,d) = (stimes n a, stimes n b, stimes n c, stimes n d)
 
 -- | @since 2.01
 instance (Monoid a, Monoid b, Monoid c, Monoid d) => Monoid (a,b,c,d) where
@@ -378,7 +378,7 @@ instance (Monoid a, Monoid b, Monoid c, Monoid d) => Monoid (a,b,c,d) where
 instance (Semigroup a, Semigroup b, Semigroup c, Semigroup d, Semigroup e)
          => Semigroup (a, b, c, d, e) where
         (a,b,c,d,e) <> (a',b',c',d',e') = (a<>a',b<>b',c<>c',d<>d',e<>e')
-        stimes n (a,b,c,d,e) =
+        -- stimes n (a,b,c,d,e) =
             (stimes n a, stimes n b, stimes n c, stimes n d, stimes n e)
 
 -- | @since 2.01
@@ -393,7 +393,7 @@ instance Semigroup Ordering where
     EQ <> y = y
     GT <> _ = GT
 
-    stimes = stimesIdempotentMonoid
+    -- stimes = stimesIdempotentMonoid
 
 -- lexicographical ordering
 -- | @since 2.01
@@ -406,7 +406,7 @@ instance Semigroup a => Semigroup (Maybe a) where
     a       <> Nothing = a
     Just a  <> Just b  = Just (a <> b)
 
-    stimes = stimesMaybe
+    -- stimes = stimesMaybe
 
 -- | Lift a semigroup into 'Maybe' forming a 'Monoid' according to
 -- <http://en.wikipedia.org/wiki/Monoid>: \"Any semigroup @S@ may be

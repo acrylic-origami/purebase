@@ -49,11 +49,11 @@ module C.Control.Arrow (
     ArrowLoop(..)
     ) where
 
-import C.Data.Tuple ( fst, snd, uncurry )
-import C.Data.Either
-import C.Control.Monad.Fix
-import C.Control.Category
-import C.GHC.Base hiding ( (.), id )
+import Data.Tuple ( fst, snd, uncurry )
+import Data.Either
+import Control.Monad.Fix
+import Control.Category
+import GHC.Base hiding ( (.), id )
 import GHC.Generics (Generic, Generic1)
 
 infixr 5 <+>

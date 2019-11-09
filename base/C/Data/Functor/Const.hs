@@ -22,11 +22,11 @@
 module C.Data.Functor.Const (Const(..)) where
 
 import Data.Bits (Bits, FiniteBits)
-import C.Data.Foldable (Foldable(foldMap))
+import Data.Foldable (Foldable(foldMap))
 import Foreign.Storable (Storable)
 
 import GHC.Arr (Ix)
-import C.GHC.Base
+import GHC.Base
 import GHC.Enum (Bounded, Enum)
 import GHC.Float (Floating, RealFloat)
 import GHC.Generics (Generic, Generic1)

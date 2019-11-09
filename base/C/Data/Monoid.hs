@@ -79,16 +79,16 @@ module C.Data.Monoid (
   ) where
 
 -- Push down the module in the dependency hierarchy.
-import C.GHC.Base hiding (Any)
+import GHC.Base hiding (Any)
 import GHC.Enum
 import GHC.Generics
 import GHC.Num
 import GHC.Read
 import GHC.Show
 
-import C.Control.Monad.Fail (MonadFail)
+import Control.Monad.Fail (MonadFail)
 
-import C.Data.Semigroup.Internal
+import Data.Semigroup.Internal
 
 -- $MaybeExamples
 -- To implement @find@ or @findLast@ on any 'Data.Foldable.Foldable':

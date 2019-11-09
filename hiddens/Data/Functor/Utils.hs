@@ -7,7 +7,7 @@
 -- This code contains utility function and data structures that are used
 -- to improve the efficiency of several instances in the Data.* namespace.
 -----------------------------------------------------------------------------
-module C.Data.Functor.Utils where
+module Data.Functor.Utils where
 
 import Data.Coerce (Coercible, coerce)
 import GHC.Base ( Applicative(..), Functor(..), Maybe(..), Monoid(..), Ord(..)

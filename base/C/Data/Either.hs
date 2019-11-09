@@ -30,7 +30,7 @@ module C.Data.Either (
    partitionEithers,
  ) where
 
-import C.GHC.Base
+import GHC.Base
 import GHC.Show
 import GHC.Read
 

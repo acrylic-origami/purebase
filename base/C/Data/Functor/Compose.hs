@@ -24,9 +24,9 @@ module C.Data.Functor.Compose (
     Compose(..),
   ) where
 
-import C.Data.Functor.Classes
+import Data.Functor.Classes
 
-import C.Control.Applicative
+import Control.Applicative
 import Data.Coerce (coerce)
 import Data.Data (Data)
 import Data.Type.Equality (TestEquality(..), (:~:)(..))

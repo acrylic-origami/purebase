@@ -23,7 +23,7 @@ module C.Data.Tuple
   , swap
   ) where
 
-import C.GHC.Base ()      -- Note [Depend on GHC.Tuple]
+import GHC.Base ()      -- Note [Depend on GHC.Tuple]
 
 default ()              -- Double isn't available yet
 

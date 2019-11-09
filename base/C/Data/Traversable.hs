@@ -53,20 +53,20 @@ module C.Data.Traversable (
 
 -- It is convenient to use 'Const' here but this means we must
 -- define a few instances here which really belong in Control.Applicative
-import C.Control.Applicative ( Const(..), ZipList(..) )
+import Control.Applicative ( Const(..), ZipList(..) )
 import Data.Coerce
-import C.Data.Either ( Either(..) )
-import C.Data.Foldable ( Foldable )
-import C.Data.Functor
-import C.Data.Functor.Identity ( Identity(..) )
-import C.Data.Functor.Utils ( StateL(..), StateR(..) )
-import C.Data.Monoid ( Dual(..), Sum(..), Product(..),
+import Data.Either ( Either(..) )
+import Data.Foldable ( Foldable )
+import Data.Functor
+import Data.Functor.Identity ( Identity(..) )
+import Data.Functor.Utils ( StateL(..), StateR(..) )
+import Data.Monoid ( Dual(..), Sum(..), Product(..),
                      First(..), Last(..), Alt(..), Ap(..) )
-import C.Data.Ord ( Down(..) )
+import Data.Ord ( Down(..) )
 import Data.Proxy ( Proxy(..) )
 
 import GHC.Arr
-import C.GHC.Base ( Applicative(..), Monad(..), Monoid, Maybe(..), NonEmpty(..),
+import GHC.Base ( Applicative(..), Monad(..), Monoid, Maybe(..), NonEmpty(..),
                   ($), (.), id, flip )
 import GHC.Generics
 import qualified GHC.List as List ( foldr )

@@ -29,5 +29,5 @@ module C.Control.Monad.ST.Safe {-# DEPRECATED "Safe is now the default, please u
         stToIO,
     ) where
 
-import C.Control.Monad.ST.Imp
+import Control.Monad.ST.Imp
 

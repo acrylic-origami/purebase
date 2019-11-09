@@ -9,7 +9,7 @@ main :: IO ()
 main = void $ runGhc (Just libdir) $ do
   dflags <- getSessionDynFlags
   let inc_paths = includePaths dflags
-  setSessionDynFlags $ dflags { includePaths = inc_paths { includePathsGlobal = "base/C/include/":(includePathsGlobal inc_paths) }, importPaths = "base/":(importPaths dflags) }
+  setSessionDynFlags $ dflags { includePaths = inc_paths { includePathsGlobal = "base/C/include/":(includePathsGlobal inc_paths) }, importPaths = "hiddens":"base/":(importPaths dflags) }
   
   target <- guessTarget ("target/A.hs") Nothing
   setTargets [target] 

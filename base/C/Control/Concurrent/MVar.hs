@@ -149,13 +149,13 @@ module C.Control.Concurrent.MVar
         , addMVarFinalizer
     ) where
 
-import C.GHC.MVar ( MVar(..), newEmptyMVar, newMVar, takeMVar, putMVar,
+import GHC.MVar ( MVar(..), newEmptyMVar, newMVar, takeMVar, putMVar,
                   tryTakeMVar, tryPutMVar, isEmptyMVar, readMVar,
                   tryReadMVar
                 )
-import qualified C.GHC.MVar
+import qualified GHC.MVar
 import GHC.Weak
-import C.GHC.Base
+import GHC.Base
 
 import Control.Exception.Base
 

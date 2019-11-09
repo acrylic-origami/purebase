@@ -26,5 +26,5 @@ module C.Control.Monad.ST.Unsafe (
         unsafeSTToIO
     ) where
 
-import C.Control.Monad.ST.Imp
+import Control.Monad.ST.Imp
 

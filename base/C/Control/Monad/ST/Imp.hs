@@ -37,10 +37,10 @@ module C.Control.Monad.ST.Imp (
 
 import GHC.ST           ( ST, runST, unsafeInterleaveST
                         , unsafeDupableInterleaveST )
-import C.GHC.Base         ( RealWorld, ($), return )
+import GHC.Base         ( RealWorld, ($), return )
 import GHC.IO           ( stToIO, unsafeIOToST, unsafeSTToIO
                         , unsafeDupableInterleaveIO )
-import C.GHC.MVar         ( readMVar, putMVar, newEmptyMVar )
+import GHC.MVar         ( readMVar, putMVar, newEmptyMVar )
 import Control.Exception.Base
                         ( catch, throwIO, NonTermination (..)
                         , BlockedIndefinitelyOnMVar (..) )

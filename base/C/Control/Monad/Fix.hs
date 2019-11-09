@@ -24,16 +24,16 @@ module C.Control.Monad.Fix (
         fix
   ) where
 
-import C.Data.Either
-import C.Data.Function ( fix )
-import C.Data.Maybe
-import C.Data.Monoid ( Dual(..), Sum(..), Product(..)
+import Data.Either
+import Data.Function ( fix )
+import Data.Maybe
+import Data.Monoid ( Dual(..), Sum(..), Product(..)
                    , First(..), Last(..), Alt(..), Ap(..) )
-import C.Data.Ord ( Down(..) )
-import C.GHC.Base ( Monad, NonEmpty(..), errorWithoutStackTrace, (.) )
+import Data.Ord ( Down(..) )
+import GHC.Base ( Monad, NonEmpty(..), errorWithoutStackTrace, (.) )
 import GHC.Generics
 import GHC.List ( head, tail )
-import C.Control.Monad.ST.Imp
+import Control.Monad.ST.Imp
 import System.IO
 
 -- | Monads having fixed points with a \'knot-tying\' semantics.

@@ -23,11 +23,11 @@ module C.Control.Concurrent.QSemN
           signalQSemN   -- :: QSemN -> Int -> IO ()
       ) where
 
-import C.Control.Concurrent.MVar ( MVar, newEmptyMVar, takeMVar, tryTakeMVar
+import Control.Concurrent.MVar ( MVar, newEmptyMVar, takeMVar, tryTakeMVar
                           , putMVar, newMVar
                           , tryPutMVar, isEmptyMVar)
 import Control.Exception
-import C.Data.Maybe
+import Data.Maybe
 
 -- | 'QSemN' is a quantity semaphore in which the resource is acquired
 -- and released in units of one. It provides guaranteed FIFO ordering
