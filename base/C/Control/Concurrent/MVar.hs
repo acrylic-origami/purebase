@@ -149,13 +149,13 @@ module C.Control.Concurrent.MVar
         , addMVarFinalizer
     ) where
 
-import C.GHC.MVar ( MVar(..), newEmptyMVar, newMVar, takeMVar, putMVar,
+import GHC.MVar ( MVar(..), newEmptyMVar, newMVar, takeMVar, putMVar,
                   tryTakeMVar, tryPutMVar, isEmptyMVar, readMVar,
                   tryReadMVar
                 )
-import qualified C.GHC.MVar
+import qualified GHC.MVar
 import GHC.Weak
-import C.GHC.Base
+import GHC.Base
 
 import Control.Exception.Base
 
@@ -263,7 +263,7 @@ modifyMVarMasked m io =
 
 {-# DEPRECATED addMVarFinalizer "use 'mkWeakMVar' instead" #-} -- deprecated in 7.6
 addMVarFinalizer :: MVar a -> IO () -> IO ()
-addMVarFinalizer = C.GHC.MVar.addMVarFinalizer
+addMVarFinalizer = GHC.MVar.addMVarFinalizer
 
 -- | Make a 'Weak' pointer to an 'MVar', using the second argument as
 -- a finalizer to run when 'MVar' is garbage-collected

@@ -23,10 +23,10 @@ module C.Control.Concurrent.QSem
           signalQSem    -- :: QSem -> IO ()
         ) where
 
-import C.Control.Concurrent.MVar ( MVar, newEmptyMVar, takeMVar, tryTakeMVar
+import Control.Concurrent.MVar ( MVar, newEmptyMVar, takeMVar, tryTakeMVar
                           , putMVar, newMVar, tryPutMVar)
 import Control.Exception
-import C.Data.Maybe
+import Data.Maybe
 
 -- | 'QSem' is a quantity semaphore in which the resource is acquired
 -- and released in units of one. It provides guaranteed FIFO ordering
@@ -38,28 +38,8 @@ import C.Data.Maybe
 --
 -- is safe; it never loses a unit of the resource.
 --
-newtype QSem = QSem (MVar (Int, [MVar ()], [MVar ()]))
+import Control.Concurrent.QSem ( QSem(..) )
 
--- The semaphore state (i, xs, ys):
---
---   i is the current resource value
---
---   (xs,ys) is the queue of blocked threads, where the queue is
---           given by xs ++ reverse ys.  We can enqueue new blocked threads
---           by consing onto ys, and dequeue by removing from the head of xs.
---
--- A blocked thread is represented by an empty (MVar ()).  To unblock
--- the thread, we put () into the MVar.
---
--- A thread can dequeue itself by also putting () into the MVar, which
--- it must do if it receives an exception while blocked in waitQSem.
--- This means that when unblocking a thread in signalQSem we must
--- first check whether the MVar is already full; the MVar lock on the
--- semaphore itself resolves race conditions between signalQSem and a
--- thread attempting to dequeue itself.
-
--- |Build a new 'QSem' with a supplied initial quantity.
---  The initial quantity must be at least 0.
 newQSem :: Int -> IO QSem
 newQSem initial
   | initial < 0 = fail "newQSem: Initial quantity must be non-negative"

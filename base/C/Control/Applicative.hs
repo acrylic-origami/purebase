@@ -47,99 +47,23 @@ module C.Control.Applicative (
     optional,
     ) where
 
-import C.Control.Category hiding ((.), id)
-import C.Control.Arrow
-import C.Data.Maybe
-import C.Data.Tuple
-import C.Data.Eq
-import C.Data.Ord
-import C.Data.Foldable (Foldable(..))
-import C.Data.Functor ((<$>))
-import C.Data.Functor.Const (Const(..))
+import Control.Category hiding ((.), id)
+import Control.Arrow
+import Data.Maybe
+import Data.Tuple
+import Data.Eq
+import Data.Ord
+import Data.Foldable (Foldable(..))
+import Data.Functor ((<$>))
+import Data.Functor.Const (Const(..))
 
-import C.GHC.Base
+import GHC.Base
 import GHC.Generics
 import GHC.List (repeat, zipWith, drop)
 import GHC.Read (Read)
 import GHC.Show (Show)
 
-newtype WrappedMonad m a = WrapMonad { unwrapMonad :: m a }
-                         deriving ( Generic  -- ^ @since 4.7.0.0
-                                  , Generic1 -- ^ @since 4.7.0.0
-                                  , Monad    -- ^ @since 4.7.0.0
-                                  )
+import Control.Applicative ( ZipList(..), WrappedArrow(..), WrappedMonad(..) )
 
--- | @since 2.01
-instance Monad m => Functor (WrappedMonad m) where
-    fmap f (WrapMonad v) = WrapMonad (liftM f v)
-
--- | @since 2.01
-instance Monad m => Applicative (WrappedMonad m) where
-    pure = WrapMonad . pure
-    WrapMonad f <*> WrapMonad v = WrapMonad (f `ap` v)
-    liftA2 f (WrapMonad x) (WrapMonad y) = WrapMonad (liftM2 f x y)
-
--- | @since 2.01
-instance MonadPlus m => Alternative (WrappedMonad m) where
-    empty = WrapMonad mzero
-    WrapMonad u <|> WrapMonad v = WrapMonad (u `mplus` v)
-
-newtype WrappedArrow a b c = WrapArrow { unwrapArrow :: a b c }
-                           deriving ( Generic  -- ^ @since 4.7.0.0
-                                    , Generic1 -- ^ @since 4.7.0.0
-                                    )
-
--- | @since 2.01
-instance Arrow a => Functor (WrappedArrow a b) where
-    fmap f (WrapArrow a) = WrapArrow (a >>> arr f)
-
--- | @since 2.01
-instance Arrow a => Applicative (WrappedArrow a b) where
-    pure x = WrapArrow (arr (const x))
-    liftA2 f (WrapArrow u) (WrapArrow v) =
-      WrapArrow (u &&& v >>> arr (uncurry f))
-
--- | @since 2.01
-instance (ArrowZero a, ArrowPlus a) => Alternative (WrappedArrow a b) where
-    empty = WrapArrow zeroArrow
-    WrapArrow u <|> WrapArrow v = WrapArrow (u <+> v)
-
--- | Lists, but with an 'Applicative' functor based on zipping.
-newtype ZipList a = ZipList { getZipList :: [a] }
-                  deriving ( Show     -- ^ @since 4.7.0.0
-                           , Eq       -- ^ @since 4.7.0.0
-                           , Ord      -- ^ @since 4.7.0.0
-                           , Read     -- ^ @since 4.7.0.0
-                           , Functor  -- ^ @since 2.01
-                           , Foldable -- ^ @since 4.9.0.0
-                           , Generic  -- ^ @since 4.7.0.0
-                           , Generic1 -- ^ @since 4.7.0.0
-                           )
--- See Data.Traversable for Traversable instance due to import loops
-
--- |
--- > f <$> ZipList xs1 <*> ... <*> ZipList xsN
--- >     = ZipList (zipWithN f xs1 ... xsN)
---
--- where @zipWithN@ refers to the @zipWith@ function of the appropriate arity
--- (@zipWith@, @zipWith3@, @zipWith4@, ...). For example:
---
--- > (\a b c -> stimes c [a, b]) <$> ZipList "abcd" <*> ZipList "567" <*> ZipList [1..]
--- >     = ZipList (zipWith3 (\a b c -> stimes c [a, b]) "abcd" "567" [1..])
--- >     = ZipList {getZipList = ["a5","b6b6","c7c7c7"]}
---
--- @since 2.01
-instance Applicative ZipList where
-    pure x = ZipList (repeat x)
-    liftA2 f (ZipList xs) (ZipList ys) = ZipList (zipWith f xs ys)
-
--- | @since 4.11.0.0
-instance Alternative ZipList where
-   empty = ZipList []
-   ZipList xs <|> ZipList ys = ZipList (xs ++ drop (length xs) ys)
-
--- extra functions
-
--- | One or none.
 optional :: Alternative f => f a -> f (Maybe a)
 optional v = Just <$> v <|> pure Nothing

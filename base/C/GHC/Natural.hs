@@ -80,6 +80,8 @@ import GHC.Integer.GMP.Internals
 import GHC.Integer
 #endif
 
+import GHC.Natural ( Natural(..) )
+
 default ()
 
 -- Most high-level operations need to be marked `NOINLINE` as
@@ -133,25 +135,6 @@ divZeroError = raise# divZeroException
 --
 -- >>> -1 :: Natural
 -- *** Exception: arithmetic underflow
---
--- @since 4.8.0.0
-data Natural = NatS#                 GmpLimb# -- ^ in @[0, maxBound::Word]@
-             | NatJ# {-# UNPACK #-} !BigNat   -- ^ in @]maxBound::Word, +inf[@
-                                              --
-                                              -- __Invariant__: 'NatJ#' is used
-                                              -- /iff/ value doesn't fit in
-                                              -- 'NatS#' constructor.
-                               -- NB: Order of constructors *must*
-                               -- coincide with 'Ord' relation
-             deriving ( Eq  -- ^ @since 4.8.0.0
-                      , Ord -- ^ @since 4.8.0.0
-                      )
-
-
--- | Test whether all internal invariants are satisfied by 'Natural' value
---
--- This operation is mostly useful for test-suites and/or code which
--- constructs 'Integer' values directly.
 --
 -- @since 4.8.0.0
 isValidNatural :: Natural -> Bool
@@ -400,16 +383,6 @@ wordToNaturalBase w# = NatS# w#
 --
 -- Operations whose result would be negative @'Control.Exception.throw'
 -- ('Control.Exception.Underflow' :: 'Control.Exception.ArithException')@.
---
--- @since 4.8.0.0
-newtype Natural = Natural Integer -- ^ __Invariant__: non-negative 'Integer'
-                  deriving (Eq,Ord)
-
-
--- | Test whether all internal invariants are satisfied by 'Natural' value
---
--- This operation is mostly useful for test-suites and/or code which
--- constructs 'Natural' values directly.
 --
 -- @since 4.8.0.0
 isValidNatural :: Natural -> Bool

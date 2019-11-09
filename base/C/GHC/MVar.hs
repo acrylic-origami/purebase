@@ -32,9 +32,10 @@ module C.GHC.MVar (
         , addMVarFinalizer
     ) where
 
-import C.GHC.Base
+import GHC.Base
 
-data MVar a = MVar (MVar# RealWorld a)
+import GHC.MVar ( MVar(..) )
+
 {- ^
 An 'MVar' (pronounced \"em-var\") is a synchronising variable, used
 for communication between concurrent threads.  It can be thought of
@@ -43,9 +44,6 @@ as a box, which may be empty or full.
 
 -- pull in Eq (Mvar a) too, to avoid GHC.Conc being an orphan-instance module
 -- | @since 4.1.0.0
-instance Eq (MVar a) where
-        (MVar mvar1#) == (MVar mvar2#) = isTrue# (sameMVar# mvar1# mvar2#)
-
 {-
 M-Vars are rendezvous points for concurrent threads.  They begin
 empty, and any attempt to read an empty M-Var blocks.  When an M-Var

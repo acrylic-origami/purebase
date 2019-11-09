@@ -1,0 +1,23 @@
+cabal-version:       >=1.10
+
+name:                purebase
+version:             0.1.0.0
+-- synopsis:
+-- description:
+-- bug-reports:
+-- license:
+license-file:        LICENSE
+author:              Derek Lam
+maintainer:          dc.lam@mail.utoronto.ca
+-- copyright:
+-- category:
+build-type:          Simple
+extra-source-files:  ChangeLog.md
+
+executable purebase
+  main-is:             Main.hs
+  -- other-modules:		  C.Union, C.Control.Applicative, C.Control.Arrow, C.Control.Category, C.Control.Concurrent.MVar, C.Control.Concurrent.QSem, C.Control.Concurrent.QSemN, C.Control.Monad, C.Control.Monad.Fail, C.Control.Monad.Fix, C.Control.Monad.ST, C.Control.Monad.ST.Imp, C.Control.Monad.ST.Lazy, C.Control.Monad.ST.Lazy.Safe, C.Control.Monad.ST.Lazy.Unsafe, C.Control.Monad.ST.Safe, C.Control.Monad.ST.Strict, C.Control.Monad.ST.Unsafe, C.Control.Monad.Zip, C.Data.Bifoldable, C.Data.Bifunctor, C.Data.Bitraversable, C.Data.Bool, C.Data.Complex, C.Data.Either, C.Data.Eq, C.Data.Foldable, C.Data.Function, C.Data.Functor, C.Data.Functor.Compose, C.Data.Functor.Const, C.Data.Functor.Contravariant, C.Data.Functor.Identity, C.Data.Functor.Product, C.Data.Functor.Sum, C.Data.Functor.Utils, C.Data.IORef, C.Data.List, C.Data.List.NonEmpty, C.Data.Maybe, C.Data.Monoid, C.Data.Ord, C.Data.STRef, C.Data.STRef.Lazy, C.Data.Semigroup, C.Data.Semigroup.Internal, C.Data.Traversable, C.Data.Tuple, C.Foreign.C.String, C.GHC.Base, C.GHC.Err, C.GHC.Exception, C.GHC.IO.Device, C.GHC.IO.Exception, C.GHC.IORef, C.GHC.List, C.GHC.MVar, C.GHC.Maybe, C.GHC.Natural, C.GHC.Real, C.System.Posix.Internals, Control.Concurrent.QSem Control.Concurrent.QSemN, Control.Monad.ST.Imp, Control.Monad.ST.Lazy.Imp, Data.Functor.Utils, Data.OldList, Data.Semigroup.Internal, Data.Semigroup.Internal
+  -- other-extensions:
+  build-depends:       base >=4.12 && <4.13, ghc, ghc-paths, ghc-prim, integer-gmp
+  hs-source-dirs:      src
+  default-language:    Haskell2010

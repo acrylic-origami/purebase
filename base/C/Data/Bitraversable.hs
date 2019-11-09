@@ -26,12 +26,12 @@ module C.Data.Bitraversable
   , bifoldMapDefault
   ) where
 
-import C.Control.Applicative
-import C.Data.Bifunctor
-import C.Data.Bifoldable
+import Control.Applicative
+import Data.Bifunctor
+import Data.Bifoldable
 import Data.Coerce
-import C.Data.Functor.Identity (Identity(..))
-import C.Data.Functor.Utils (StateL(..), StateR(..))
+import Data.Functor.Identity (Identity(..))
+import Data.Functor.Utils (StateL(..), StateR(..))
 import GHC.Generics (K1(..))
 
 -- | 'Bitraversable' identifies bifunctorial data structures whose elements can
@@ -92,22 +92,8 @@ import GHC.Generics (K1(..))
 -- These are available as 'bimapDefault' and 'bifoldMapDefault' respectively.
 --
 -- @since 4.10.0.0
-class (Bifunctor t, Bifoldable t) => Bitraversable t where
-  -- | Evaluates the relevant functions at each element in the structure,
-  -- running the action, and builds a new structure with the same shape, using
-  -- the results produced from sequencing the actions.
-  --
-  -- @'bitraverse' f g ≡ 'bisequenceA' . 'bimap' f g@
-  --
-  -- For a version that ignores the results, see 'bitraverse_'.
-  --
-  -- @since 4.10.0.0
-  bitraverse :: Applicative f => (a -> f c) -> (b -> f d) -> t a b -> f (t c d)
-  bitraverse f g = bisequenceA . bimap f g
+import Data.Bitraversable ( Bitraversable(..) )
 
--- | Alias for 'bisequence'.
---
--- @since 4.10.0.0
 bisequenceA :: (Bitraversable t, Applicative f) => t (f a) (f b) -> f (t a b)
 bisequenceA = bisequence
 
@@ -128,48 +114,18 @@ bimapM = bitraverse
 bisequence :: (Bitraversable t, Applicative f) => t (f a) (f b) -> f (t a b)
 bisequence = bitraverse id id
 
--- | @since 4.10.0.0
-instance Bitraversable (,) where
-  bitraverse f g ~(a, b) = liftA2 (,) (f a) (g b)
+-- | @since 4.10.0.0  bitraverse f g ~(x, a, b) = liftA2 ((,,) x) (f a) (g b)
+
+-- | @since 4.10.0.0  bitraverse f g ~(x, y, a, b) = liftA2 ((,,,) x y) (f a) (g b)
+
+-- | @since 4.10.0.0  bitraverse f g ~(x, y, z, a, b) = liftA2 ((,,,,) x y z) (f a) (g b)
+
+-- | @since 4.10.0.0  bitraverse f g ~(x, y, z, w, a, b) = liftA2 ((,,,,,) x y z w) (f a) (g b)
+
+-- | @since 4.10.0.0  bitraverse f g ~(x, y, z, w, v, a, b) =
+    -- liftA2 ((,,,,,,) x y z w v) (f a) (g b)
 
 -- | @since 4.10.0.0
-instance Bitraversable ((,,) x) where
-  bitraverse f g ~(x, a, b) = liftA2 ((,,) x) (f a) (g b)
-
--- | @since 4.10.0.0
-instance Bitraversable ((,,,) x y) where
-  bitraverse f g ~(x, y, a, b) = liftA2 ((,,,) x y) (f a) (g b)
-
--- | @since 4.10.0.0
-instance Bitraversable ((,,,,) x y z) where
-  bitraverse f g ~(x, y, z, a, b) = liftA2 ((,,,,) x y z) (f a) (g b)
-
--- | @since 4.10.0.0
-instance Bitraversable ((,,,,,) x y z w) where
-  bitraverse f g ~(x, y, z, w, a, b) = liftA2 ((,,,,,) x y z w) (f a) (g b)
-
--- | @since 4.10.0.0
-instance Bitraversable ((,,,,,,) x y z w v) where
-  bitraverse f g ~(x, y, z, w, v, a, b) =
-    liftA2 ((,,,,,,) x y z w v) (f a) (g b)
-
--- | @since 4.10.0.0
-instance Bitraversable Either where
-  bitraverse f _ (Left a) = Left <$> f a
-  bitraverse _ g (Right b) = Right <$> g b
-
--- | @since 4.10.0.0
-instance Bitraversable Const where
-  bitraverse f _ (Const a) = Const <$> f a
-
--- | @since 4.10.0.0
-instance Bitraversable (K1 i) where
-  bitraverse f _ (K1 c) = K1 <$> f c
-
--- | 'bifor' is 'bitraverse' with the structure as the first argument. For a
--- version that ignores the results, see 'bifor_'.
---
--- @since 4.10.0.0
 bifor :: (Bitraversable t, Applicative f)
       => t a b -> (a -> f c) -> (b -> f d) -> f (t c d)
 bifor t f g = bitraverse f g t

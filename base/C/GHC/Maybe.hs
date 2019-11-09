@@ -10,6 +10,8 @@ where
 import GHC.Integer () -- See Note [Depend on GHC.Integer] in GHC.Base
 import GHC.Classes
 
+import GHC.Maybe ( Maybe(..) )
+
 default ()
 
 -------------------------------------------------------------------------------
@@ -26,7 +28,3 @@ default ()
 -- monad, where all errors are represented by 'Nothing'.  A richer
 -- error monad can be built using the 'Data.Either.Either' type.
 --
-data  Maybe a  =  Nothing | Just a
-  deriving ( Eq  -- ^ @since 2.01
-           , Ord -- ^ @since 2.01
-           )

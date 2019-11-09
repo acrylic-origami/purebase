@@ -26,8 +26,8 @@ module C.Data.IORef
         modifyIORef,
         modifyIORef',
         atomicModifyIORef,
-        atomicModifyIORef',
-        atomicWriteIORef,
+        -- atomicModifyIORef',
+        -- atomicWriteIORef,
         mkWeakIORef,
         -- ** Memory Model
 
@@ -35,9 +35,9 @@ module C.Data.IORef
 
         ) where
 
-import C.GHC.Base
+import GHC.Base
 import GHC.STRef -- all special-cases
-import C.GHC.IORef -- mix of special and non-special cases
+import GHC.IORef -- mix of special and non-special cases
 import GHC.Weak
 
 -- |Make a 'Weak' pointer to an 'IORef', using the second argument as a finalizer
@@ -90,19 +90,19 @@ modifyIORef' ref f = do
 --
 -- Use 'atomicModifyIORef'' or 'atomicWriteIORef' to avoid this problem.
 --
-atomicModifyIORef :: IORef a -> (a -> (a,b)) -> IO b
-atomicModifyIORef ref f = do
-  (_old, ~(_new, res)) <- atomicModifyIORef2 ref f
-  pure res
+-- atomicModifyIORef :: IORef a -> (a -> (a,b)) -> IO b
+-- atomicModifyIORef ref f = do
+--   (_old, ~(_new, res)) <- atomicModifyIORef2 ref f
+--   pure res
 
 -- | Variant of 'writeIORef' with the \"barrier to reordering\" property that
 -- 'atomicModifyIORef' has.
 --
 -- @since 4.6.0.0
-atomicWriteIORef :: IORef a -> a -> IO ()
-atomicWriteIORef ref a = do
-  _ <- atomicSwapIORef ref a
-  pure ()
+-- atomicWriteIORef :: IORef a -> a -> IO ()
+-- atomicWriteIORef ref a = do
+--   _ <- atomicSwapIORef ref a
+--   pure ()
 
 {- $memmodel
 

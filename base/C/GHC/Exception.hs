@@ -25,7 +25,7 @@
 module C.GHC.Exception
        ( module GHC.Exception.Type
        , throw
-       , ErrorCall(..,ErrorCall)
+       -- , ErrorCall(..,ErrorCall)
        , errorCallException
        , errorCallWithCallStackException
          -- re-export CallStack and SrcLoc from GHC.Types
@@ -45,32 +45,22 @@ import GHC.Exception.Type
 
 -- | Throw an exception.  Exceptions may be thrown from purely
 -- functional code, but may only be caught within the 'IO' monad.
+import GHC.Exception ( ErrorCall(..) )
+
 throw :: forall (r :: RuntimeRep). forall (a :: TYPE r). forall e.
          Exception e => e -> a
 throw e = raise# (toException e)
 
 -- | This is thrown when the user calls 'error'. The first @String@ is the
 -- argument given to 'error', second @String@ is the location.
-data ErrorCall = ErrorCallWithLocation String String
-    deriving ( Eq  -- ^ @since 4.7.0.0
-             , Ord -- ^ @since 4.7.0.0
-             )
+-- pattern ErrorCall :: String -> ErrorCall
+-- pattern ErrorCall err <- ErrorCallWithLocation err _ where
+--  ErrorCall err = ErrorCallWithLocation err ""
 
-pattern ErrorCall :: String -> ErrorCall
-pattern ErrorCall err <- ErrorCallWithLocation err _ where
-  ErrorCall err = ErrorCallWithLocation err ""
-
-{-# COMPLETE ErrorCall #-}
+-- {-# COMPLETE ErrorCall #-}
 
 -- | @since 4.0.0.0
-instance Exception ErrorCall
-
 -- | @since 4.0.0.0
-instance Show ErrorCall where
-  showsPrec _ (ErrorCallWithLocation err "") = showString err
-  showsPrec _ (ErrorCallWithLocation err loc) =
-      showString err . showChar '\n' . showString loc
-
 errorCallException :: String -> SomeException
 errorCallException s = toException (ErrorCall s)
 

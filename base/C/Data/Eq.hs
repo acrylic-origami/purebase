@@ -19,4 +19,4 @@ module C.Data.Eq (
    Eq(..),
  ) where
 
-import C.GHC.Base
+import GHC.Base

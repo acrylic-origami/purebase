@@ -23,7 +23,7 @@ module C.Prelude (
 
     -- ** Basic data types
     Bool(False, True),
-    (&&), (||), not, otherwise,
+    (&&), (||), not, -- , otherwise,
 
     Maybe(Nothing, Just),
     maybe,
@@ -32,7 +32,7 @@ module C.Prelude (
     either,
 
     Ordering(LT, EQ, GT),
-    Char, String,
+    Char, -- , String,
 
     -- *** Tuples
     fst, snd, curry, uncurry,
@@ -67,14 +67,14 @@ module C.Prelude (
     fromIntegral, realToFrac,
 
     -- ** Semigroups and Monoids
-    Semigroup((<>)),
+    -- Semigroup((<>)),
     Monoid(mempty, mappend, mconcat),
 
     -- ** Monads and functors
     Functor(fmap, (<$)), (<$>),
     Applicative(pure, (<*>), (*>), (<*)),
     Monad((>>=), (>>), return),
-    MonadFail(fail),
+    -- MonadFail(fail),
     mapM_, sequence_, (=<<),
 
     -- ** Folds and traversals
@@ -96,9 +96,9 @@ module C.Prelude (
     Traversable(traverse, sequenceA, mapM, sequence),
 
     -- ** Miscellaneous functions
-    id, const, (.), flip, ($), until,
-    asTypeOf, error, errorWithoutStackTrace, undefined,
-    seq, ($!),
+    -- id, const, (.), flip, ($), until,
+    error, errorWithoutStackTrace, undefined, -- asTypeOf, 
+    -- ($!), -- seq, 
 
     -- * List operations
     map, (++), filter,
@@ -154,18 +154,18 @@ module C.Prelude (
 
   ) where
 
-import C.Control.Monad
+import Control.Monad
 import System.IO
 import System.IO.Error
 import Data.List hiding ( map, (++), null, length )
-import C.Data.Either
-import C.Data.Foldable    ( Foldable(..) )
-import C.Data.Functor     ( (<$>) )
-import C.Data.Maybe
-import C.Data.Traversable ( Traversable(..) )
-import C.Data.Tuple
+import Data.Either
+import Data.Foldable    ( Foldable(..) )
+import Data.Functor     ( (<$>) )
+import Data.Maybe
+import Data.Traversable ( Traversable(..) )
+import Data.Tuple
 
-import C.GHC.Base hiding ( foldr, mapM, sequence )
+import GHC.Base hiding ( foldr, mapM, sequence )
 import Text.Read
 import GHC.Enum
 import GHC.Num

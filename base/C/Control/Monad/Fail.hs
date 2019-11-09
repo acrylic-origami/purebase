@@ -38,7 +38,7 @@
 --
 module C.Control.Monad.Fail ( MonadFail(fail) ) where
 
-import C.GHC.Base (String, Monad(), Maybe(Nothing), IO())
+import GHC.Base (String, Monad(), Maybe(Nothing), IO())
 import  GHC.IO (failIO)
 
 -- | When a value is bound in @do@-notation, the pattern on the left
@@ -63,19 +63,5 @@ import  GHC.IO (failIO)
 -- @
 --
 -- @since 4.9.0.0
-class Monad m => MonadFail m where
-    fail :: String -> m a
+import Control.Monad.Fail ( MonadFail(..) )
 
-
--- | @since 4.9.0.0
-instance MonadFail Maybe where
-    fail _ = Nothing
-
--- | @since 4.9.0.0
-instance MonadFail [] where
-    {-# INLINE fail #-}
-    fail _ = []
-
--- | @since 4.9.0.0
-instance MonadFail IO where
-    fail = failIO
